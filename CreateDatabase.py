@@ -15,20 +15,28 @@ stmt = """CREATE TABLE Company (
 
 stmt2 = """CREATE TABLE Notes (
     NoteId INTEGER NOT NULL,
-    Notes TEXT
+    Notes TEXT,
     OrgNumber INTEGER NOT NULL,
     CONSTRAINT PK_Notes PRIMARY KEY (NoteId),
     CONSTRAINT FK_Notes FOREIGN KEY (OrgNumber) REFERENCES Company(OrgNumber)
 );"""
 
-stmt3 = """"CREATE TABLE NewsArticles(
+stmt3 = """CREATE TABLE NewsArticles(
     ArticleId INTEGER NOT NULL,
-    URL TEXT NOT NULL
-    Title TEXT
+    URL TEXT NOT NULL,
+    Title TEXT,
     OrgNumber INTEGER NOT NULL,
-    CONSTRAINT PK_Notes PRIMARY KEY (ArticleID),
-    CONSTRAINT FK_Notes FOREIGN KEY (OrgNumber) REFERENCES Company(OrgNumber)
+    CONSTRAINT PK_NewArticles PRIMARY KEY (ArticleId),
+    CONSTRAINT FK_NewArticles FOREIGN KEY (OrgNumber) REFERENCES Company(OrgNumber)
 );"""
-conn.execute(stmt2)
+
+stmt4 = """CREATE TABLE StockHolders(
+    StockHolderId INTEGER NOT NULL,
+    Name TEXT,
+    OrgNumber INTEGER NOT NULL,
+    CONSTRAINT PK_StockHolder PRIMARY KEY (StockHolderId),
+    CONSTRAINT FK_Stockholder FOREIGN KEY (OrgNumber) REFERENCES Company(OrgNumber)
+);"""
+conn.execute(stmt4)
 
 cursor = conn.cursor()
