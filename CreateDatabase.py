@@ -21,6 +21,14 @@ stmt2 = """CREATE TABLE Notes (
     CONSTRAINT FK_Notes FOREIGN KEY (OrgNumber) REFERENCES Company(OrgNumber)
 );"""
 
+stmt3 = """"CREATE TABLE NewsArticles(
+    ArticleId INTEGER NOT NULL,
+    URL TEXT NOT NULL
+    Title TEXT
+    OrgNumber INTEGER NOT NULL,
+    CONSTRAINT PK_Notes PRIMARY KEY (ArticleID),
+    CONSTRAINT FK_Notes FOREIGN KEY (OrgNumber) REFERENCES Company(OrgNumber)
+);"""
 conn.execute(stmt2)
 
 cursor = conn.cursor()
