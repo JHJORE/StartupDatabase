@@ -21,22 +21,22 @@ stmt2 = """CREATE TABLE Notes (
     CONSTRAINT FK_Notes FOREIGN KEY (OrgNumber) REFERENCES Company(OrgNumber)
 );"""
 
-stmt3 = """"CREATE TABLE NewsArticles(
+stmt3 = """CREATE TABLE NewsArticles(
     ArticleId INTEGER NOT NULL,
-    URL TEXT NOT NULL
+    URL TEXT NOT NULL,
     Title TEXT,
     OrgNumber INTEGER NOT NULL,
     CONSTRAINT PK_NewArticles PRIMARY KEY (ArticleId),
     CONSTRAINT FK_NewArticles FOREIGN KEY (OrgNumber) REFERENCES Company(OrgNumber)
 );"""
 
-stmt4 = """"CREATE TABLE StockHolders(
+stmt4 = """CREATE TABLE StockHolders(
     StockHolderId INTEGER NOT NULL,
     Name TEXT,
     OrgNumber INTEGER NOT NULL,
     CONSTRAINT PK_StockHolder PRIMARY KEY (StockHolderId),
     CONSTRAINT FK_Stockholder FOREIGN KEY (OrgNumber) REFERENCES Company(OrgNumber)
 );"""
-conn.execute(stmt2)
+conn.execute(stmt4)
 
 cursor = conn.cursor()
