@@ -2,6 +2,8 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
+#from SQL_app.models import NewsArticles, StockHolders, Notes
+
 
 class CompanyBase(BaseModel):
     OrgNumber: str
@@ -11,30 +13,62 @@ class CompanyBase(BaseModel):
     
 
 
-class ItemCreate(ItemBase):
+class CompanyCreate(CompanyBase):
     pass
 
 
-class Item(ItemBase):
-    id: int
-    owner_id: int
+class Company(CompanyBase):
+    Notes: List[Notes] = []
+    NewsArticles: List[NewsArticle] = []
+    Owners: List[StockHolders] = []
 
     class Config:
         orm_mode = True
 
 
-class UserBase(BaseModel):
-    email: str
+class NotesBase(BaseModel):
+    NoteId: int
+    Notes: str
+    OrgNumber: int
 
 
-class UserCreate(UserBase):
-    password: str
+class NotesCreate(NotesBase):
+    pass
 
 
-class User(UserBase):
-    id: int
-    is_active: bool
-    items: List[Item] = []
+class Notes(NotesBase):
+    class Config:
+        orm_mode = True
 
+
+
+class NewsArticleBase(BaseModel):
+    ArticleId: int
+    URL: str
+    Title: str
+    OrgNumber: int
+
+
+class NewsArticleCreate(NewsArticleBase):
+    pass
+
+
+class NewsArticle(NewsArticleBase):
+    class Config:
+        orm_mode = True
+
+
+
+class StockHoldersBase(BaseModel):
+    StockHolderId: int
+    Name: str
+    OrgNumber: int
+
+
+class StockHoldersCreate(StockHoldersBase):
+    pass
+
+
+class StockHolders(StockHoldersBase):
     class Config:
         orm_mode = True
