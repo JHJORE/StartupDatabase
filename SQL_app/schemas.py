@@ -65,9 +65,9 @@ class CompanyCreate(CompanyBase):
 
 
 class Company(CompanyBase):
-    Notes: List[Notes]
-    NewsArticles: List[NewsArticle]
-    Owners: List[StockHolders]
+    Notes: Optional[List[Notes]]
+    NewsArticles: Optional[List[NewsArticle]]
+    Owners: Optional[List[StockHolders]]
 
     class Config:
         orm_mode = True

@@ -13,7 +13,7 @@ class Company(Base):
     Sector = Column(String)
 
     Notes = relationship("Notes", back_populates="NoteAbout")
-    NewsArticles = relationship("Articles", back_populates="ArticleAbout")
+    NewsArticles = relationship("NewsArticles", back_populates="ArticleAbout")
     Owners = relationship("StockHolders", back_populates="HolderIn")
 
 class Notes(Base):
