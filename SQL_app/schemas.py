@@ -53,7 +53,7 @@ class StockHolders(StockHoldersBase):
         orm_mode = True
 
 class CompanyBase(BaseModel):
-    OrgNumber: str
+    OrgNumber: int
     CompanyName: Optional[str]
     Email: Optional[str]
     Sector: Optional[str]
