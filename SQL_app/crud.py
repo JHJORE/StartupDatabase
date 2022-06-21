@@ -15,16 +15,16 @@ def get_Article(db: Session, ArticleId: int):
 def get_StockHolder(db: Session, skip: int = 0):
     return db.query(models.StockHolders).offset(skip).all()
 
-def create_Notes(b: Session, Notes: schemas.NotesCreate):
-    db_Notes = models.Company(NoteId = Notes.NoteId, Notes = Notes.Notes, OrgNumber = models.Company.OrgNumber, NoteAbout = Notes.NoteAbout)
+def create_Notes(db: Session, Notes: schemas.NotesCreate):
+    db_Notes = models.Company(NoteId = Notes.NoteId, Notes = Notes.Notes, OrgNumber = models.Company.OrgNumber)
     db.add(db_Notes)
     db.commit()
     db.refresh(db_Notes)
     return db_Notes
 
 
-def create_NewsArticle(b: Session, NewsArticle: schemas.NewsArticleCreate):
-    db_NewsArticle = models.Company (ArticleID = NewsArticle.ArticleId, URL = NewsArticle.URL, Title  = NewsArticle.Title, OrgNumber = models.Company.OrgNumber, ArticleAbout = NewsArticle.ArticleAbout)
+def create_NewsArticle(db: Session, NewsArticle: schemas.NewsArticleCreate):
+    db_NewsArticle = models.Company (ArticleID = NewsArticle.ArticleId, URL = NewsArticle.URL, Title  = NewsArticle.Title, OrgNumber = models.Company.OrgNumber)
     db.add(db_NewsArticle)
     db.commit()
     db.refresh(db_NewsArticle)

@@ -5,27 +5,6 @@ from pydantic import BaseModel
 #from SQL_app.models import NewsArticles, StockHolders, Notes
 
 
-class CompanyBase(BaseModel):
-    OrgNumber: str
-    CompanyName: Optional[str]
-    Email: Optional[str]
-    Sector: Optional[str]
-    
-
-
-class CompanyCreate(CompanyBase):
-    pass
-
-
-class Company(CompanyBase):
-    Notes: List[Notes] = []
-    NewsArticles: List[NewsArticle] = []
-    Owners: List[StockHolders] = []
-
-    class Config:
-        orm_mode = True
-
-
 class NotesBase(BaseModel):
     NoteId: int
     Notes: str
@@ -70,5 +49,25 @@ class StockHoldersCreate(StockHoldersBase):
 
 
 class StockHolders(StockHoldersBase):
+    class Config:
+        orm_mode = True
+
+class CompanyBase(BaseModel):
+    OrgNumber: str
+    CompanyName: Optional[str]
+    Email: Optional[str]
+    Sector: Optional[str]
+    
+
+
+class CompanyCreate(CompanyBase):
+    pass
+
+
+class Company(CompanyBase):
+    Notes: List[Notes]
+    NewsArticles: List[NewsArticle]
+    Owners: List[StockHolders]
+
     class Config:
         orm_mode = True
