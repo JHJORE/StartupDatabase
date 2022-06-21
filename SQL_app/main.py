@@ -34,7 +34,7 @@ def create_Company(Company: schemas.CompanyCreate, db: Session = Depends(get_db)
 #     return users
 
 
-@app.get("/users/{OrgNumber}", response_model=schemas.Company)
+@app.get("/Company/{OrgNumber}", response_model=schemas.Company)
 def read_Company(OrgNumber: int, db: Session = Depends(get_db)):
     db_Company = crud.get_Company(db, OrgNumber_id=OrgNumber)
     if db_Company is None:
