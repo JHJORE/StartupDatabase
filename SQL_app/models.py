@@ -29,7 +29,7 @@ class Note(Base):
     Note = Column(String)
     OrgNumber = Column(Integer, ForeignKey(Company.OrgNumber))
 
-    NoteAbout = relationship("Company", back_populates="Note")
+    NoteAbout = relationship("Company", back_populates="Notes")
 
 class NewsArticle(Base):
     __tablename__ = "NewsArticle"
@@ -39,7 +39,7 @@ class NewsArticle(Base):
     Title = Column(String)
     OrgNumber = Column(Integer, ForeignKey(Company.OrgNumber))
     
-    ArticleAbout = relationship("Company", back_populates="NewsArticle")
+    ArticleAbout = relationship("Company", back_populates="NewsArticles")
 
 class StockHolder(Base):
     __tablename__ = "StockHolder"
@@ -48,7 +48,7 @@ class StockHolder(Base):
     Name = Column(String)
     OrgNumber = Column(Integer, ForeignKey(Company.OrgNumber))
    
-    HolderIn = relationship("Company", back_populates="Owner")
+    HolderIn = relationship("Company", back_populates="Owners")
 
 class Aid(Base):
     __tablename__ = "Aid"
