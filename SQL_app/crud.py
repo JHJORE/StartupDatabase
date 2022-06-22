@@ -9,7 +9,7 @@ def get_Company(db: Session, OrgNumber_id: int):
 def get_CompanyByName(db: Session, CompanyName: str):
     return db.query(models.Company).filter(models.Company.CompanyName == CompanyName).first()
 
-def get_Companie(db: Session, skip: int = 0, limit: int = 100):
+def get_Companies(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Company).offset(skip).limit(limit).all()
 
 def get_Note(db: Session, NoteId: int):

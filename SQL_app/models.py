@@ -7,7 +7,7 @@ from .database import Base
 Base = declarative_base()
 
 class Company(Base):
-    __tablename__ = "company"
+    __tablename__ = "Company"
 
     OrgNumber = Column(Integer, primary_key = True, index = True)
     CompanyName = Column(String)
@@ -17,7 +17,7 @@ class Company(Base):
     Employees = Column(Integer)
     Municipality = Column(String)
 
-    Note = relationship("Note", back_populates="NoteAbout")
+    Notes = relationship("Note", back_populates="NoteAbout")
     NewsArticles = relationship("NewsArticle", back_populates="ArticleAbout")
     Owners = relationship("StockHolder", back_populates="HolderIn")
     Aid = relationship("Aid", back_populates = "AidTo")
