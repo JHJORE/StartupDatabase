@@ -15,15 +15,19 @@ db = SessionLocal()
 # print(Company.OrgNumber)
 
 #main.create_Company(Company=Company)
-# add_note = models.Notes(
+# add_note = models.Note(
 #     NoteId = 2,
-#     Notes = "Lagt til med python",
+#     Note = "Lagt til med python",
 #     OrgNumber = 2
 # )
 
-#main.create_Note(Notes= add_note, OrgNumber=2, db = db)
+# main.create_Note(Note= add_note, OrgNumber=2, db = db)
 
-note = main.read_Note(NoteId = 2, db = db)
+# note = main.read_Note(NoteId = 2, db = db)
+# print(note)
 # print(note.NoteId)
-# print(note.Notes)
+# print(note.Note)
 # print(note.OrgNumber)
+
+company = main.read_Company(OrgNumber = 2, db=db)
+print(company.CompanyName)
