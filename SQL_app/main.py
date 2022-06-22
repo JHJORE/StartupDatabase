@@ -125,11 +125,11 @@ def read_Aid(AidId  : int, db: Session = Depends(get_db)):
 
 @app.delete("/Aid/{AidId}/delete", response_model=schemas.Aid)
 def delete_Aid(AidId:int, db: Session = Depends(get_db)):
-    db_Aid = crud.delete_Aid(db=db, AidId=aidId)
+    db_Aid = crud.delete_Aid(db=db, AidId=AidId)
     return db_Aid
 
 @app.put("/Aid/{AidId}/update", response_model = schemas.Aid)
-def update_Ai(AidId:int, Aid: schemas.Aid, db: Session = Depends(get_db)):
+def update_Aid(AidId:int, Aid: schemas.Aid, db: Session = Depends(get_db)):
     db_Aid = crud.update_Aid(AidId = AidId, Aid = Aid, db = db)
     return db_Aid
 
