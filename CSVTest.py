@@ -1,17 +1,12 @@
 import pandas as pd
-import sqlite3
 import csv
 
-conn = sqlite3.connect("LeadsDatapool.db")
-courser = conn.cursor()
+with open("TildelingerKopi.csv", encoding="ISO-8859-1") as csv_file:
+    csv_reader = csv.reader(csv_file)
 
-df = pd.read_csv("TildelingerKopi.csv", encoding= "utf-8", delimiter=  ";")
-
-# with open("Tildelinger.csv") as csv_file:
-#     csv_reader = csv.reader(csv_file)
-
-#     df = pd.DataFrame([csv_reader], index= None)
-
+    df = pd.DataFrame([csv_reader], index= None)
+    
+print(df)
 #     # df.columns = ['thing']
 #     df_split= df[].str.split(";")
 #     print(df.to_string)
