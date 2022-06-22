@@ -13,7 +13,7 @@ class Company(Base):
     Sector = Column(String)
 
     Notes = relationship("Notes", back_populates="NoteAbout")
-    NewsArticles = relationship("NewsArticles", back_populates="ArticleAbout")
+    NewsArticles = relationship("NewsArticle", back_populates="ArticleAbout")
     Owners = relationship("StockHolders", back_populates="HolderIn")
 
 class Notes(Base):
@@ -25,7 +25,7 @@ class Notes(Base):
 
     NoteAbout = relationship("Company", back_populates="Notes")
 
-class NewsArticles(Base):
+class NewsArticle(Base):
     __tablename__ = "NewsArticles"
 
     ArticleId = Column(Integer, primary_key=True, index = True)
@@ -43,6 +43,3 @@ class StockHolders(Base):
     OrgNumber = Column(Integer, ForeignKey(Company.OrgNumber))
    
     HolderIn = relationship("Company", back_populates="Owners")
-    
-
-
