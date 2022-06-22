@@ -14,8 +14,6 @@ from sqlalchemy.orm import sessionmaker
 import sqlite3
 
 def enheter_json():
-    
-
 
     with open('enheter_alle.json') as json_file:
         enheter = json.load(json_file)

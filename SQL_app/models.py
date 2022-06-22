@@ -17,34 +17,42 @@ class Company(Base):
     Employees = Column(Integer)
     Municipality = Column(String)
 
-    Notes = relationship("Notes", back_populates="NoteAbout")
+    Notes = relationship("Note", back_populates="NoteAbout")
     NewsArticles = relationship("NewsArticle", back_populates="ArticleAbout")
-    Owners = relationship("StockHolders", back_populates="HolderIn")
+    Owners = relationship("StockHolder", back_populates="HolderIn")
+    Aid = relationship("Aid", back_populates = "AidTo")
 
-class Notes(Base):
+class Note(Base):
     __tablename__ = "Notes"
 
     NoteId = Column(Integer, primary_key = True, index=True)
-    Notes = Column(String)
+    Note = Column(String)
     OrgNumber = Column(Integer, ForeignKey(Company.OrgNumber))
 
-    NoteAbout = relationship("Company", back_populates="Notes")
+    NoteAbout = relationship("Company", back_populates="Note")
 
 class NewsArticle(Base):
-    __tablename__ = "NewsArticles"
+    __tablename__ = "NewsArticle"
 
     ArticleId = Column(Integer, primary_key=True, index = True)
     URL = Column(String)
     Title = Column(String)
     OrgNumber = Column(Integer, ForeignKey(Company.OrgNumber))
     
-    ArticleAbout = relationship("Company", back_populates="NewsArticles")
+    ArticleAbout = relationship("Company", back_populates="NewsArticle")
 
-class StockHolders(Base):
-    __tablename__ = "StockHolders"
+class StockHolder(Base):
+    __tablename__ = "StockHolder"
     
     StockHolderId = Column(Integer, primary_key = True, index=True)
     Name = Column(String)
     OrgNumber = Column(Integer, ForeignKey(Company.OrgNumber))
    
-    HolderIn = relationship("Company", back_populates="Owners")
+    HolderIn = relationship("Company", back_populates="Owner")
+
+class Aid(Base):
+    __tablename__ = "Aid"
+    AidId = Column(Integer, primary_key = True, index=True)
+    Sum = Column(Integer)
+    OrgNumber = Column(Integer, ForeignKey(Company.OrgNumber))
+    AidTo = relationship("Company", back_populates="Aid")
