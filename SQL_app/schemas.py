@@ -3,7 +3,7 @@ from typing import List, Optional
 
 from pydantic import BaseModel
 
-#from SQL_app.models import NewsArticles, StockHolders, Notes
+#from SQL_app.models import NewsArticles, StockHolders, Note
 
 
 class NoteBase(BaseModel):

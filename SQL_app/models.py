@@ -17,13 +17,13 @@ class Company(Base):
     Employees = Column(Integer)
     Municipality = Column(String)
 
-    Notes = relationship("Note", back_populates="NoteAbout")
+    Note = relationship("Note", back_populates="NoteAbout")
     NewsArticles = relationship("NewsArticle", back_populates="ArticleAbout")
     Owners = relationship("StockHolder", back_populates="HolderIn")
     Aid = relationship("Aid", back_populates = "AidTo")
 
 class Note(Base):
-    __tablename__ = "Notes"
+    __tablename__ = "Note"
 
     NoteId = Column(Integer, primary_key = True, index=True)
     Note = Column(String)
