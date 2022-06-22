@@ -48,3 +48,11 @@ class StockHolders(Base):
     OrgNumber = Column(Integer, ForeignKey(Company.OrgNumber))
    
     HolderIn = relationship("Company", back_populates="Owners")
+
+class Issues(Base):
+    __tablename__ = "Issues"
+    StockHolderId = Column(Integer, primary_key = True, index=True)
+    Name = Column(String)
+    OrgNumber = Column(Integer, ForeignKey(Company.OrgNumber))
+   
+    HolderIn = relationship("Company", back_populates="Owners")

@@ -83,6 +83,9 @@ def update_Company(db: Session, Company: schemas.Company, OrgNumber: int):
     db_Company.CompanyName = Company.CompanyName
     db_Company.Email = Company.Email
     db_Company.Sector = Company.Sector
+    db_Company.Employees = Company.Employees
+    db_Company.Description = Company.Description
+    db_Company.Municipality = Company.Municipality
     db.commit()
     db.refresh(db_Company)
     return db_Company
