@@ -1,3 +1,4 @@
+from optparse import Option
 from typing import List, Optional
 
 from pydantic import BaseModel
@@ -57,6 +58,9 @@ class CompanyBase(BaseModel):
     CompanyName: Optional[str]
     Email: Optional[str]
     Sector: Optional[str]
+    Description: Optional[str]
+    Employees: Optional[int]
+    Municipality: Optional[str]
     
 
 
