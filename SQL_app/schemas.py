@@ -6,24 +6,24 @@ from pydantic import BaseModel
 #from SQL_app.models import NewsArticles, StockHolders, Notes
 
 
-class NotesBase(BaseModel):
+class NoteBase(BaseModel):
     NoteId: int
-    Notes: str
+    Note: str
     OrgNumber: int
 
 
-class NotesCreate(NotesBase):
+class NoteCreate(NoteBase):
     pass
 
 
-class Notes(NotesBase):
+class Note(NoteBase):
     class Config:
         orm_mode = True
 
 
 
 class NewsArticleBase(BaseModel):
-    ArticleId: int
+    ArticlId: int
     URL: str
     Title: str
     OrgNumber: int
@@ -37,19 +37,30 @@ class NewsArticle(NewsArticleBase):
     class Config:
         orm_mode = True
 
+class AidBase(BaseModel):
+    AidId: int
+    Sum: int
+    OrgNumber: int
+
+class AidCreate(AidBase):
+    pass
+
+class Aid(AidCreate):
+    class Config:
+        orm_mode = True
 
 
-class StockHoldersBase(BaseModel):
+class StockHolderBase(BaseModel):
     StockHolderId: int
     Name: str
     OrgNumber: int
 
 
-class StockHoldersCreate(StockHoldersBase):
+class StockHolderCreate(StockHolderBase):
     pass
 
 
-class StockHolders(StockHoldersBase):
+class StockHolder(StockHolderBase):
     class Config:
         orm_mode = True
 
@@ -69,9 +80,10 @@ class CompanyCreate(CompanyBase):
 
 
 class Company(CompanyBase):
-    Notes: Optional[List[Notes]]
-    NewsArticles: Optional[List[NewsArticle]]
-    Owners: Optional[List[StockHolders]]
+    Note: Optional[List[Note]]
+    NewsArticle: Optional[List[NewsArticle]]
+    Owner: Optional[List[StockHolder]]
 
     class Config:
         orm_mode = True
+
