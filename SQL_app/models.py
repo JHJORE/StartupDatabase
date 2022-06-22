@@ -1,8 +1,10 @@
 from operator import index
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
-
+from sqlalchemy.ext.declarative import declarative_base
 from .database import Base
+
+Base = declarative_base()
 
 class Company(Base):
     __tablename__ = "company"
@@ -11,6 +13,9 @@ class Company(Base):
     CompanyName = Column(String)
     Email = Column(String)
     Sector = Column(String)
+    Description= Column(String)
+    Employees = Column(Integer)
+    Municipality = Column(String)
 
     Notes = relationship("Notes", back_populates="NoteAbout")
     NewsArticles = relationship("NewsArticle", back_populates="ArticleAbout")

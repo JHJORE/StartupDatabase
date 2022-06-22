@@ -47,7 +47,7 @@ def delete_NewsArticle(db: Session, ArticleId: int):
 
 
 def create_Company(db: Session, Company: schemas.CompanyCreate):
-    db_Company = models.Company(OrgNumber = Company.OrgNumber, CompanyName = Company.CompanyName, Email = Company.Email, Sector = Company.Sector )
+    db_Company = models.Company(OrgNumber = Company.OrgNumber, CompanyName = Company.CompanyName, Email = Company.Email, Sector = Company.Sector, Description = Company.Description, Employees = Company.Employees, Municipality = Company.Municipality )
     db.add(db_Company)
     db.commit()
     db.refresh(db_Company)
