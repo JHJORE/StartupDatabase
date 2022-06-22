@@ -79,6 +79,7 @@ def create_Stockholders (db: Session, StockHolders: schemas.StockHoldersCreate, 
 
 def update_Company(db: Session, Company: schemas.Company, OrgNumber: int):
     db_Company = db.query(models.Company).filter(models.Company.OrgNumber == OrgNumber).first()
+    db_Company.OrgNumber = OrgNumber
     db_Company.CompanyName = Company.CompanyName
     db_Company.Email = Company.Email
     db_Company.Sector = Company.Sector
@@ -87,12 +88,21 @@ def update_Company(db: Session, Company: schemas.Company, OrgNumber: int):
     return db_Company
 
 
-
 def update_NewsArticle(db: Session, NewsArticle: schemas.NewsArticle, ArticleId: int):
     db_NewsArticle = db.query(models.NewsArticle).filter(models.NewsArticle.ArticleId == ArticleId).first()
     db_NewsArticle.ArticleId = NewsArticle.ArticleId 
     db_NewsArticle.URL = NewsArticle.URL 
     db_NewsArticle.Title = NewsArticle.Title
+    db_NewsArticle.OrgNumber = NewsArticle.OrgNumber
     db.commit()
     db.refresh(db_NewsArticle)
     return db_NewsArticle
+
+def update_Note(db: Session, Note: schemas.Notes, NoteId: int):
+    db_Note = db.query(models.Notes).filter(models.Notes.NoteId == NoteId).first()
+    db_Note.NoteId = Note.NoteId
+    db_Note.Notes = Note.Notes
+    db_Note.OrgNumber = Note.OrgNumber
+    db.commit()
+    db.refresh(db_Note)
+    return db_Note

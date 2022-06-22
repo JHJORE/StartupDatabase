@@ -55,7 +55,9 @@ def delete_Company(OrgNumber:int, db: Session = Depends(get_db)):
     return db_Company
 
 @app.put("/Company/{OrgNumber}/update", response_model= schemas.Company)
-def update_Company():
+def update_Company(OrgNumber: int, Company: schemas.Company, db: Session = Depends(get_db)):
+    db_Company = crud.update_Company(db = db, Company=Company, OrgNumber=OrgNumber)
+    return db_Company
     
 
 
@@ -78,6 +80,10 @@ def delete_Note(NoteId:int, db: Session = Depends(get_db)):
     db_Note = crud.delete_Note(db=db, NoteId=NoteId)
     return db_Note
 
+@app.put("/Notes/{NoteId}/update", response_model = schemas.Notes)
+def update_Note(NoteId:int, Note: schemas.Notes, db: Session = Depends(get_db)):
+    db_Note = crud.update_Note(NoteId = NoteId, Note = Note, db = db)
+    return db_Note
 
 
 
