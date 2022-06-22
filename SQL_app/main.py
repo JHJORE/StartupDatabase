@@ -64,24 +64,24 @@ def update_Company(OrgNumber: int, Company: schemas.Company, db: Session = Depen
 
 
 
-@app.post("/Company/{OrgNumber}/Notes/", response_model=schemas.Notes)
+@app.post("/Company/{OrgNumber}/Note/", response_model=schemas.Note)
 def create_Note(
-    OrgNumber: int, Notes: schemas.Notes, db: Session = Depends(get_db)
+    OrgNumber: int, Note: schemas.Note, db: Session = Depends(get_db)
 ):
-    return crud.create_Notes(db=db, Notes=Notes, OrgNumber=OrgNumber)
+    return crud.create_Note(db=db, Note=Note, OrgNumber=OrgNumber)
 
-@app.get("/Notes/{NoteId}", response_model=schemas.Notes)
+@app.get("/Note/{NoteId}", response_model=schemas.Note)
 def read_Note(NoteId: int, db: Session = Depends(get_db)):
-    note = crud.get_Notes(db=db, NoteId=NoteId)
+    note = crud.get_Note(db=db, NoteId=NoteId)
     return note
 
-@app.delete("/Notes/{NoteId}/delete", response_model=schemas.Notes)
+@app.delete("/Note/{NoteId}/delete", response_model=schemas.Note)
 def delete_Note(NoteId:int, db: Session = Depends(get_db)):
     db_Note = crud.delete_Note(db=db, NoteId=NoteId)
     return db_Note
 
-@app.put("/Notes/{NoteId}/update", response_model = schemas.Notes)
-def update_Note(NoteId:int, Note: schemas.Notes, db: Session = Depends(get_db)):
+@app.put("/Note/{NoteId}/update", response_model = schemas.Note)
+def update_Note(NoteId:int, Note: schemas.Note, db: Session = Depends(get_db)):
     db_Note = crud.update_Note(NoteId = NoteId, Note = Note, db = db)
     return db_Note
 
@@ -109,3 +109,29 @@ def delete_NewsArticle(ArticleId:int, db: Session = Depends(get_db)):
 def update_NewsArticle(ArticleId: int, NewsArticle: schemas.NewsArticle, db: Session = Depends(get_db)):
     db_NewsArticle = crud.update_NewsArticle(ArticleId=ArticleId, NewsArticle=NewsArticle, db=db)
     return db_NewsArticle
+
+
+
+@app.post("/Company/{OrgNumber}/Aid", response_model=schemas.Aid)
+def create_Aid(
+     OrgNumber: int, Aid: schemas.Aid, db: Session = Depends(get_db)
+):
+    return crud.create_NewsArticle(db=db, Aid=Aid, OrgNumber=OrgNumber)
+
+@app.get("/Aid/{AidId}", response_model=schemas.Aid)
+def read_Aid(AidId  : int, db: Session = Depends(get_db)):
+    Aid = crud.get_Aid(db, AidId=AidId)
+    return Aid
+
+@app.delete("/Aid/{AidId}/delete", response_model=schemas.Aid)
+def delete_Aid(AidId:int, db: Session = Depends(get_db)):
+    db_Aid = crud.delete_Aid(db=db, AidId=aidId)
+    return db_Aid
+
+@app.put("/Aid/{AidId}/update", response_model = schemas.Aid)
+def update_Ai(AidId:int, Aid: schemas.Aid, db: Session = Depends(get_db)):
+    db_Aid = crud.update_Aid(AidId = AidId, Aid = Aid, db = db)
+    return db_Aid
+
+
+

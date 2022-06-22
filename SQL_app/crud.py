@@ -9,17 +9,22 @@ def get_Company(db: Session, OrgNumber_id: int):
 def get_CompanyByName(db: Session, CompanyName: str):
     return db.query(models.Company).filter(models.Company.CompanyName == CompanyName).first()
 
-def get_Companies(db: Session, skip: int = 0, limit: int = 100):
+def get_Companie(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Company).offset(skip).limit(limit).all()
 
-def get_Notes(db: Session, NoteId: int):
-    return db.query(models.Notes).filter(models.Notes.NoteId == NoteId).first()
+def get_Note(db: Session, NoteId: int):
+    return db.query(models.Note).filter(models.Note.NoteId == NoteId).first()
 
 def get_NewsArticle(db: Session, NewsArticleId: int):
     return db.query(models.NewsArticle).filter(models.NewsArticle.ArticleId == NewsArticleId).first()
 
+
 # def get_StockHolder(db: Session, skip: int = 0):
-#     return db.query(models.StockHolders).offset(skip).all()
+#     return db.query(models.StockHolder).offset(skip).all()
+
+# def get_Aid(db: Session, skip: int = 0):
+#     return db.query(models.Aid).offset(skip).all()
+
 
 
 
@@ -31,7 +36,7 @@ def delete_Company(db: Session, OrgNumber: int):
     return db_Company
 
 def delete_Note(db: Session, NoteId: int):
-    db_Note = db.query(models.Notes).filter(models.Notes.NoteId == NoteId).first()
+    db_Note = db.query(models.Note).filter(models.Note.NoteId == NoteId).first()
     db.delete(db_Note)
     db.commit()
     return db_Note
@@ -41,6 +46,12 @@ def delete_NewsArticle(db: Session, ArticleId: int):
     db.delete(db_NewsArticle)
     db.commit()
     return db_NewsArticle
+
+def delete_Aid(db: Session, AidId: int):
+    db_Aid = db.query(models.NewsArticle).filter(models.Aid.AidId == AidId).first()
+    db.delete(db_Aid)
+    db.commit()
+    return db_Aid
 
 
 
@@ -53,27 +64,36 @@ def create_Company(db: Session, Company: schemas.CompanyCreate):
     db.refresh(db_Company)
     return db_Company
 
-def create_Notes(db: Session, Notes: schemas.NotesCreate, OrgNumber: int):
-    db_Notes = models.Notes(NoteId = Notes.NoteId, Notes = Notes.Notes, OrgNumber = OrgNumber)
-    db.add(db_Notes)
+def create_Note(db: Session, Note: schemas.NoteCreate, OrgNumber: int):
+    db_Note = models.Note(NoteId = Note.NoteId, Note = Note.Note, OrgNumber = OrgNumber)
+    db.add(db_Note)
     db.commit()
-    db.refresh(db_Notes)
-    return db_Notes
+    db.refresh(db_Note)
+    return db_Note
 
 
 def create_NewsArticle(db: Session, NewsArticle: schemas.NewsArticleCreate, OrgNumber: int):
-    db_NewsArticle = models.NewsArticle (ArticleId = NewsArticle.ArticleId, URL = NewsArticle.URL, Title = NewsArticle.Title, OrgNumber = OrgNumber)
+    db_NewsArticle = models.NewsArticle (ArticleId = NewsArticle.ArticlId, URL = NewsArticle.URL, Title = NewsArticle.Title, OrgNumber = OrgNumber)
     db.add(db_NewsArticle)
     db.commit()
     db.refresh(db_NewsArticle)
     return db_NewsArticle
 
-def create_Stockholders (db: Session, StockHolders: schemas.StockHoldersCreate, OrgNumber: int):
-    db_Stockholders = models.StockHolders(**StockHolders.dict(), stock = OrgNumber)
-    db.add(db_Stockholders)
+def create_Stockholder (db: Session, StockHolder: schemas.StockHolderCreate, OrgNumber: int):
+    db_StockHolder = models.StockHolder(**StockHolder.dict(), stock = OrgNumber)
+    db.add(db_StockHolder)
     db.commit()
-    db.refresh(db_Stockholders)
-    return db_Stockholders
+    db.refresh(db_StockHolder)
+    return db_StockHolder
+
+def create_Aid (db: Session, Aid: schemas.StockHolderCreate, OrgNumber: int):
+    db_Aid = models.Aid(**Aid.dict(), stock = OrgNumber)
+    db.add(db_Aid)
+    db.commit()
+    db.refresh(db_Aid)
+    return db_Aid
+
+
 
 
 
@@ -83,6 +103,9 @@ def update_Company(db: Session, Company: schemas.Company, OrgNumber: int):
     db_Company.CompanyName = Company.CompanyName
     db_Company.Email = Company.Email
     db_Company.Sector = Company.Sector
+    db_Company.Employees = Company.Employees
+    db_Company.Description = Company.Description
+    db_Company.Municipality = Company.Municipality
     db.commit()
     db.refresh(db_Company)
     return db_Company
@@ -90,7 +113,7 @@ def update_Company(db: Session, Company: schemas.Company, OrgNumber: int):
 
 def update_NewsArticle(db: Session, NewsArticle: schemas.NewsArticle, ArticleId: int):
     db_NewsArticle = db.query(models.NewsArticle).filter(models.NewsArticle.ArticleId == ArticleId).first()
-    db_NewsArticle.ArticleId = NewsArticle.ArticleId 
+    db_NewsArticle.ArticleId = NewsArticle.ArticlId 
     db_NewsArticle.URL = NewsArticle.URL 
     db_NewsArticle.Title = NewsArticle.Title
     db_NewsArticle.OrgNumber = NewsArticle.OrgNumber
@@ -98,11 +121,20 @@ def update_NewsArticle(db: Session, NewsArticle: schemas.NewsArticle, ArticleId:
     db.refresh(db_NewsArticle)
     return db_NewsArticle
 
-def update_Note(db: Session, Note: schemas.Notes, NoteId: int):
-    db_Note = db.query(models.Notes).filter(models.Notes.NoteId == NoteId).first()
+def update_Note(db: Session, Note: schemas.Note, NoteId: int):
+    db_Note = db.query(models.Note).filter(models.Note.NoteId == NoteId).first()
     db_Note.NoteId = Note.NoteId
-    db_Note.Notes = Note.Notes
+    db_Note.Note = Note.Note
     db_Note.OrgNumber = Note.OrgNumber
     db.commit()
     db.refresh(db_Note)
     return db_Note
+
+def update_Aid(db: Session, Aid: schemas.Aid, AidId: int):
+    db_Aid = db.query(models.Note).filter(models.Aid.AidId == AidId).first()
+    db_Aid.AidId = Aid.AidId
+    db_Aid.Sum = Aid.Sum
+    db_Aid.OrgNumber = Aid.OrgNumber
+    db.commit()
+    db.refresh(db_Aid)
+    return db_Aid
