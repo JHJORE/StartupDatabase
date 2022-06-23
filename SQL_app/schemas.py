@@ -76,6 +76,7 @@ class CompanyBase(BaseModel):
     Description: Optional[str]
     Employees: Optional[int]
     Municipality: Optional[str]
+    HomePage: Optional[str]
     
 
 

@@ -61,7 +61,7 @@ def delete_Aid(db: Session, AidId: str):
 
 
 def create_Company(db: Session, Company: schemas.CompanyCreate):
-    db_Company = models.Company(OrgNumber = Company.OrgNumber, CompanyName = Company.CompanyName, Email = Company.Email, Sector = Company.Sector, Description = Company.Description, Employees = Company.Employees, Municipality = Company.Municipality )
+    db_Company = models.Company(OrgNumber = Company.OrgNumber, CompanyName = Company.CompanyName, Email = Company.Email, Sector = Company.Sector, Description = Company.Description, Employees = Company.Employees, Municipality = Company.Municipality, HomePage = Company.HomePage )
     db.add(db_Company)
     db.commit()
     db.refresh(db_Company)
@@ -109,6 +109,7 @@ def update_Company(db: Session, Company: schemas.Company, OrgNumber: int):
     db_Company.Employees = Company.Employees
     db_Company.Description = Company.Description
     db_Company.Municipality = Company.Municipality
+    db_Company.HomePage = Company.HomePage
     db.commit()
     db.refresh(db_Company)
     return db_Company

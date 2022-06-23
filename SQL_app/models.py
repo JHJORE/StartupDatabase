@@ -16,6 +16,7 @@ class Company(Base):
     Description= Column(String)
     Employees = Column(Integer)
     Municipality = Column(String)
+    HomePage = Column(String)
 
     Notes = relationship("Note", back_populates="NoteAbout")
     NewsArticles = relationship("NewsArticle", back_populates="ArticleAbout")
