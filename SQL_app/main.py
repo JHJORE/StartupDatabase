@@ -116,20 +116,25 @@ def update_NewsArticle(ArticleId: int, NewsArticle: schemas.NewsArticle, db: Ses
 def create_Aid(
      OrgNumber: int, Aid: schemas.Aid, db: Session = Depends(get_db)
 ):
-    return crud.create_NewsArticle(db=db, Aid=Aid, OrgNumber=OrgNumber)
+    return crud.create_Aid(db=db, Aid=Aid, OrgNumber=OrgNumber)
 
-@app.get("/Aid/{AidId}", response_model=schemas.Aid)
-def read_Aid(AidId  : int, db: Session = Depends(get_db)):
-    Aid = crud.get_Aid(db, AidId=AidId)
+@app.get("/Aid", response_model=List[schemas.Aid])
+def read_Aids(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    Aid = crud.get_Aids(db, skip=skip, limit=limit)
+    return Aid
+
+@app.get("/Aid/{AidId}", response_model=List[schemas.Aid])
+def read_Aid(AidId: str, db: Session = Depends(get_db)):
+    Aid = crud.get_Aid(db, AidId = AidId)
     return Aid
 
 @app.delete("/Aid/{AidId}/delete", response_model=schemas.Aid)
-def delete_Aid(AidId:int, db: Session = Depends(get_db)):
+def delete_Aid(AidId:str, db: Session = Depends(get_db)):
     db_Aid = crud.delete_Aid(db=db, AidId=AidId)
     return db_Aid
 
 @app.put("/Aid/{AidId}/update", response_model = schemas.Aid)
-def update_Aid(AidId:int, Aid: schemas.Aid, db: Session = Depends(get_db)):
+def update_Aid(AidId:str, Aid: schemas.Aid, db: Session = Depends(get_db)):
     db_Aid = crud.update_Aid(AidId = AidId, Aid = Aid, db = db)
     return db_Aid
 
