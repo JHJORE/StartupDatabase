@@ -1,30 +1,47 @@
 
 import json
 from sql_app.models import Company
+from sql_app import main
+from sql_app import models
+from sql_app.database import SessionLocal
 
+db = SessionLocal()
 
 
 
 def enheter_json():
-
-    with open('enheter_alle.json') as json_file:
+    db = SessionLocal()
+    with open('enheter_alle.json', encoding="ISO-8859-1") as json_file:
         enheter = json.load(json_file)
     for package in enheter:
         kode = package.get("organisasjonsform").get("kode")
-        if(kode !="AS" or package.get("konkurs")!= True):
+        if(kode !="AS" or package.get("konkurs")!= False):
             continue
         OrgNumber = package.get("organisasjonsnummer")
         CompanyName = package.get("navn")
-        Description = package.get("beskrivelse")
-        Sector = package.get("naeringskode1").get("naeringBeskrivelse") 
+        try:
+            Description = package.get("naeringskode1").get("beskrivelse")
+
+        except:
+            Description = None
+        else:
+             Description = package.get("institusjonellSektorkode").get("beskrivelse")
         Employees = package.get("antallAnsatte" )
         Municipality = package.get("forretningsadresse").get("kommune")
 
         company = Company(OrgNumber = OrgNumber,
         CompanyName = CompanyName,
-        Sector = Sector,
+        
         Description = Description,
         Employees = Employees,
         Municipality = Municipality) 
+        main.create_Company(Company=company, db = db)
+
+        
     
 enheter_json()
+
+
+
+
+

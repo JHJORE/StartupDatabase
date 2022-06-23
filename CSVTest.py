@@ -1,24 +1,29 @@
+from posixpath import split
 import pandas as pd
 import csv
 
-with open("TildelingerKopi.csv", encoding="ISO-8859-1") as csv_file:
-    csv_reader = csv.reader(csv_file)
+from sqlalchemy import true
 
-    df = pd.DataFrame([csv_reader], index= None)
-    
-print(df)
-#     # df.columns = ['thing']
-#     df_split= df[].str.split(";")
-#     print(df.to_string)
-# # def fetch_data(df):
-# #     for row in df:
+from sql_app.models import Company
+
+
+df = pd.read_csv("TildelingerKopi.csv", encoding="ISO-8859-1")
+s = 'Fylkesnavn;Kommunenavn;Org-nr;Bedriftsnavn;Virkemiddelkategori;Underkategori;Innvilget beløp;Innvilget dato;Beslutningsenhet;Næringshovedområde;Næring;Type finansiering'
+df[s]=df[s].str.split(";")
+df = df.explode(s).reset_index(drop=True)
+# pivot = df.pivot_table('company',['Fylke', ' kommune', 'Org-nr', 'Navn','Virkemiddel', 'Under', 'innvilget', 'Belop', ' data', 'besluting', 'Naering','Ntype','finasiering'])
+df.insert(1,'Bedriftnavn', '')
+new_df = pd.DataFrame({s:df[s].iloc[::2].values, 'Bedriftnavn':df[s].iloc[1::2].values})
+
+# for index, row in df.iterrows():
+#     print(row[s])
+#     compan = Company(OrgNumber = OrgNumber,
+#         CompanyName = CompanyName,
         
-#         Orgnumber = df[2]
-#         CompanyName = df[3]
-#         Sector = df[-2]
-    
-#         statement = """INSERT INTO Company (OrgNumber, CompanyName, Sector) VALUES (?, ?, ?)"""
-#         courser.execute(statement, (Orgnumber, CompanyName, Sector))
-#         conn.commit()
+#         Description = Description,
+#         Employees = Employees,
+#         Municipality = Municipality,
+#         Sum = Sum)
+print(df)
 
 
