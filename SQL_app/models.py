@@ -52,7 +52,11 @@ class StockHolder(Base):
 
 class Aid(Base):
     __tablename__ = "Aid"
-    AidId = Column(Integer, primary_key = True, index=True)
+    AidId = Column(String, primary_key = True, index=True)
     Sum = Column(Integer)
+    GivenBy = Column(String)
+    Type = Column(String)
+    Reason = Column(String)
+    County = Column(String)
     OrgNumber = Column(Integer, ForeignKey(Company.OrgNumber))
     AidTo = relationship("Company", back_populates="Aid")

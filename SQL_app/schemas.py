@@ -38,8 +38,12 @@ class NewsArticle(NewsArticleBase):
         orm_mode = True
 
 class AidBase(BaseModel):
-    AidId: int
+    AidId: str
     Sum: int
+    GivenBy: str
+    Type: str
+    Reason: str
+    County: str
     OrgNumber: int
 
 class AidCreate(AidBase):
@@ -83,6 +87,7 @@ class Company(CompanyBase):
     Notes: Optional[List[Note]]
     NewsArticles: Optional[List[NewsArticle]]
     Owners: Optional[List[StockHolder]]
+    Aid: Optional[List[Aid]]
 
     class Config:
         orm_mode = True

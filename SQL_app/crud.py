@@ -22,8 +22,11 @@ def get_NewsArticle(db: Session, NewsArticleId: int):
 # def get_StockHolder(db: Session, skip: int = 0):
 #     return db.query(models.StockHolder).offset(skip).all()
 
-# def get_Aid(db: Session, skip: int = 0):
-#     return db.query(models.Aid).offset(skip).all()
+def get_Aids(db: Session, skip: int = 0, limit: int = 100):
+    return db.query(models.Aid).offset(skip).all()
+
+def get_Aid(db: Session, AidId: str):
+    return db.query(models.Aid).filter(models.Aid.AidId == AidId).first()
 
 
 
@@ -47,8 +50,8 @@ def delete_NewsArticle(db: Session, ArticleId: int):
     db.commit()
     return db_NewsArticle
 
-def delete_Aid(db: Session, AidId: int):
-    db_Aid = db.query(models.NewsArticle).filter(models.Aid.AidId == AidId).first()
+def delete_Aid(db: Session, AidId: str):
+    db_Aid = db.query(models.Aid).filter(models.Aid.AidId == AidId).first()
     db.delete(db_Aid)
     db.commit()
     return db_Aid
@@ -86,8 +89,8 @@ def create_Stockholder (db: Session, StockHolder: schemas.StockHolderCreate, Org
     db.refresh(db_StockHolder)
     return db_StockHolder
 
-def create_Aid (db: Session, Aid: schemas.StockHolderCreate, OrgNumber: int):
-    db_Aid = models.Aid(**Aid.dict(), stock = OrgNumber)
+def create_Aid (db: Session, Aid: schemas.AidCreate, OrgNumber: int):
+    db_Aid = models.Aid(AidId = Aid.AidId, Sum = Aid.Sum, GivenBy = Aid.GivenBy, Type = Aid.Type, Reason = Aid.Reason, County = Aid.County, OrgNumber = OrgNumber)
     db.add(db_Aid)
     db.commit()
     db.refresh(db_Aid)
@@ -130,11 +133,15 @@ def update_Note(db: Session, Note: schemas.Note, NoteId: int):
     db.refresh(db_Note)
     return db_Note
 
-def update_Aid(db: Session, Aid: schemas.Aid, AidId: int):
-    db_Aid = db.query(models.Note).filter(models.Aid.AidId == AidId).first()
+def update_Aid(db: Session, Aid: schemas.Aid, AidId: str):
+    db_Aid = db.query(models.Aid).filter(models.Aid.AidId == AidId).first()
     db_Aid.AidId = Aid.AidId
     db_Aid.Sum = Aid.Sum
     db_Aid.OrgNumber = Aid.OrgNumber
+    db_Aid.GivenBy = Aid.GivenBy
+    db_Aid.Type = Aid.Type
+    db_Aid.Reason = Aid.Reason
+    db_Aid.County = Aid.County
     db.commit()
     db.refresh(db_Aid)
     return db_Aid
