@@ -8,7 +8,7 @@ from sql_app.database import SessionLocal
 db = SessionLocal()
 
 
-
+# henter inn alle bedrifter i hele Norge
 def enheter_json():
     db = SessionLocal()
     with open('enheter_alle.json', encoding="ISO-8859-1") as json_file:

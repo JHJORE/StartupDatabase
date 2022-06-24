@@ -1,12 +1,6 @@
-from ast import Or
-from distutils.ccompiler import new_compiler
-from http.client import HTTPException
 import json
-import re
-import secrets
 import requests
 from sql_app import models, main
-from sql_app.crud import create_Company
 from sql_app.database import SessionLocal
 
 db = SessionLocal()

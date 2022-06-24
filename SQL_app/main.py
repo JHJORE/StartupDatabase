@@ -120,12 +120,12 @@ def create_Aid(
 
 @app.get("/Aid", response_model=List[schemas.Aid])
 def read_Aids(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    Aid = crud.get_Aids(db, skip=skip, limit=limit)
+    Aid = crud.get_Aids(db=db, skip=skip, limit=limit)
     return Aid
 
 @app.get("/Aid/{AidId}", response_model=List[schemas.Aid])
 def read_Aid(AidId: str, db: Session = Depends(get_db)):
-    Aid = crud.get_Aid(db, AidId = AidId)
+    Aid = crud.get_Aid(db=db, AidId = AidId)
     return Aid
 
 @app.delete("/Aid/{AidId}/delete", response_model=schemas.Aid)
