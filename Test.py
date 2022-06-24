@@ -3,6 +3,10 @@ import requests
 import pandas as pd
 import re
 
+from sql_app.models import CapitalRaise
+from sql_app import main
+from sql_app.database import SessionLocal
+
 def fetch_website(url):
     try:
         page = requests.get(url)
@@ -40,5 +44,18 @@ def fetch_capital_raises_by_org_num(orgnum):
     
     return df
 
-df = fetch_capital_raises_by_org_num(916545061)
-print(df)
+
+def capital_raises_to_db(orgnum, df):
+    db = SessionLocal()
+    for row in df.iterrows():
+        capitalraise = CapitalRaise (
+            Sum = row[1].loc["amount"],
+            Link = row[1].loc["link"],
+            Date = row[1].loc["date"],
+            OrgNumber = orgnum
+        )
+        main.create_CapitalRaise(OrgNumber=orgnum, CapitalRaise=capitalraise, db=db)
+    
+orgnum = 916545061
+df = fetch_capital_raises_by_org_num(orgnum)
+capital_raises_to_db(orgnum, df)

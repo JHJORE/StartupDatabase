@@ -1,3 +1,4 @@
+from ast import Raise
 from sqlalchemy.orm import Session
 
 from . import models, schemas
@@ -23,10 +24,13 @@ def get_NewsArticle(db: Session, NewsArticleId: int):
 #     return db.query(models.StockHolder).offset(skip).all()
 
 def get_Aids(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Aid).offset(skip).all()
+    return db.query(models.Aid).offset(skip).limit(limit).all()
 
 def get_Aid(db: Session, AidId: str):
     return db.query(models.Aid).filter(models.Aid.AidId == AidId).first()
+
+def get_CapitalRaise(db: Session, RaiseId: int):
+    return db.query(models.CapitalRaise).filter(models.CapitalRaise.RaiseId == RaiseId).first()
 
 
 
@@ -55,6 +59,12 @@ def delete_Aid(db: Session, AidId: str):
     db.delete(db_Aid)
     db.commit()
     return db_Aid
+
+def delete_CapitalRaise(db: Session, RaiseId: int):
+    db_CapitalRaise = db.query(models.CapitalRaise).filter(models.CapitalRaise.RaiseId == RaiseId).first()
+    db.delete(db_CapitalRaise)
+    db.commit()
+    return db_CapitalRaise
 
 
 
@@ -95,6 +105,13 @@ def create_Aid (db: Session, Aid: schemas.AidCreate, OrgNumber: int):
     db.commit()
     db.refresh(db_Aid)
     return db_Aid
+
+def create_CapitalRaise (db: Session, CapitalRaise: schemas.CapitalRaiseCreate, OrgNumber: int):
+    db_CapitalRaise = models.CapitalRaise(RaiseId = CapitalRaise.RaiseId, Sum = CapitalRaise.Sum, Link = CapitalRaise.Link, Date = CapitalRaise.Date, OrgNumber = OrgNumber)
+    db.add(db_CapitalRaise)
+    db.commit()
+    db.refresh(db_CapitalRaise)
+    return db_CapitalRaise
 
 
 
@@ -147,3 +164,13 @@ def update_Aid(db: Session, Aid: schemas.Aid, AidId: str):
     db.commit()
     db.refresh(db_Aid)
     return db_Aid
+
+def update_CapitalRaise(db: Session, CapitalRaise: schemas.CapitalRaise, RaiseId: int):
+    db_CapitalRaise = db.query(models.CapitalRaise).filter(models.CapitalRaise.RaiseId == RaiseId).first()
+    db_CapitalRaise.RaiseId = CapitalRaise.RaiseId
+    db_CapitalRaise.Sum = CapitalRaise.Sum
+    db_CapitalRaise.Link = CapitalRaise.Link
+    db_CapitalRaise.Date = CapitalRaise.Date
+    db.commit()
+    db.refresh(db_CapitalRaise)
+    return db_CapitalRaise
