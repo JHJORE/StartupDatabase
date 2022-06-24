@@ -1,9 +1,10 @@
+from datetime import date
 from optparse import Option
 from typing import List, Optional
 
 from pydantic import BaseModel
 
-#from SQL_app.models import NewsArticles, StockHolders, Note
+from sql_app.database import Base
 
 
 class NoteBase(BaseModel):
@@ -44,14 +45,30 @@ class AidBase(BaseModel):
     Type: str
     Reason: str
     County: str
+    DateGiven: Optional[date]
     OrgNumber: int
 
 class AidCreate(AidBase):
     pass
 
-class Aid(AidCreate):
+class Aid(AidBase):
     class Config:
         orm_mode = True
+
+class CapitalRaiseBase(BaseModel):
+    RaiseId: int
+    Sum: int
+    Link: str
+    Date: date
+    OrgNumber: int
+
+class CapitalRaiseCreate(CapitalRaiseBase):
+    pass
+
+class CapitalRaise(CapitalRaiseBase):
+    class Config:
+        orm_mode = True
+
 
 
 class StockHolderBase(BaseModel):
@@ -89,6 +106,7 @@ class Company(CompanyBase):
     NewsArticles: Optional[List[NewsArticle]]
     Owners: Optional[List[StockHolder]]
     Aid: Optional[List[Aid]]
+    CapitalRaises: Optional[List[CapitalRaise]]
 
     class Config:
         orm_mode = True

@@ -120,12 +120,12 @@ def create_Aid(
 
 @app.get("/Aid", response_model=List[schemas.Aid])
 def read_Aids(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    Aid = crud.get_Aids(db, skip=skip, limit=limit)
+    Aid = crud.get_Aids(db=db, skip=skip, limit=limit)
     return Aid
 
-@app.get("/Aid/{AidId}", response_model=List[schemas.Aid])
+@app.get("/Aid/{AidId}", response_model=schemas.Aid)
 def read_Aid(AidId: str, db: Session = Depends(get_db)):
-    Aid = crud.get_Aid(db, AidId = AidId)
+    Aid = crud.get_Aid(db=db, AidId = AidId)
     return Aid
 
 @app.delete("/Aid/{AidId}/delete", response_model=schemas.Aid)
@@ -137,6 +137,28 @@ def delete_Aid(AidId:str, db: Session = Depends(get_db)):
 def update_Aid(AidId:str, Aid: schemas.Aid, db: Session = Depends(get_db)):
     db_Aid = crud.update_Aid(AidId = AidId, Aid = Aid, db = db)
     return db_Aid
+
+
+
+@app.post("/Company/{OrgNumber}/CapitalRaise", response_model=schemas.CapitalRaise)
+def create_CapitalRaise(OrgNumber: int, CapitalRaise: schemas.CapitalRaise, db: Session = Depends(get_db)):
+    return crud.create_CapitalRaise(db=db, CapitalRaise=CapitalRaise, OrgNumber=OrgNumber)
+
+@app.get("/CapitalRaise/{RaiseId}", response_model=schemas.CapitalRaise)
+def read_CapitalRaise(RaiseId: int, db: Session = Depends(get_db)):
+    CapitalRaise = crud.get_CapitalRaise(db = db, RaiseId= RaiseId)
+    return CapitalRaise
+
+@app.delete("/CapitalRaise/{RaiseId}/delete", response_model=schemas.CapitalRaise)
+def delete_CapitalRaise(RaiseId: int, db: Session = Depends(get_db)):
+    CapitalRaise = crud.delete_CapitalRaise(db=db, RaiseId=RaiseId)
+    return CapitalRaise
+
+@app.put("/CapitalRaise/{RaiseId}/update", response_model=schemas.CapitalRaise)
+def update_CapitalRaise(RaiseId: int, CapitalRaise: schemas.CapitalRaise, db: Session = Depends(get_db)):
+    CapitalRaise = crud.update_CapitalRaise(RaiseId=RaiseId, CapitalRaise=CapitalRaise, db=db)
+    return CapitalRaise
+
 
 
 
