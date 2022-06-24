@@ -3,11 +3,15 @@ from itertools import count
 from tkinter import*
 from tkinter import ttk
 
+from sqlalchemy import values
+
 from sql_app import main,models
 import sqlite3
 from turtle import right, update
 
 from soupsieve import select
+from sql_app.database import SessionLocal
+db = SessionLocal()
 
 root = Tk()
 root.title('Startup Database')
@@ -49,9 +53,16 @@ tree['column'] = (
 
 
 def create_company():
-    orgNumber = str(tree.focus)
-    row = tree.item(orgNumber)
-    company = models.Company(
+    select = tree.focus()
+    row = tree.item(select)
+    values = row.get('values')
+    
+
+    return models.Company(
+        OrgNumber = values[1],
+        CompanyName = values[0],
+        Description = values[3],
+     
         
     )
 
@@ -62,23 +73,24 @@ def update_company():
     
     conn = sqlite3.connect('sql_app.db')
     cursor = conn.cursor()
+    OrgNumber = tree.focus
     
 
-    
+    main.update_Company(db=db, OrgNumber = OrgNumber, Company= create_company())
 
 
 
-    cursor.execute("""UPDATE Company SET 
-        CompanyName = :companyname,
-        Email = :email,
-        Sector = :sector
-        WHERE OrgNumber = :orgNumber""",
-        {
-            'companyname':name_edit.get(), 
-            'email' : email_edit.get(),
-            'sector': sector_edit.get(),
-            'orgNumber': orgNumber
-        })
+    # cursor.execute("""UPDATE Company SET 
+    #     CompanyName = :companyname,
+    #     Email = :email,
+    #     Sector = :sector
+    #     WHERE OrgNumber = :orgNumber""",
+    #     {
+    #         'companyname':name_edit.get(), 
+    #         'email' : email_edit.get(),
+    #         'sector': sector_edit.get(),
+    #         'orgNumber': orgNumber
+    #     })
 
     conn.commit()
     conn.close()
@@ -104,11 +116,17 @@ def selected():
     name_edit.delete(0,END)
 
     select = tree.focus()
+    row = tree.item(select)
+    values = row.get('values')
+    print(values)
+
+
     values = tree.item(select,'values')
 
     email_edit.insert(0, values[3])
     sector_edit.insert(0, values[2])
     name_edit.insert(0,values[1])
+
     
 
 def clicked(event):
