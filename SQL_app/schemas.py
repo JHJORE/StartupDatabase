@@ -1,3 +1,4 @@
+from datetime import date
 from optparse import Option
 from typing import List, Optional
 
@@ -44,6 +45,7 @@ class AidBase(BaseModel):
     Type: str
     Reason: str
     County: str
+    DateGiven: date
     OrgNumber: int
 
 class AidCreate(AidBase):

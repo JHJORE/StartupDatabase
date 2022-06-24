@@ -90,7 +90,7 @@ def create_Stockholder (db: Session, StockHolder: schemas.StockHolderCreate, Org
     return db_StockHolder
 
 def create_Aid (db: Session, Aid: schemas.AidCreate, OrgNumber: int):
-    db_Aid = models.Aid(AidId = Aid.AidId, Sum = Aid.Sum, GivenBy = Aid.GivenBy, Type = Aid.Type, Reason = Aid.Reason, County = Aid.County, OrgNumber = OrgNumber)
+    db_Aid = models.Aid(AidId = Aid.AidId, Sum = Aid.Sum, GivenBy = Aid.GivenBy, Type = Aid.Type, Reason = Aid.Reason, County = Aid.County, DateGiven = Aid.DateGiven, OrgNumber = OrgNumber)
     db.add(db_Aid)
     db.commit()
     db.refresh(db_Aid)
@@ -143,6 +143,7 @@ def update_Aid(db: Session, Aid: schemas.Aid, AidId: str):
     db_Aid.Type = Aid.Type
     db_Aid.Reason = Aid.Reason
     db_Aid.County = Aid.County
+    db_Aid.DateGiven = Aid.DateGiven
     db.commit()
     db.refresh(db_Aid)
     return db_Aid

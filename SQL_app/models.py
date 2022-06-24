@@ -1,5 +1,5 @@
 from operator import index
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, Date
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 from .database import Base
@@ -59,5 +59,6 @@ class Aid(Base):
     Type = Column(String)
     Reason = Column(String)
     County = Column(String)
+    DateGiven = Column(Date)
     OrgNumber = Column(Integer, ForeignKey(Company.OrgNumber))
     AidTo = relationship("Company", back_populates="Aid")
