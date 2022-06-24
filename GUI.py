@@ -1,6 +1,6 @@
-from ast import Global
 import sqlite3
 from tkinter import *
+from tkinter import ttk
 from PIL import ImageTk, Image
 import sqlite3 as sql
 
@@ -84,12 +84,12 @@ def edit_company():
     global edit
     edit = Tk()
     edit.title('Edit Company')
-    edit.geometry("400x300")
+    edit.geometry("400x200")
 
     conn = sqlite3.connect('sql_app.db')
     cursor = conn.cursor()
     orgNumber = delete_box.get()
-    cursor.execute("SELECT * FROM Company WHERE OrgNumber ="+ orgNumber)
+    cursor.execute("SELECT * FROM Company WHERE OrgNumber =" + orgNumber)
     companies = cursor.fetchall()
 
     global email_edit
