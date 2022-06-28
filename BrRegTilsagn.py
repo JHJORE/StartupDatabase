@@ -5,8 +5,8 @@ from sql_app.database import SessionLocal
 
 db = SessionLocal()
 
-def response_API():  
-    response_API = requests.get('https://data.brreg.no/rofs/od/rofs/stottetildeling/search?language=nob&mottakerOrgnr=987&fraDato=2020-11-20')
+def brreg_tilsagn_to_db():  
+    response_API = requests.get('https://data.brreg.no/rofs/od/rofs/stottetildeling/search?language=nob&mottakerOrgnr=987&fraDato=2017-01-01')
     package_response = json.loads(response_API.text)
 
     for package in package_response:
