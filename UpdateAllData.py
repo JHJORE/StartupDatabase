@@ -10,5 +10,4 @@ def update_data():
     company_info_brreg()
 
 update_data()
-
     
