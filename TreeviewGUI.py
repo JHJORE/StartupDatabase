@@ -1,21 +1,26 @@
-from audioop import add
-from itertools import count
+
+
 from tkinter import*
 from tkinter import ttk
+from PIL import ImageTk, Image
+import customtkinter
+from matplotlib import image
 
-from sqlalchemy import values
+from sqlalchemy import column, values
 
 from sql_app import main,models
 import sqlite3
-from turtle import right, update
+from sql_app import database
 
-from soupsieve import select
 from sql_app.database import SessionLocal
 db = SessionLocal()
 
-root = Tk()
+customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
+customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
+
+root = customtkinter.CTk()
 root.title('Startup Database')
-root.geometry("1000x400")
+root.geometry("920x700")
 conn = sqlite3.connect('sql_app.db')
 cursor = conn.cursor()
 #Style
@@ -26,9 +31,21 @@ foreground ="black",
 rowheight = 23,
 )
 
+# create tree frames
 
-tree_frame = Frame(root)
-tree_frame.pack(pady=20)
+frame_top = customtkinter.CTkFrame(root,
+                        height= 60, 
+                        corner_radius=0,
+                        padx = 0,
+                        pady = 0)
+frame_top.grid(row = 0, column=0, sticky = "nswe")
+
+
+tree_frame = customtkinter.CTkFrame(root)
+tree_frame.grid(row = 1, column = 0, sticky = "nswe", padx = 20, pady = 10)
+
+frame_bottom = customtkinter.CTkFrame(root)
+frame_bottom.grid(row = 2, column = 0, sticky = "nswe",padx = 20, pady = 20)
 
 vertical_scroll = Scrollbar(tree_frame)
 vertical_scroll.pack(side=RIGHT, fill = Y )
@@ -38,6 +55,11 @@ tree.pack()
 
 vertical_scroll.config(command = tree.yview)
 
+# img = ImageTk.PhotoImage(Image.open("fi-og-img.png").resize(20,20))
+
+# img_lable = customtkinter.CTkLabel(frame_top, image = img)
+# img_lable.grid(row=0, column=0, padx=10, pady=10)
+
 tree['column'] = (
     "Name",
     "OrgNumber",
@@ -46,7 +68,6 @@ tree['column'] = (
     "Description",
     "Employees",
     "Manicipality")
-
 
 
 
@@ -74,23 +95,8 @@ def update_company():
     conn = sqlite3.connect('sql_app.db')
     cursor = conn.cursor()
     OrgNumber = tree.focus
-    
 
     main.update_Company(db=db, OrgNumber = OrgNumber, Company= create_company())
-
-
-
-    # cursor.execute("""UPDATE Company SET 
-    #     CompanyName = :companyname,
-    #     Email = :email,
-    #     Sector = :sector
-    #     WHERE OrgNumber = :orgNumber""",
-    #     {
-    #         'companyname':name_edit.get(), 
-    #         'email' : email_edit.get(),
-    #         'sector': sector_edit.get(),
-    #         'orgNumber': orgNumber
-    #     })
 
     conn.commit()
     conn.close()
@@ -111,9 +117,9 @@ def remove_company():
     conn.close()
 
 def selected():
-    email_edit.delete(0,END) 
+    email_entry.delete(0,END) 
     sector_edit.delete(0,END)
-    name_edit.delete(0,END)
+    name_entry.delete(0,END)
 
     select = tree.focus()
     row = tree.item(select)
@@ -123,10 +129,10 @@ def selected():
 
     values = tree.item(select,'values')
 
-    email_edit.insert(0, values[3])
-    sector_edit.insert(0, values[2])
-    name_edit.insert(0,values[1])
-
+    name_entry.insert(0,values[2])
+    email_entry.insert(0, values[0])
+    sector_edit.insert(0, values[-1])
+    
     
 
 def clicked(event):
@@ -172,36 +178,72 @@ for company in companies:
 
 
 
+folder_img = ImageTk.PhotoImage(Image.open("fi-og-img.png").resize((70,70),  Image.LANCZOS))
+icon = customtkinter.CTkButton(frame_top, image = folder_img,text="",borderwidth=0, width=70, height= 70, compound= "left" )
+icon.grid(row=0, column=0, padx=20, pady=10)
+
+folder_img = ImageTk.PhotoImage(Image.open("database.png").resize((40,40),  Image.LANCZOS))
+database_btn = customtkinter.CTkButton(frame_top, image = folder_img,text="", width=50, height= 50, compound= "left" )
+database_btn.grid(row=0, column=1, padx=20, )
+
+folder_img = ImageTk.PhotoImage(Image.open("company.png").resize((40,40),  Image.LANCZOS))
+company_btn = customtkinter.CTkButton(frame_top, image = folder_img,text="", width=50, height= 50, compound= "left" )
+company_btn.grid(row=0, column=3, padx=20, pady=10)
+
+folder_img = ImageTk.PhotoImage(Image.open("list.png").resize((40,40),  Image.LANCZOS))
+list_btn = customtkinter.CTkButton(frame_top, image = folder_img,text="", width=50, height= 50, compound= "left" )
+list_btn.grid(row=0, column=4, padx=20, pady=10)
 
 
 
-fram_add = Frame(root)
-fram_add.pack(pady = 20)
 
-email_edit = Entry(fram_add, width=30)
-email_edit.grid(row=0, column=1)
+email_entry = customtkinter.CTkEntry(frame_bottom,
+                                placeholder_text="Comany Email",
+                               width=180,
+                               height=25,
+                               border_width=2,
+                               corner_radius=5)
+email_entry.grid(row=0, column=5,padx=10, pady=10)
 
-name_edit = Entry(fram_add, width=30)
-name_edit.grid(row=0, column=4)
+# company_name = customtkinter.CTkLabel(frame_bottom, text="Name", width=180,height=25, corner_radius=8)
+# company_name.grid(row=0, column= 0,  padx=10, pady=10)
 
-sector_edit = Entry(fram_add, width=30)
-sector_edit.grid(row=0, column=6)
-
-
-edit_email = Label(fram_add, text="Email")
-edit_email.grid(row=0, column= 0)
-
-edit_Name = Label(fram_add, text="Name")
-edit_Name.grid(row=0, column= 3)
-
-edit_Sector = Label(fram_add, text="Sector")
-edit_Sector.grid(row=0, column= 5)
-remove_company_btn = Button(fram_add, text="Remove Company", command= remove_company)
-remove_company_btn.grid(row=6, column=4, columnspan=2, pady=10, padx=10, ipadx= 45 )
+name_entry = customtkinter.CTkEntry(frame_bottom,
+                                placeholder_text="Company Name",
+                               width=180,
+                               height=25,
+                               border_width=2,
+                               corner_radius=5)
+name_entry.grid(row=0, column=0, padx=10, pady=10)
 
 
-update_btn = Button(fram_add, text = 'Save Changes', command=update_company)
-update_btn.grid(row=6, column=0, columnspan=2, pady=10, padx=10, ipadx= 45 )
+
+
+sector_edit = customtkinter.CTkEntry(frame_bottom,
+                                placeholder_text="Sector",
+                               width=180,
+                               height=25,
+                               border_width=2,
+                               corner_radius=5)
+sector_edit.grid(row=0, column=7,padx=10, pady=10)
+
+
+# edit_email = Label(frame_bottom, text="Email")
+# edit_email.grid(row=0, column= 3)
+
+
+# edit_Sector = Label(frame_bottom, text="Sector")
+# edit_Sector.grid(row=0, column= 5)
+
+update_btn = customtkinter.CTkButton(frame_bottom, text = 'Save Changes', command=update_company)
+update_btn.grid(row=6, column=0, columnspan=2, pady=10, padx=10, ipadx= 30 )
+
+remove_company_btn = customtkinter.CTkButton(frame_bottom, text="Remove Company", command= remove_company)
+remove_company_btn.grid(row=6, column=4, columnspan=2, pady=10, padx=10, ipadx= 30 )
+
+
+excel_btn = customtkinter.CTkButton(frame_bottom, text="Export to Excel", command= remove_company)
+excel_btn.grid(row=6, column=6, columnspan=2, pady=10, padx=10, ipadx= 30 )
 
 
 tree.bind("<ButtonRelease-1>", clicked)
