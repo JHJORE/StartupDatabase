@@ -1,16 +1,16 @@
 import json
+import pandas
 import requests
 from sql_app import models, main
 from sql_app.database import SessionLocal
+import pandas as pd
 
 db = SessionLocal()
 
 def brreg_tilsagn_to_db():  
-    response_API = requests.get('https://data.brreg.no/rofs/od/rofs/stottetildeling/search?language=nob&mottakerOrgnr=987&fraDato=2017-01-01')
+    response_API = requests.get('https://data.brreg.no/rofs/od/rofs/stottetildeling/search?language=nob&mottakerOrgnr=987&fraDato=2016-11-20')
     package_response = json.loads(response_API.text)
-
     for package in package_response:
-        aidId = package.get("tildelingId")
         OrgNumber = package.get("stottemottakerOrganisasjonsnummer")
         CompanyName = package.get("stottemottakerNavn")
         Sector = package.get("naeringBeskrivelse")
@@ -19,6 +19,12 @@ def brreg_tilsagn_to_db():
         reason = package.get("formaal")
         county = package.get("fylke")
         amountGiven = package.get("tildeltBelop")
+        dateGiven = pd.to_datetime(package.get("tildelingsdato"), format= "%d.%m.%Y")
+        aidId = package.get("stottemottakerOrganisasjonsnummer") + package.get("tildelingsdato")
+
+        # dateinfo = package.get("tildelingsdato").split(".")
+        # year, month, day = int("20" + dateinfo[0]), int(dateinfo[1]), int(dateinfo[2])
+        # dateGiven = date(year, month, day)
 
         aid = models.Aid(
             AidId = aidId,
@@ -27,6 +33,7 @@ def brreg_tilsagn_to_db():
             Type = typeOfAid,
             GivenBy = givenBy,
             Reason = reason,
+            DateGiven = dateGiven,
             County = county
         )
         
@@ -57,5 +64,5 @@ def brreg_tilsagn_to_db():
 
         
         
-response_API()
+brreg_tilsagn_to_db()
         
