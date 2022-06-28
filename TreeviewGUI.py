@@ -15,7 +15,7 @@ from sql_app import database
 from sql_app.database import SessionLocal
 db = SessionLocal()
 
-customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
+customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
 
 root = customtkinter.CTk()
@@ -23,6 +23,7 @@ root.title('Startup Database')
 root.geometry("920x700")
 conn = sqlite3.connect('sql_app.db')
 cursor = conn.cursor()
+
 #Style
 style = ttk.Style()
 style.theme_use("default")
@@ -31,21 +32,27 @@ foreground ="black",
 rowheight = 23,
 )
 
-# create tree frames
+# create frames
 
-frame_top = customtkinter.CTkFrame(root,
+top_frame = customtkinter.CTkFrame(root,
                         height= 60, 
                         corner_radius=0,
                         padx = 0,
                         pady = 0)
-frame_top.grid(row = 0, column=0, sticky = "nswe")
+top_frame.grid(row = 0, column=0, sticky = "nswe")
 
+filter_frame = customtkinter.CTkFrame(root)
+filter_frame.grid(row = 1, column = 0, sticky = "nswe",padx = 20, pady = 20)
+
+
+search_frame = customtkinter.CTkFrame(filter_frame)
+search_frame.grid(row = 0, column = 0, sticky = "nswe",padx = 20, pady = 20)
 
 tree_frame = customtkinter.CTkFrame(root)
-tree_frame.grid(row = 1, column = 0, sticky = "nswe", padx = 20, pady = 10)
+tree_frame.grid(row = 2, column = 0, sticky = "nswe", padx = 20, pady = 10)
 
-frame_bottom = customtkinter.CTkFrame(root)
-frame_bottom.grid(row = 2, column = 0, sticky = "nswe",padx = 20, pady = 20)
+bottom_frame = customtkinter.CTkFrame(root)
+bottom_frame.grid(row = 3, column = 0, sticky = "nswe",padx = 20, pady = 20)
 
 vertical_scroll = Scrollbar(tree_frame)
 vertical_scroll.pack(side=RIGHT, fill = Y )
@@ -55,9 +62,10 @@ tree.pack()
 
 vertical_scroll.config(command = tree.yview)
 
+
 # img = ImageTk.PhotoImage(Image.open("fi-og-img.png").resize(20,20))
 
-# img_lable = customtkinter.CTkLabel(frame_top, image = img)
+# img_lable = customtkinter.CTkLabel(top_frame, image = img)
 # img_lable.grid(row=0, column=0, padx=10, pady=10)
 
 tree['column'] = (
@@ -78,13 +86,14 @@ def create_company():
     row = tree.item(select)
     values = row.get('values')
     
+    print(values[1])
+    print(values[0])
+    print(values[-1])
 
     return models.Company(
         OrgNumber = values[1],
         CompanyName = values[0],
-        Description = values[3],
-     
-        
+        Description = values[-1],   
     )
 
 
@@ -92,14 +101,14 @@ def update_company():
 
     
     
-    conn = sqlite3.connect('sql_app.db')
-    cursor = conn.cursor()
-    OrgNumber = tree.focus
+    select = tree.focus()
+    row = tree.item(select)
+    values = row.get('values')
+    OrgNumber = values[1]
 
     main.update_Company(db=db, OrgNumber = OrgNumber, Company= create_company())
 
-    conn.commit()
-    conn.close()
+    
     
 
 def remove_company():
@@ -124,20 +133,84 @@ def selected():
     select = tree.focus()
     row = tree.item(select)
     values = row.get('values')
-    print(values)
+    
 
 
     values = tree.item(select,'values')
 
-    name_entry.insert(0,values[2])
-    email_entry.insert(0, values[0])
+    name_entry.insert(0,values[0])
+    email_entry.insert(0, values[2])
     sector_edit.insert(0, values[-1])
     
     
 
 def clicked(event):
     selected()
+
+
+def make_treeview(companies):
+    count_color = 0
+    for company in companies:
+        if count_color %2 ==0:
+            tree.insert(parent='', index= 'end', iid=company[0], text="", values=(company[1],company[0],company[2],company[3],company[4],company[5],company[6]), tags=('evenrow'))
+        else:
+            tree.insert(parent='', index= 'end', iid=company[0], text="", values=(company[1],company[0],company[2],company[3],company[4],company[5],company[6]), tags=(''))
+    
+        count_color +=1
+
+def employee_treeview(companies):
+    count_color = 0
+    employees = employee_dropdown.get()
+    for company in companies:
+        if(int(employees[-1])>= int(company[4]) and int(company[4]>=int(employees[0]))):
+            if count_color %2 ==0:
+                tree.insert(parent='', index= 'end', iid=company[0], text="", values=(company[1],company[0],company[2],company[3],company[4],company[5],company[6]), tags=('evenrow'))
+            else:
+                tree.insert(parent='', index= 'end', iid=company[0], text="", values=(company[1],company[0],company[2],company[3],company[4],company[5],company[6]), tags=(''))
+    
+        count_color +=1
    
+def search_database():
+    
+    conn = sqlite3.connect('sql_app.db')
+    cursor = conn.cursor()
+    filter = search_dropdown.get()
+    company_search = search_entry.get()
+    cursor.execute("SELECT *, oid FROM Company ")
+    companies = cursor.fetchall()
+    if(company_search != "" or filter == "Employees"): 
+        for company in tree.get_children():
+            tree.delete(company)
+        cursor.execute(f"SELECT *, oid FROM Company WHERE {filter} like ?", (company_search,))
+        companies = cursor.fetchall()
+        if(filter == "Employees"): #trenges ettersom vi sorterer i tall og ikke items
+            employee_treeview(companies)
+        else:
+            make_treeview(companies)
+            print("filter")
+    else:
+        for company in tree.get_children():
+            tree.delete(company)
+        make_treeview(companies) 
+        print("normal")  
+    conn.commit()
+    conn.close()
+
+def check_dropdown(self):
+    selected = search_dropdown.get()
+    if(selected == "Employees"):
+        employee_dropdown.grid(row=0, column=2, padx=10, pady=10)
+    else:
+        employee_dropdown.grid_remove()
+
+
+def switchmode():
+    state = mode_switch.get()
+    if(state == "on"):
+        customtkinter.set_appearance_mode("Dark")
+    else:
+        customtkinter.set_appearance_mode("System")
+
 
 
 #colums
@@ -164,40 +237,34 @@ cursor.execute("SELECT *, oid FROM Company ")
 companies = cursor.fetchall()
 
 tree.tag_configure('oddrow',background="white")
-tree.tag_configure('evenrow',background="lightblue")
+tree.tag_configure('evenrow',background="#51B087")
 
-global count_color
-count_color = 0
-for company in companies:
-    if count_color %2 ==0:
-        tree.insert(parent='', index= 'end', iid=company[0], text="", values=(company[1],company[0],company[2],company[3]), tags=('evenrow'))
-    else:
-        tree.insert(parent='', index= 'end', iid=company[0], text="", values=(company[1],company[0],company[2],company[3]), tags=(''))
-    
-    count_color +=1
+
+make_treeview(companies)
 
 
 
 folder_img = ImageTk.PhotoImage(Image.open("fi-og-img.png").resize((70,70),  Image.LANCZOS))
-icon = customtkinter.CTkButton(frame_top, image = folder_img,text="",borderwidth=0, width=70, height= 70, compound= "left" )
+icon = customtkinter.CTkButton(top_frame, image = folder_img,text="",borderwidth=0, width=70, height= 70, compound= "left" )
 icon.grid(row=0, column=0, padx=20, pady=10)
 
 folder_img = ImageTk.PhotoImage(Image.open("database.png").resize((40,40),  Image.LANCZOS))
-database_btn = customtkinter.CTkButton(frame_top, image = folder_img,text="", width=50, height= 50, compound= "left" )
+database_btn = customtkinter.CTkButton(top_frame, image = folder_img,text="", width=50, height= 50, compound= "left" )
 database_btn.grid(row=0, column=1, padx=20, )
 
 folder_img = ImageTk.PhotoImage(Image.open("company.png").resize((40,40),  Image.LANCZOS))
-company_btn = customtkinter.CTkButton(frame_top, image = folder_img,text="", width=50, height= 50, compound= "left" )
+company_btn = customtkinter.CTkButton(top_frame, image = folder_img,text="", width=50, height= 50, compound= "left" )
 company_btn.grid(row=0, column=3, padx=20, pady=10)
 
 folder_img = ImageTk.PhotoImage(Image.open("list.png").resize((40,40),  Image.LANCZOS))
-list_btn = customtkinter.CTkButton(frame_top, image = folder_img,text="", width=50, height= 50, compound= "left" )
+
+list_btn = customtkinter.CTkButton(top_frame, image = folder_img,text="", width=50, height= 50, compound= "left" )
 list_btn.grid(row=0, column=4, padx=20, pady=10)
 
 
 
 
-email_entry = customtkinter.CTkEntry(frame_bottom,
+email_entry = customtkinter.CTkEntry(bottom_frame,
                                 placeholder_text="Comany Email",
                                width=180,
                                height=25,
@@ -205,10 +272,10 @@ email_entry = customtkinter.CTkEntry(frame_bottom,
                                corner_radius=5)
 email_entry.grid(row=0, column=5,padx=10, pady=10)
 
-# company_name = customtkinter.CTkLabel(frame_bottom, text="Name", width=180,height=25, corner_radius=8)
+# company_name = customtkinter.CTkLabel(bottom_frame, text="Name", width=180,height=25, corner_radius=8)
 # company_name.grid(row=0, column= 0,  padx=10, pady=10)
 
-name_entry = customtkinter.CTkEntry(frame_bottom,
+name_entry = customtkinter.CTkEntry(bottom_frame,
                                 placeholder_text="Company Name",
                                width=180,
                                height=25,
@@ -216,10 +283,39 @@ name_entry = customtkinter.CTkEntry(frame_bottom,
                                corner_radius=5)
 name_entry.grid(row=0, column=0, padx=10, pady=10)
 
+search_entry = customtkinter.CTkEntry(search_frame,
+                                placeholder_text="Search Company",
+                               width=180,
+                               height=25,
+                               border_width=2,
+                               corner_radius=5)
+
+search_entry.grid(row=0, column=0, padx=10, pady=10)  
 
 
+folder_img = ImageTk.PhotoImage(Image.open("searchicon.png").resize((20,20),  Image.LANCZOS))
+search_button = customtkinter.CTkButton(search_frame, image = folder_img,text="", width=20, height= 20, compound= "left", command=search_database )
+search_button.grid(row=0, column=5, padx=10, pady=10)
+search_dropdown = customtkinter.CTkOptionMenu(search_frame,
+                                                values=["CompanyName",
+                                                "OrgNumber", 
+                                                "Sector", 
+                                                "Employees", 
+                                                "Municipality"],
+                                                command=check_dropdown
+                                            )
+search_dropdown.grid(row=0, column=1, padx=10, pady=10)
 
-sector_edit = customtkinter.CTkEntry(frame_bottom,
+employee_dropdown = customtkinter.CTkOptionMenu(search_frame,
+                                                values=["0-3",
+                                                "3-10", 
+                                                "10+"],)
+on =1
+mode_switch = customtkinter.CTkSwitch(top_frame, text = "Dark Mode", command= switchmode, onvalue= "on", offvalue= "off")
+mode_switch.grid(row=0, column=9, padx=10, pady=10)
+
+
+sector_edit = customtkinter.CTkEntry(bottom_frame,
                                 placeholder_text="Sector",
                                width=180,
                                height=25,
@@ -228,22 +324,24 @@ sector_edit = customtkinter.CTkEntry(frame_bottom,
 sector_edit.grid(row=0, column=7,padx=10, pady=10)
 
 
-# edit_email = Label(frame_bottom, text="Email")
+# edit_email = Label(bottom_frame, text="Email")
 # edit_email.grid(row=0, column= 3)
 
 
-# edit_Sector = Label(frame_bottom, text="Sector")
+# edit_Sector = Label(bottom_frame, text="Sector")
 # edit_Sector.grid(row=0, column= 5)
 
-update_btn = customtkinter.CTkButton(frame_bottom, text = 'Save Changes', command=update_company)
+update_btn = customtkinter.CTkButton(bottom_frame, text = 'Save Changes', command=update_company)
 update_btn.grid(row=6, column=0, columnspan=2, pady=10, padx=10, ipadx= 30 )
 
-remove_company_btn = customtkinter.CTkButton(frame_bottom, text="Remove Company", command= remove_company)
+remove_company_btn = customtkinter.CTkButton(bottom_frame, text="Remove Company", command= remove_company)
 remove_company_btn.grid(row=6, column=4, columnspan=2, pady=10, padx=10, ipadx= 30 )
 
 
-excel_btn = customtkinter.CTkButton(frame_bottom, text="Export to Excel", command= remove_company)
+excel_btn = customtkinter.CTkButton(bottom_frame, text="Export to Excel", command= remove_company)
 excel_btn.grid(row=6, column=6, columnspan=2, pady=10, padx=10, ipadx= 30 )
+
+
 
 
 tree.bind("<ButtonRelease-1>", clicked)
