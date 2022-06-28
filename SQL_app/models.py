@@ -17,11 +17,11 @@ class Company(Base):
     Municipality = Column(String)
     HomePage = Column(String)
 
-    Notes = relationship("Note", back_populates="NoteAbout")
-    NewsArticles = relationship("NewsArticle", back_populates="ArticleAbout")
-    Owners = relationship("StockHolder", back_populates="HolderIn")
-    Aid = relationship("Aid", back_populates = "AidTo")
-    CapitalRaises = relationship("CapitalRaise", back_populates="CapitalRaiseComp")
+    Notes = relationship("Note", back_populates="NoteAbout", cascade="all, delete-orphan")
+    NewsArticles = relationship("NewsArticle", back_populates="ArticleAbout", cascade="all, delete-orphan")
+    Owners = relationship("StockHolder", back_populates="HolderIn", cascade="all, delete-orphan")
+    Aid = relationship("Aid", back_populates = "AidTo", cascade="all, delete-orphan")
+    CapitalRaises = relationship("CapitalRaise", back_populates="CapitalRaiseComp", cascade="all, delete-orphan")
 
 class Note(Base):
     __tablename__ = "Note"

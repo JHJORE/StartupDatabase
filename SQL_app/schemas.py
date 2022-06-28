@@ -44,7 +44,7 @@ class AidBase(BaseModel):
     GivenBy: str
     Type: str
     Reason: str
-    County: str
+    County: Optional[str]
     DateGiven: Optional[date]
     OrgNumber: int
 
