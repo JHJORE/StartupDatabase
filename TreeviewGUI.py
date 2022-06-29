@@ -17,10 +17,13 @@ db = SessionLocal()
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
+WIDTH = 920
+HEIGHT = 700
+
 
 root = customtkinter.CTk()
 root.title('Startup Database')
-root.geometry("920x700")
+root.geometry(f"{WIDTH}x{HEIGHT}")
 conn = sqlite3.connect('sql_app.db')
 cursor = conn.cursor()
 
@@ -37,12 +40,16 @@ rowheight = 23,
 top_frame = customtkinter.CTkFrame(root,
                         height= 60, 
                         corner_radius=0,
-                        padx = 0,
-                        pady = 0)
+                    )
 top_frame.grid(row = 0, column=0, sticky = "nswe")
+    
+
+
+
 
 filter_frame = customtkinter.CTkFrame(root)
 filter_frame.grid(row = 1, column = 0, sticky = "nswe",padx = 20, pady = 20)
+
 
 
 search_frame = customtkinter.CTkFrame(filter_frame)
@@ -160,15 +167,17 @@ def make_treeview(companies):
 
 def employee_treeview(companies):
     count_color = 0
-    employees = employee_dropdown.get()
+    employees_start = int(employee_entry1.get())
+    employees_end = int(employee_entry2.get())
     for company in companies:
-        if(int(employees[-1])>= int(company[4]) and int(company[4]>=int(employees[0]))):
+        employed = int(company[5])
+        if(employees_end>= employed and employed>=employees_start):
             if count_color %2 ==0:
                 tree.insert(parent='', index= 'end', iid=company[0], text="", values=(company[1],company[0],company[2],company[3],company[4],company[5],company[6]), tags=('evenrow'))
             else:
                 tree.insert(parent='', index= 'end', iid=company[0], text="", values=(company[1],company[0],company[2],company[3],company[4],company[5],company[6]), tags=(''))
     
-        count_color +=1
+            count_color +=1
    
 def search_database():
     
@@ -178,20 +187,21 @@ def search_database():
     company_search = search_entry.get()
     cursor.execute("SELECT *, oid FROM Company ")
     companies = cursor.fetchall()
-    if(company_search != "" or filter == "Employees"): 
+    if(company_search != ""): 
         for company in tree.get_children():
             tree.delete(company)
         cursor.execute(f"SELECT *, oid FROM Company WHERE {filter} like ?", (company_search,))
         companies = cursor.fetchall()
-        if(filter == "Employees"): #trenges ettersom vi sorterer i tall og ikke items
-            employee_treeview(companies)
-        else:
-            make_treeview(companies)
-            print("filter")
+        make_treeview(companies)
+        print("filter")
     else:
         for company in tree.get_children():
             tree.delete(company)
-        make_treeview(companies) 
+        if(filter == "Employees"): #trenges ettersom vi sorterer i tall og ikke items
+            employee_treeview(companies)
+            print("success")
+        else:
+            make_treeview(companies) 
         print("normal")  
     conn.commit()
     conn.close()
@@ -199,9 +209,11 @@ def search_database():
 def check_dropdown(self):
     selected = search_dropdown.get()
     if(selected == "Employees"):
-        employee_dropdown.grid(row=0, column=2, padx=10, pady=10)
+        employee_entry1.grid(row=0, column=2, padx=10, pady=10)
+        employee_entry2.grid(row=0, column=3, padx=10, pady=10)
     else:
-        employee_dropdown.grid_remove()
+        employee_entry1.grid_remove()
+        employee_entry2.grid_remove()
 
 
 def switchmode():
@@ -306,11 +318,19 @@ search_dropdown = customtkinter.CTkOptionMenu(search_frame,
                                             )
 search_dropdown.grid(row=0, column=1, padx=10, pady=10)
 
-employee_dropdown = customtkinter.CTkOptionMenu(search_frame,
-                                                values=["0-3",
-                                                "3-10", 
-                                                "10+"],)
-on =1
+employee_entry1 = customtkinter.CTkEntry(search_frame,
+                                placeholder_text="Start",
+                               width=60,
+                               height=25,
+                               border_width=2,
+                               corner_radius=5)
+employee_entry2 = customtkinter.CTkEntry(search_frame,
+                                placeholder_text="End",
+                               width=60,
+                               height=25,
+                               border_width=2,
+                               corner_radius=5)
+
 mode_switch = customtkinter.CTkSwitch(top_frame, text = "Dark Mode", command= switchmode, onvalue= "on", offvalue= "off")
 mode_switch.grid(row=0, column=9, padx=10, pady=10)
 
