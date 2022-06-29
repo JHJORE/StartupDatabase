@@ -287,7 +287,7 @@ email_entry = customtkinter.CTkEntry(bottom_frame,
                                height=25,
                                border_width=2,
                                corner_radius=5)
-email_entry.grid(row=0, column=5,padx=10, pady=10)
+email_entry.grid(row=1, column=0,padx=10, pady=10)
 
 # company_name = customtkinter.CTkLabel(bottom_frame, text="Name", width=180,height=25, corner_radius=8)
 # company_name.grid(row=0, column= 0,  padx=10, pady=10)
@@ -300,6 +300,29 @@ name_entry = customtkinter.CTkEntry(bottom_frame,
                                corner_radius=5)
 name_entry.grid(row=0, column=0, padx=10, pady=10)
 
+org_entry = customtkinter.CTkEntry(bottom_frame,
+                                placeholder_text="OrgNumber",
+                               width=180,
+                               height=25,
+                               border_width=2,
+                               corner_radius=5)
+org_entry.grid(row=0, column=1, padx=10, pady=10)
+
+muncipality_entry = customtkinter.CTkEntry(bottom_frame,
+                                placeholder_text="Municipality",
+                               width=180,
+                               height=25,
+                               border_width=2,
+                               corner_radius=5)
+muncipality_entry.grid(row=1, column=2, padx=10, pady=10)
+
+
+
+
+
+
+
+
 search_entry = customtkinter.CTkEntry(search_frame,
                                 placeholder_text="Search Company",
                                width=180,
@@ -308,6 +331,8 @@ search_entry = customtkinter.CTkEntry(search_frame,
                                corner_radius=5)
 
 search_entry.grid(row=0, column=0, padx=10, pady=10)  
+
+
 
 
 folder_img = ImageTk.PhotoImage(Image.open("searchicon.png").resize((20,20),  Image.LANCZOS))
@@ -346,7 +371,9 @@ sector_edit = customtkinter.CTkEntry(bottom_frame,
                                height=25,
                                border_width=2,
                                corner_radius=5)
-sector_edit.grid(row=0, column=7,padx=10, pady=10)
+sector_edit.grid(row=1, column=1,padx=10, pady=10)
+
+
 
 
 # edit_email = Label(bottom_frame, text="Email")
@@ -357,14 +384,18 @@ sector_edit.grid(row=0, column=7,padx=10, pady=10)
 # edit_Sector.grid(row=0, column= 5)
 
 update_btn = customtkinter.CTkButton(bottom_frame, text = 'Save Changes', command=update_company)
-update_btn.grid(row=6, column=0, columnspan=2, pady=10, padx=10, ipadx= 30 )
+update_btn.grid(row=3, column=0, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
-remove_company_btn = customtkinter.CTkButton(bottom_frame, text="Remove Company", command= remove_company)
-remove_company_btn.grid(row=6, column=4, columnspan=2, pady=10, padx=10, ipadx= 30 )
+notes_btn = customtkinter.CTkButton(bottom_frame, text="Notes", command= remove_company)
+notes_btn.grid(row=3, column=1, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
+news_btn = customtkinter.CTkButton(bottom_frame, text="News Articles", command= remove_company)
+news_btn.grid(row=3, column=2, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
 excel_btn = customtkinter.CTkButton(bottom_frame, text="Export to Excel", command= remove_company)
-excel_btn.grid(row=6, column=6, columnspan=2, pady=10, padx=10, ipadx= 30 )
+excel_btn.grid(row=3, column=3, columnspan=1, pady=10, padx=10, ipadx= 30 )
+
+
 
 
 
