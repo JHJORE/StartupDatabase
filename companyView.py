@@ -32,6 +32,10 @@ left_frame.grid(row = 1, column = 0, sticky = "nswe", padx = 20, pady = 10)
 right_frame = customtkinter.CTkFrame(root)
 right_frame.grid(row = 1, column = 1, sticky = "nswe", padx = 20, pady = 10)
 
+#tree kapitalutvidelse
+
+#tree AID
+
 
 
 
