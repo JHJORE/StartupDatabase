@@ -5,12 +5,13 @@ import customtkinter
 from sqlalchemy import column, values
 import sqlite3
 from sql_app.database import SessionLocal
+import capitalTree
 db = SessionLocal()
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
-WIDTH = 920
-HEIGHT = 700
+WIDTH = 820
+HEIGHT = 600
 
 
 root = customtkinter.CTk()
@@ -21,6 +22,13 @@ cursor = conn.cursor()
 
 root.columnconfigure((0,1), weight=1)
 root.rowconfigure((1,1), weight=1)
+#Style
+style = ttk.Style()
+style.theme_use("default")
+style.configure("Treeview",
+foreground ="black",
+rowheight = 23,
+)
 
 #Frames
 topp_frame = customtkinter.CTkFrame(root)
@@ -33,19 +41,15 @@ right_frame = customtkinter.CTkFrame(root)
 right_frame.grid(row = 1, column = 1, sticky = "nswe", padx = 20, pady = 10)
 
 #tree kapitalutvidelse
+capitaltree = capitalTree.capitalTree(root, right_frame)
+
 
 #tree AID
 
 
 
 
-#Style
-style = ttk.Style()
-style.theme_use("default")
-style.configure("Treeview",
-foreground ="black",
-rowheight = 23,
-)
+
 
 # tree.bind("<ButtonRelease-1>", clicked)
 

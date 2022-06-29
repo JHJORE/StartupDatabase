@@ -57,6 +57,6 @@ def capital_raises_to_db(orgnum):
         )
         main.create_CapitalRaise(OrgNumber=orgnum, CapitalRaise=capitalraise, db=db)
     
-# orgnum = 916545061
-# df = fetch_capital_raises_by_org_num(orgnum)
-# capital_raises_to_db(orgnum, df)
+orgnum = 916545061
+df = fetch_capital_raises_by_org_num(orgnum)
+capital_raises_to_db(orgnum)
