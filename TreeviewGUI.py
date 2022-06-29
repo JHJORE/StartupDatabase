@@ -281,40 +281,6 @@ list_btn.grid(row=0, column=3, padx=20, pady=10)
 
 
 
-email_entry = customtkinter.CTkEntry(bottom_frame,
-                                placeholder_text="Comany Email",
-                               width=180,
-                               height=25,
-                               border_width=2,
-                               corner_radius=5)
-email_entry.grid(row=1, column=0,padx=10, pady=10)
-
-# company_name = customtkinter.CTkLabel(bottom_frame, text="Name", width=180,height=25, corner_radius=8)
-# company_name.grid(row=0, column= 0,  padx=10, pady=10)
-
-name_entry = customtkinter.CTkEntry(bottom_frame,
-                                placeholder_text="Company Name",
-                               width=180,
-                               height=25,
-                               border_width=2,
-                               corner_radius=5)
-name_entry.grid(row=0, column=0, padx=10, pady=10)
-
-org_entry = customtkinter.CTkEntry(bottom_frame,
-                                placeholder_text="OrgNumber",
-                               width=180,
-                               height=25,
-                               border_width=2,
-                               corner_radius=5)
-org_entry.grid(row=0, column=1, padx=10, pady=10)
-
-muncipality_entry = customtkinter.CTkEntry(bottom_frame,
-                                placeholder_text="Municipality",
-                               width=180,
-                               height=25,
-                               border_width=2,
-                               corner_radius=5)
-muncipality_entry.grid(row=1, column=2, padx=10, pady=10)
 
 
 
