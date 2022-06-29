@@ -27,6 +27,10 @@ root.geometry(f"{WIDTH}x{HEIGHT}")
 conn = sqlite3.connect('sql_app.db')
 cursor = conn.cursor()
 
+root.columnconfigure((0), weight=1)
+root.rowconfigure((1,2,3,4,5,6,7,8,9), weight=1)
+
+
 #Style
 style = ttk.Style()
 style.theme_use("default")
@@ -42,7 +46,8 @@ top_frame = customtkinter.CTkFrame(root,
                         corner_radius=0,
                     )
 top_frame.grid(row = 0, column=0, sticky = "nswe")
-    
+
+
 
 
 
@@ -262,16 +267,16 @@ icon.grid(row=0, column=0, padx=20, pady=10)
 
 folder_img = ImageTk.PhotoImage(Image.open("database.png").resize((40,40),  Image.LANCZOS))
 database_btn = customtkinter.CTkButton(top_frame, image = folder_img,text="", width=50, height= 50, compound= "left" )
-database_btn.grid(row=0, column=1, padx=20, )
+database_btn.grid(row=0, column=1, padx=10, )
 
 folder_img = ImageTk.PhotoImage(Image.open("company.png").resize((40,40),  Image.LANCZOS))
 company_btn = customtkinter.CTkButton(top_frame, image = folder_img,text="", width=50, height= 50, compound= "left" )
-company_btn.grid(row=0, column=3, padx=20, pady=10)
+company_btn.grid(row=0, column=2, padx=20, pady=10)
 
 folder_img = ImageTk.PhotoImage(Image.open("list.png").resize((40,40),  Image.LANCZOS))
 
 list_btn = customtkinter.CTkButton(top_frame, image = folder_img,text="", width=50, height= 50, compound= "left" )
-list_btn.grid(row=0, column=4, padx=20, pady=10)
+list_btn.grid(row=0, column=3, padx=20, pady=10)
 
 
 
