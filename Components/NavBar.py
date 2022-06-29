@@ -22,6 +22,10 @@ class NavBar(tk.Frame):
         list_btn = customtkinter.CTkButton(top_frame, image = folder_img,text="", width=50, height= 50, compound= "left" )
         list_btn.grid(row=0, column=3, padx=20, pady=10)
 
+        # excel_btn = customtkinter.CTkButton(bottom_frame, text="Export to Excel", command= remove_company)
+        # excel_btn.grid(row=6, column=6, columnspan=2, pady=10, padx=10, ipadx= 30 )
+
+
         self.mode_switch = customtkinter.CTkSwitch(top_frame, text = "Dark Mode", command= self.switchmode, onvalue= "on", offvalue= "off")
         self.mode_switch.grid(row=0, column=9, padx=10, pady=10)
 

@@ -21,15 +21,6 @@ class EditCompany(tk.Frame):
         self.excel_btn.grid(row=6, column=6, columnspan=2, pady=10, padx=10, ipadx= 30 )
         
         self.tree = tree
-    
-        self.tree['column'] = (
-        "Name",
-        "OrgNumber",
-        "Email",
-        "Sector",
-        "Description",
-        "Employees",
-        "Manicipality")
 
         self.email_entry = customtkinter.CTkEntry(bottom_frame,
                                 placeholder_text="Comany Email",
