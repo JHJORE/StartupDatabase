@@ -21,3 +21,13 @@ class NavBar(tk.Frame):
         folder_img = ImageTk.PhotoImage(Image.open("list.png").resize((40,40),  Image.LANCZOS))
         list_btn = customtkinter.CTkButton(top_frame, image = folder_img,text="", width=50, height= 50, compound= "left" )
         list_btn.grid(row=0, column=3, padx=20, pady=10)
+
+        self.mode_switch = customtkinter.CTkSwitch(top_frame, text = "Dark Mode", command= self.switchmode, onvalue= "on", offvalue= "off")
+        self.mode_switch.grid(row=0, column=9, padx=10, pady=10)
+
+    def switchmode(self):
+        state = self.mode_switch.get()
+        if(state == "on"):
+            customtkinter.set_appearance_mode("Dark")
+        else:
+            customtkinter.set_appearance_mode("System")

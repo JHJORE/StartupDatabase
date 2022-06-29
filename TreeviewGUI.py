@@ -5,8 +5,11 @@ from tkinter import ttk
 from PIL import ImageTk, Image
 import customtkinter
 from matplotlib import image
+from Components import NavBar
 
 from sqlalchemy import column, values
+from Components.EditCompany import EditCompany
+from Components.MainPageTable import MainPageTable
 
 from sql_app import main,models
 import sqlite3
@@ -75,11 +78,6 @@ tree.pack()
 vertical_scroll.config(command = tree.yview)
 
 
-# img = ImageTk.PhotoImage(Image.open("fi-og-img.png").resize(20,20))
-
-# img_lable = customtkinter.CTkLabel(top_frame, image = img)
-# img_lable.grid(row=0, column=0, padx=10, pady=10)
-
 tree['column'] = (
     "Name",
     "OrgNumber",
@@ -88,87 +86,21 @@ tree['column'] = (
     "Description",
     "Employees",
     "Manicipality")
-
-
-
-
-
-def create_company():
-    select = tree.focus()
-    row = tree.item(select)
-    values = row.get('values')
-    
-    print(values[1])
-    print(values[0])
-    print(values[-1])
-
-    return models.Company(
-        OrgNumber = values[1],
-        CompanyName = values[0],
-        Description = values[-1],   
-    )
-
-
-def update_company():
-
-    
-    
-    select = tree.focus()
-    row = tree.item(select)
-    values = row.get('values')
-    OrgNumber = values[1]
-
-    main.update_Company(db=db, OrgNumber = OrgNumber, Company= create_company())
-
     
     
 
-def remove_company():
-    conn = sqlite3.connect('sql_app.db')
-    cursor = conn.cursor()
 
-    companies = tree.selection()
-    for company in companies:
-        orgNumber = company
-        print(company)
-        cursor.execute("DELETE FROM Company WHERE OrgNumber = "+ orgNumber)
-        tree.delete(company)
 
-    conn.commit()
-    conn.close()
 
-def selected():
-    email_entry.delete(0,END) 
-    sector_edit.delete(0,END)
-    name_entry.delete(0,END)
-
-    select = tree.focus()
-    row = tree.item(select)
-    values = row.get('values')
+# def make_treeview(companies):
+#     count_color = 0
+#     for company in companies:
+#         if count_color %2 ==0:
+#             tree.insert(parent='', index= 'end', iid=company[0], text="", values=(company[1],company[0],company[2],company[3],company[4],company[5],company[6]), tags=('evenrow'))
+#         else:
+#             tree.insert(parent='', index= 'end', iid=company[0], text="", values=(company[1],company[0],company[2],company[3],company[4],company[5],company[6]), tags=(''))
     
-
-
-    values = tree.item(select,'values')
-
-    name_entry.insert(0,values[0])
-    email_entry.insert(0, values[2])
-    sector_edit.insert(0, values[-1])
-    
-    
-
-def clicked(event):
-    selected()
-
-
-def make_treeview(companies):
-    count_color = 0
-    for company in companies:
-        if count_color %2 ==0:
-            tree.insert(parent='', index= 'end', iid=company[0], text="", values=(company[1],company[0],company[2],company[3],company[4],company[5],company[6]), tags=('evenrow'))
-        else:
-            tree.insert(parent='', index= 'end', iid=company[0], text="", values=(company[1],company[0],company[2],company[3],company[4],company[5],company[6]), tags=(''))
-    
-        count_color +=1
+#         count_color +=1
 
 def employee_treeview(companies):
     count_color = 0
@@ -185,7 +117,6 @@ def employee_treeview(companies):
             count_color +=1
    
 def search_database():
-    
     conn = sqlite3.connect('sql_app.db')
     cursor = conn.cursor()
     filter = search_dropdown.get()
@@ -221,84 +152,42 @@ def check_dropdown(self):
         employee_entry2.grid_remove()
 
 
-def switchmode():
-    state = mode_switch.get()
-    if(state == "on"):
-        customtkinter.set_appearance_mode("Dark")
-    else:
-        customtkinter.set_appearance_mode("System")
+
+# #colums
+# tree.column("#0", width=0, stretch=NO)
+# tree.column("Name", anchor=W, width= 120)
+# tree.column("OrgNumber", anchor=W, width= 80)
+# tree.column("Email", anchor=CENTER, width= 160)
+# tree.column("Sector", anchor=CENTER, width= 180)
+# tree.column("Description", anchor=CENTER, width= 120)
+# tree.column("Employees", anchor=W, width= 80)
+# tree.column("Manicipality", anchor=W, width= 120)
+
+# #Headings
+# tree.heading("#0", text= "", anchor= W)
+# tree.heading("Name", text= "Name", anchor= W)
+# tree.heading("OrgNumber", text= "OrgNumber", anchor= W)
+# tree.heading("Email", text= "Email", anchor= CENTER)
+# tree.heading("Sector", text= "Sector", anchor= CENTER)
+# tree.heading("Description", text= "Description", anchor= CENTER)
+# tree.heading("Employees", text= "Employees", anchor= W)
+# tree.heading("Manicipality", text= "Manicipality", anchor= W)
+
+# cursor.execute("SELECT *, oid FROM Company ")
+# companies = cursor.fetchall()
+
+# tree.tag_configure('oddrow',background="white")
+# tree.tag_configure('evenrow',background="#51B087")
 
 
-
-#colums
-tree.column("#0", width=0, stretch=NO)
-tree.column("Name", anchor=W, width= 120)
-tree.column("OrgNumber", anchor=W, width= 80)
-tree.column("Email", anchor=CENTER, width= 160)
-tree.column("Sector", anchor=CENTER, width= 180)
-tree.column("Description", anchor=CENTER, width= 120)
-tree.column("Employees", anchor=W, width= 80)
-tree.column("Manicipality", anchor=W, width= 120)
-
-#Headings
-tree.heading("#0", text= "", anchor= W)
-tree.heading("Name", text= "Name", anchor= W)
-tree.heading("OrgNumber", text= "OrgNumber", anchor= W)
-tree.heading("Email", text= "Email", anchor= CENTER)
-tree.heading("Sector", text= "Sector", anchor= CENTER)
-tree.heading("Description", text= "Description", anchor= CENTER)
-tree.heading("Employees", text= "Employees", anchor= W)
-tree.heading("Manicipality", text= "Manicipality", anchor= W)
-
-cursor.execute("SELECT *, oid FROM Company ")
-companies = cursor.fetchall()
-
-tree.tag_configure('oddrow',background="white")
-tree.tag_configure('evenrow',background="#51B087")
+# make_treeview(companies)
 
 
-make_treeview(companies)
+navbar = NavBar.NavBar(root, top_frame)
 
+maintable = MainPageTable.MainPageTable(root, tree_frame)
 
-
-folder_img = ImageTk.PhotoImage(Image.open("fi-og-img.png").resize((70,70),  Image.LANCZOS))
-icon = customtkinter.CTkButton(top_frame, image = folder_img,text="",borderwidth=0, width=70, height= 70, compound= "left" )
-icon.grid(row=0, column=0, padx=20, pady=10)
-
-folder_img = ImageTk.PhotoImage(Image.open("database.png").resize((40,40),  Image.LANCZOS))
-database_btn = customtkinter.CTkButton(top_frame, image = folder_img,text="", width=50, height= 50, compound= "left" )
-database_btn.grid(row=0, column=1, padx=10, )
-
-folder_img = ImageTk.PhotoImage(Image.open("company.png").resize((40,40),  Image.LANCZOS))
-company_btn = customtkinter.CTkButton(top_frame, image = folder_img,text="", width=50, height= 50, compound= "left" )
-company_btn.grid(row=0, column=2, padx=20, pady=10)
-
-folder_img = ImageTk.PhotoImage(Image.open("list.png").resize((40,40),  Image.LANCZOS))
-
-list_btn = customtkinter.CTkButton(top_frame, image = folder_img,text="", width=50, height= 50, compound= "left" )
-list_btn.grid(row=0, column=3, padx=20, pady=10)
-
-
-
-
-email_entry = customtkinter.CTkEntry(bottom_frame,
-                                placeholder_text="Comany Email",
-                               width=180,
-                               height=25,
-                               border_width=2,
-                               corner_radius=5)
-email_entry.grid(row=0, column=5,padx=10, pady=10)
-
-# company_name = customtkinter.CTkLabel(bottom_frame, text="Name", width=180,height=25, corner_radius=8)
-# company_name.grid(row=0, column= 0,  padx=10, pady=10)
-
-name_entry = customtkinter.CTkEntry(bottom_frame,
-                                placeholder_text="Company Name",
-                               width=180,
-                               height=25,
-                               border_width=2,
-                               corner_radius=5)
-name_entry.grid(row=0, column=0, padx=10, pady=10)
+edit_company_section = EditCompany(root, bottom_frame, tree)
 
 search_entry = customtkinter.CTkEntry(search_frame,
                                 placeholder_text="Search Company",
@@ -336,37 +225,14 @@ employee_entry2 = customtkinter.CTkEntry(search_frame,
                                border_width=2,
                                corner_radius=5)
 
-mode_switch = customtkinter.CTkSwitch(top_frame, text = "Dark Mode", command= switchmode, onvalue= "on", offvalue= "off")
-mode_switch.grid(row=0, column=9, padx=10, pady=10)
 
 
-sector_edit = customtkinter.CTkEntry(bottom_frame,
-                                placeholder_text="Sector",
-                               width=180,
-                               height=25,
-                               border_width=2,
-                               corner_radius=5)
-sector_edit.grid(row=0, column=7,padx=10, pady=10)
 
+# excel_btn = customtkinter.CTkButton(bottom_frame, text="Export to Excel", command= remove_company)
+# excel_btn.grid(row=6, column=6, columnspan=2, pady=10, padx=10, ipadx= 30 )
 
-# edit_email = Label(bottom_frame, text="Email")
-# edit_email.grid(row=0, column= 3)
-
-
-# edit_Sector = Label(bottom_frame, text="Sector")
-# edit_Sector.grid(row=0, column= 5)
-
-update_btn = customtkinter.CTkButton(bottom_frame, text = 'Save Changes', command=update_company)
-update_btn.grid(row=6, column=0, columnspan=2, pady=10, padx=10, ipadx= 30 )
-
-remove_company_btn = customtkinter.CTkButton(bottom_frame, text="Remove Company", command= remove_company)
-remove_company_btn.grid(row=6, column=4, columnspan=2, pady=10, padx=10, ipadx= 30 )
-
-
-excel_btn = customtkinter.CTkButton(bottom_frame, text="Export to Excel", command= remove_company)
-excel_btn.grid(row=6, column=6, columnspan=2, pady=10, padx=10, ipadx= 30 )
-
-
+def clicked(event):
+    edit_company_section.selected()
 
 
 tree.bind("<ButtonRelease-1>", clicked)
