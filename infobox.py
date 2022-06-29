@@ -1,3 +1,18 @@
+from tkinter import*
+from tkinter import ttk
+from PIL import ImageTk, Image
+import customtkinter
+from matplotlib import image
+
+from sqlalchemy import column, values
+
+from sql_app import main,models
+import sqlite3
+from sql_app import database
+
+from sql_app.database import SessionLocal
+db = SessionLocal()
+
 bottom_frame = customtkinter.CTkFrame(root)
 bottom_frame.grid(row = 3, column = 0, sticky = "nswe",padx = 20, pady = 20)
 
