@@ -53,7 +53,7 @@ class StockHolder(Base):
 
 class Aid(Base):
     __tablename__ = "Aid"
-    AidId = Column(String, primary_key = True, index=True)
+    AidId = Column(String(100), primary_key = True, index=True)
     Sum = Column(Integer)
     GivenBy = Column(String)
     Type = Column(String)
