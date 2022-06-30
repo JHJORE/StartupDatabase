@@ -29,7 +29,7 @@ class Filter(Frame):
                                                         "Sector", 
                                                         "Employees", 
                                                         "Municipality"],
-                                                        command=self.check_dropdown
+                                                        command=self.check_dropdown,
                                                     )
         self.search_dropdown.grid(row=0, column=1, padx=10, pady=10)
 
@@ -48,9 +48,8 @@ class Filter(Frame):
 
         self.tree = tree
 
-    def check_dropdown(self):
-        selected = self.search_dropdown.get()
-        if(selected == "Employees"):
+    def check_dropdown(self, x):
+        if(x == "Employees"):
             self.employee_entry1.grid(row=0, column=2, padx=10, pady=10)
             self.employee_entry2.grid(row=0, column=3, padx=10, pady=10)
         else:
@@ -96,7 +95,9 @@ class Filter(Frame):
         employees_start = int(self.employee_entry1.get())
         employees_end = int(self.employee_entry2.get())
         for company in companies:
-            employed = int(company[5])
+            employed = company[5]
+            if employed == None:
+                continue
             if(employees_end>= employed and employed>=employees_start):
                 if count_color %2 ==0:
                     self.tree.insert(parent='', index= 'end', iid=company[0], text="", values=(company[1],company[0],company[2],company[3],company[4],company[5],company[6]), tags=('evenrow'))
