@@ -9,7 +9,7 @@ from sqlalchemy.engine import URL
 
 import urllib
 
-params = 'DRIVER={ODBC Driver 18 for SQL Server};' \
+params = 'DRIVER={ODBC Driver 17 for SQL Server};' \
          'SERVER=tcp:folkeinvest-internship2022.database.windows.net;' \
          'PORT=1433;' \
          'DATABASE=Folkeinvest-Internship-2022;' \
