@@ -1,6 +1,7 @@
 from tkinter import *
 import customtkinter
 from PIL import ImageTk, Image
+from sql_app import main
 from sql_app.database import SessionLocal
 import sqlite3
 
@@ -18,6 +19,9 @@ class Filter(Frame):
                                corner_radius=5)
 
         self.search_entry.grid(row=0, column=0, padx=10, pady=10)  
+
+        delete_btn = customtkinter.CTkButton(search_frame, text="Delete Company", command= self.remove_company)
+        delete_btn.grid(row=3, column=3, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
 
         self.folder_img = ImageTk.PhotoImage(Image.open("searchicon.png").resize((20,20),  Image.LANCZOS))
@@ -73,7 +77,7 @@ class Filter(Frame):
         else:
             for company in self.tree.get_children():
                 self.tree.delete(company)
-            if(filter == "Employees"): #trenges ettersom vi sorterer i tall og ikke items
+            if(filter == "Employees"): 
                 self.employee_treeview(companies)
             else:
                 self.make_treeview(companies) 
@@ -105,3 +109,12 @@ class Filter(Frame):
                     self.tree.insert(parent='', index= 'end', iid=company[0], text="", values=(company[1],company[0],company[2],company[3],company[4],company[5],company[6]), tags=(''))
         
                 count_color +=1
+    def remove_company(self):
+        select = self.tree.focus()
+        row = self.tree.item(select)
+        values = row.get('values')
+        orgnumber = values[1]
+        main.delete_Company(db = self.db, OrgNumber=orgnumber)
+        
+        company = self.tree.focus()
+        self.tree.delete(company)

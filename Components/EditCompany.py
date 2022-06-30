@@ -10,40 +10,52 @@ class EditCompany(tk.Frame):
 
         self.db = SessionLocal()
 
-        self.update_btn = customtkinter.CTkButton(bottom_frame, text = 'Save Changes', command=self.update_company)
-        self.update_btn.grid(row=6, column=0, columnspan=2, pady=10, padx=10, ipadx= 30 )
-
-        self.remove_company_btn = customtkinter.CTkButton(bottom_frame, text="Remove Company", command= self.remove_company)
-        self.remove_company_btn.grid(row=6, column=4, columnspan=2, pady=10, padx=10, ipadx= 30 )
-
-
-        self.excel_btn = customtkinter.CTkButton(bottom_frame, text="Export to Excel", command= self.remove_company)
-        self.excel_btn.grid(row=6, column=6, columnspan=2, pady=10, padx=10, ipadx= 30 )
-        
-        self.tree = tree
-
-        self.email_entry = customtkinter.CTkEntry(bottom_frame,
-                                placeholder_text="Company Email",
+        email_entry = customtkinter.CTkEntry(bottom_frame,
+                                placeholder_text="Comany Email",
                                width=180,
                                height=25,
                                border_width=2,
                                corner_radius=5)
-        self.email_entry.grid(row=0, column=5,padx=10, pady=10)
+        email_entry.grid(row=1, column=0,padx=10, pady=10)
 
-        self.name_entry = customtkinter.CTkEntry(bottom_frame,
-                                    placeholder_text="Company Name",
-                                width=180,
-                                height=25,
-                                border_width=2,
-                                corner_radius=5)
-        self.name_entry.grid(row=0, column=0, padx=10, pady=10)
-        self.sector_edit = customtkinter.CTkEntry(bottom_frame,
-                                placeholder_text="Municipality",
-                               width=180,
-                               height=25,
-                               border_width=2,
-                               corner_radius=5)
-        self.sector_edit.grid(row=0, column=7,padx=10, pady=10)
+        # company_name = customtkinter.CTkLabel(bottom_frame, text="Name", width=180,height=25, corner_radius=8)
+        # company_name.grid(row=0, column= 0,  padx=10, pady=10)
+
+        name_entry = customtkinter.CTkEntry(bottom_frame,
+                                        placeholder_text="Company Name",
+                                    width=180,
+                                    height=25,
+                                    border_width=2,
+                                    corner_radius=5)
+        name_entry.grid(row=0, column=0, padx=10, pady=10)
+
+        org_entry = customtkinter.CTkEntry(bottom_frame,
+                                        placeholder_text="OrgNumber",
+                                    width=180,
+                                    height=25,
+                                    border_width=2,
+                                    corner_radius=5)
+        org_entry.grid(row=0, column=1, padx=10, pady=10)
+
+        muncipality_entry = customtkinter.CTkEntry(bottom_frame,
+                                        placeholder_text="Municipality",
+                                    width=180,
+                                    height=25,
+                                    border_width=2,
+                                    corner_radius=5)
+        muncipality_entry.grid(row=1, column=2, padx=10, pady=10)
+
+        update_btn = customtkinter.CTkButton(bottom_frame, text = 'Save Changes', command=self.update_company)
+        update_btn.grid(row=3, column=0, columnspan=1, pady=10, padx=10, ipadx= 30 )
+
+        notes_btn = customtkinter.CTkButton(bottom_frame, text="Notes", command= self.notes)
+        notes_btn.grid(row=3, column=1, columnspan=1, pady=10, padx=10, ipadx= 30 )
+
+        news_btn = customtkinter.CTkButton(bottom_frame, text="News Articles", command= self.news)
+        news_btn.grid(row=3, column=2, columnspan=1, pady=10, padx=10, ipadx= 30 )
+
+        delete_btn = customtkinter.CTkButton(bottom_frame, text="Delete Company", command= self.remove_company)
+        delete_btn.grid(row=3, column=3, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
 
     def update_company(self):
