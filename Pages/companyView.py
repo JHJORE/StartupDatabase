@@ -5,8 +5,8 @@ import customtkinter
 from sqlalchemy import column, values
 import sqlite3
 from sql_app.database import SessionLocal
-import capitalTree
-import aidTree
+import Components.capitalTree as capitalTree
+import Components.aidTree as aidTree
 db = SessionLocal()
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
