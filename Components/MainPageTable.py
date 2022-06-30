@@ -4,7 +4,7 @@ from sql_app import main
 from sql_app.database import SessionLocal
 
 class MainPageTable(Frame):
-    def __init__(self, parent, tree_frame):
+    def __init__(self, parent, tree_frame, clicked):
         Frame.__init__(self, parent)
         self.db = SessionLocal()
 
@@ -22,7 +22,7 @@ class MainPageTable(Frame):
         "Sector",
         "Description",
         "Employees",
-        "Manicipality")
+        "Municipality")
         #colums
         self.tree.column("#0", width=0, stretch=NO)
         self.tree.column("Name", anchor=W, width= 120)
@@ -31,7 +31,7 @@ class MainPageTable(Frame):
         self.tree.column("Sector", anchor=CENTER, width= 180)
         self.tree.column("Description", anchor=CENTER, width= 120)
         self.tree.column("Employees", anchor=W, width= 80)
-        self.tree.column("Manicipality", anchor=W, width= 120)
+        self.tree.column("Municipality", anchor=W, width= 120)
 
         #Headings
         self.tree.heading("#0", text= "", anchor= W)
@@ -41,24 +41,13 @@ class MainPageTable(Frame):
         self.tree.heading("Sector", text= "Sector", anchor= CENTER)
         self.tree.heading("Description", text= "Description", anchor= CENTER)
         self.tree.heading("Employees", text= "Employees", anchor= W)
-        self.tree.heading("Manicipality", text= "Manicipality", anchor= W)
+        self.tree.heading("Municipality", text= "Municipality", anchor= W)
 
         self.tree.tag_configure('oddrow',background="white")
         self.tree.tag_configure('evenrow',background="#51B087")
 
-        
-
-
-        self.tree['column'] = (
-            "Name",
-            "OrgNumber",
-            "Email",
-            "Sector",
-            "Description",
-            "Employees",
-            "Manicipality")
-
         self.make_treeview()
+        self.tree.bind("<ButtonRelease-1>", clicked)
 
     def get_tree(self):
         return self.tree

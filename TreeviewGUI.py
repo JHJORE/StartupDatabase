@@ -48,18 +48,22 @@ bottom_frame = customtkinter.CTkFrame(root)
 bottom_frame.grid(row = 3, column = 0, sticky = "nswe",padx = 20, pady = 20)
 
 
+def clicked(event):
+    tree = maintable.get_tree()
+    select = tree.focus()
+    values = tree.item(select,'values')
+    edit_company_section.selected(values=values)
+
+
 navbar = NavBar.NavBar(root, top_frame)
 
-maintable = MainPageTable.MainPageTable(root, tree_frame)
+maintable = MainPageTable.MainPageTable(root, tree_frame, clicked)
 
-filter = Filter.Filter(root, search_frame, maintable.get_tree)
+filter = Filter.Filter(root, search_frame, maintable.get_tree())
 
-edit_company_section = EditCompany.EditCompany(root, bottom_frame, maintable.get_tree)
-
-def clicked(event):
-    edit_company_section.selected()
+edit_company_section = EditCompany.EditCompany(root, bottom_frame, maintable.get_tree())
 
 
-#tree.bind("<ButtonRelease-1>", clicked)
+
 
 root.mainloop()

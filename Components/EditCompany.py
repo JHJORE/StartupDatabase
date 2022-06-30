@@ -23,7 +23,7 @@ class EditCompany(tk.Frame):
         self.tree = tree
 
         self.email_entry = customtkinter.CTkEntry(bottom_frame,
-                                placeholder_text="Comany Email",
+                                placeholder_text="Company Email",
                                width=180,
                                height=25,
                                border_width=2,
@@ -38,7 +38,7 @@ class EditCompany(tk.Frame):
                                 corner_radius=5)
         self.name_entry.grid(row=0, column=0, padx=10, pady=10)
         self.sector_edit = customtkinter.CTkEntry(bottom_frame,
-                                placeholder_text="Sector",
+                                placeholder_text="Municipality",
                                width=180,
                                height=25,
                                border_width=2,
@@ -46,29 +46,17 @@ class EditCompany(tk.Frame):
         self.sector_edit.grid(row=0, column=7,padx=10, pady=10)
 
 
-    def create_company(self):
-        select = self.tree.focus()
-        row = self.tree.item(select)
-        values = row.get('values')
-
-        return models.Company(
-            OrgNumber = values[1],
-            CompanyName = values[0],
-            Description = values[-1],   
-        )
-
-
     def update_company(self):
         select = self.tree.focus()
         row = self.tree.item(select)
         values = row.get('values')
+        company = self.create_company()
         OrgNumber = values[1]
+        self.tree.item(select, values=(company.CompanyName, company.OrgNumber, company.Email, company.Sector, company.Description, company.Employees, company.Municipality))
+        main.update_Company(db=self.db, OrgNumber = OrgNumber, Company = company)
 
-        main.update_Company(db=self.db, OrgNumber = OrgNumber, Company = self.create_company())
 
         
-        
-
     def remove_company(self):
         select = self.tree.focus()
         row = self.tree.item(select)
@@ -81,18 +69,10 @@ class EditCompany(tk.Frame):
 
         
 
-    def selected(self):
+    def selected(self, values):
         self.email_entry.delete(0,tk.END) 
         self.sector_edit.delete(0,tk.END)
         self.name_entry.delete(0,tk.END)
-
-        select = self.tree.focus()
-        row = self.tree.item(select)
-        values = row.get('values')
-        
-
-
-        values = self.tree.item(select,'values')
 
         self.name_entry.insert(0,values[0])
         self.email_entry.insert(0, values[2])
@@ -102,13 +82,14 @@ class EditCompany(tk.Frame):
         select = self.tree.focus()
         row = self.tree.item(select)
         values = row.get('values')
-        
-        print(values[1])
-        print(values[0])
-        print(values[-1])
 
         return models.Company(
             OrgNumber = values[1],
-            CompanyName = values[0],
-            Description = values[-1],   
+            CompanyName = self.name_entry.get(),
+            Email = self.email_entry.get(),
+            Sector = values[3],
+            Description = values[4],   
+            Employees = values[5],
+            Municipality = self.sector_edit.get(),
+            #HomePage = values[x],
         )
