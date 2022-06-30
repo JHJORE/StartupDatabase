@@ -17,7 +17,6 @@ def fetch_website(url):
 def get_capital_date_and_size(obj):
     capital_page = fetch_website("https://w2.brreg.no/kunngjoring/" + obj["link"])
     capital_soup = BeautifulSoup(capital_page.content, "html.parser")
-    
     date = capital_soup.findAll(text=re.compile("Foretaksregisteret *"))[1].split(" ")[1]
     obj["date"] = date
 
@@ -38,25 +37,28 @@ def fetch_capital_raises_by_org_num(orgnum):
     for raises in capital_raises:
         get_capital_date_and_size(raises)
     
-    df = pd.DataFrame.from_dict(capital_raises)
-    df['date'] = pd.to_datetime(df['date'], format="%d.%m.%Y")
-    df["change"] = df["amount"].pct_change(-1)*100
-    
-    return df
+    if len(capital_raises) > 0:
+        df = pd.DataFrame.from_dict(capital_raises)
+        df['date'] = pd.to_datetime(df['date'], format="%d.%m.%Y")
+        df["change"] = df["amount"].pct_change(-1)*100
+        return df
+    else:
+        return None
 
 
 def capital_raises_to_db(orgnum):
     df = fetch_capital_raises_by_org_num(orgnum=orgnum)
-    db = SessionLocal()
-    for row in df.iterrows():
-        capitalraise = CapitalRaise (
-            Sum = row[1].loc["amount"],
-            Link = row[1].loc["link"],
-            Date = row[1].loc["date"],
-            OrgNumber = orgnum
-        )
-        main.create_CapitalRaise(OrgNumber=orgnum, CapitalRaise=capitalraise, db=db)
+    print(df)
+    if (not df.empty):
+        db = SessionLocal()
+        for row in df.iterrows():
+            capitalraise = CapitalRaise (
+                Sum = row[1].loc["amount"],
+                Link = row[1].loc["link"],
+                Date = row[1].loc["date"],
+                OrgNumber = orgnum
+            )
+            main.create_CapitalRaise(OrgNumber=orgnum, CapitalRaise=capitalraise, db=db)
     
 orgnum = 916545061
-df = fetch_capital_raises_by_org_num(orgnum)
 capital_raises_to_db(orgnum)
