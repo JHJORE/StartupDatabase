@@ -67,6 +67,7 @@ class Filter(Frame):
         if(company_search != ""): 
             for company in self.tree.get_children():
                 self.tree.delete(company)
+            company_search = "%" + company_search + "%"
             cursor.execute(f"SELECT *, oid FROM Company WHERE {filter} like ?", (company_search,))
             companies = cursor.fetchall()
             self.make_treeview(companies)
