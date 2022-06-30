@@ -1,6 +1,6 @@
-from DataGathering.BrRegTilsagn import brreg_tilsagn_to_db
-from DataGathering.EnhetBrReg import company_info_brreg
-from DataGathering.Aid import innovation_norway_help
+from BrRegTilsagn import brreg_tilsagn_to_db
+from EnhetBrReg import company_info_brreg
+from Aid import innovation_norway_help
 
 
 def update_data():

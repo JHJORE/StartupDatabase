@@ -37,6 +37,14 @@ class EditCompany(tk.Frame):
                                     corner_radius=5)
         org_entry.grid(row=0, column=1, padx=10, pady=10)
 
+        name_entry = customtkinter.CTkEntry(bottom_frame,
+                                        placeholder_text="Employees",
+                                    width=180,
+                                    height=25,
+                                    border_width=2,
+                                    corner_radius=5)
+        name_entry.grid(row=1, column=1, padx=10, pady=10)
+
         muncipality_entry = customtkinter.CTkEntry(bottom_frame,
                                         placeholder_text="Municipality",
                                     width=180,
@@ -48,10 +56,10 @@ class EditCompany(tk.Frame):
         update_btn = customtkinter.CTkButton(bottom_frame, text = 'Save Changes', command=self.update_company)
         update_btn.grid(row=3, column=0, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
-        notes_btn = customtkinter.CTkButton(bottom_frame, text="Notes", command= self.notes)
+        notes_btn = customtkinter.CTkButton(bottom_frame, text="Notes")#, command= self.notes)
         notes_btn.grid(row=3, column=1, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
-        news_btn = customtkinter.CTkButton(bottom_frame, text="News Articles", command= self.news)
+        news_btn = customtkinter.CTkButton(bottom_frame, text="News Articles")#, command= self.news)
         news_btn.grid(row=3, column=2, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
         delete_btn = customtkinter.CTkButton(bottom_frame, text="Delete Company", command= self.remove_company)

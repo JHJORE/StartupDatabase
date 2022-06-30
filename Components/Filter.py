@@ -11,6 +11,8 @@ class Filter(Frame):
 
         self.db = SessionLocal()
 
+        search_frame.rowconfigure((10), weight=1)
+
         self.search_entry = customtkinter.CTkEntry(search_frame,
                                 placeholder_text="Search Company",
                                width=180,
@@ -19,12 +21,11 @@ class Filter(Frame):
                                corner_radius=5)
 
         self.search_entry.grid(row=0, column=0, padx=10, pady=10)  
-
         delete_btn = customtkinter.CTkButton(search_frame, text="Delete Company", command= self.remove_company)
-        delete_btn.grid(row=3, column=3, columnspan=1, pady=10, padx=10, ipadx= 30 )
+        delete_btn.grid(row=0, column=10, columnspan=1, pady=10, padx=10, ipadx= 30, sticky="ne")
 
 
-        self.folder_img = ImageTk.PhotoImage(Image.open("searchicon.png").resize((20,20),  Image.LANCZOS))
+        self.folder_img = ImageTk.PhotoImage(Image.open("./Constants/searchicon.png").resize((20,20),  Image.LANCZOS))
         self.search_button = customtkinter.CTkButton(search_frame, image = self.folder_img,text="", width=20, height= 20, compound= "left", command=self.search_database)
         self.search_button.grid(row=0, column=5, padx=10, pady=10)
         self.search_dropdown = customtkinter.CTkOptionMenu(search_frame,

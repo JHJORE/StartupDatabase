@@ -1,7 +1,18 @@
 from tkinter import*
 from tkinter import ttk
 import customtkinter
-from Components import NavBar, EditCompany, MainPageTable, Filter
+
+# import os
+# import sys
+
+# script_dir = os.path.dirname( __file__ )
+# mymodule_dir = os.path.join( script_dir, '..', 'Components' )
+# sys.path.append( mymodule_dir )
+# import NavBar, MainPageTable, Filter, EditCompany
+
+from Components import NavBar, Filter, EditCompany, MainPageTable
+#import Components.NavBar, Components.Filter, Components.EditCompany, Components.MainPageTable
+#import Components
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -52,13 +63,13 @@ def clicked(event):
     values = tree.item(select,'values')
     edit_company_section.selected(values=values)
 
-navbar = NavBar.NavBar(root, top_frame)
+navbar = NavBar(root, top_frame)
 
-maintable = MainPageTable.MainPageTable(root, tree_frame, clicked)
+maintable = MainPageTable(root, tree_frame, clicked)
 
-filter = Filter.Filter(root, search_frame, maintable.get_tree())
+filter = Filter(root, search_frame, maintable.get_tree())
 
-edit_company_section = EditCompany.EditCompany(root, bottom_frame, maintable.get_tree())
+edit_company_section = EditCompany(root, bottom_frame, maintable.get_tree())
 
 
 
