@@ -52,11 +52,9 @@ def clicked(event):
     tree = maintable.get_tree()
     select = tree.focus()
     values = tree.item(select,'values')
+    edit_company_section.selected(values=values)
 
-
-news_btn = customtkinter.CTkButton(bottom_frame, text="News Articles", command= remove_company)
-news_btn.grid(row=3, column=2, columnspan=1, pady=10, padx=10, ipadx= 30 )
-
+navbar = NavBar.NavBar(root, top_frame)
 
 maintable = MainPageTable.MainPageTable(root, tree_frame, clicked)
 
