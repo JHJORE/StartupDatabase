@@ -1,13 +1,9 @@
 from tkinter import *
 from tkinter.ttk import Treeview
-from turtle import right
-import customtkinter
-from numpy import pad
-from sql_app import models, main
 import sqlite3
 
-class capitalTree(Frame):
-    def __init__(self, parent, right_frame):
+class CapitalTree(Frame):
+    def __init__(self, parent, right_frame, values):
         Frame.__init__(self, parent)
         conn = sqlite3.connect('sql_app.db')
         cursor = conn.cursor()
@@ -37,7 +33,9 @@ class capitalTree(Frame):
         tree.heading("Date", text= "Date", anchor= W)
         tree.heading("Link", text= "Link", anchor= CENTER)
 
-        cursor.execute("SELECT * FROM CapitalRaise")
+        print(values)
+
+        cursor.execute("SELECT * FROM CapitalRaise WHERE OrgNumber = ?", (int(values[1])))
         capitalRais = cursor.fetchall()
 
         tree.tag_configure('oddrow',background="white")
@@ -51,3 +49,5 @@ class capitalTree(Frame):
                 tree.insert(parent='', index= 'end', iid=capital[0], text="", values=(capital[1],capital[3],capital[2]), tags=(''))
     
             count_color +=1
+        conn.commit()
+        conn.close()

@@ -4,7 +4,7 @@ from sql_app import main
 from sql_app.database import SessionLocal
 
 class MainPageTable(Frame):
-    def __init__(self, parent, tree_frame, clicked):
+    def __init__(self, parent, tree_frame, open_company):
         Frame.__init__(self, parent)
         self.db = SessionLocal()
 
@@ -47,7 +47,7 @@ class MainPageTable(Frame):
         self.tree.tag_configure('evenrow',background="#51B087")
 
         self.make_treeview()
-        self.tree.bind("<ButtonRelease-1>", clicked)
+        self.tree.bind("<Double-1>", open_company)
 
     def get_tree(self):
         return self.tree
@@ -62,4 +62,5 @@ class MainPageTable(Frame):
                 self.tree.insert(parent='', index= 'end', iid=company.OrgNumber, text="", values=(company.CompanyName,company.OrgNumber,company.Email,company.Sector,company.Description,company.Employees,company.Municipality), tags=(''))
         
             count_color +=1
+
 

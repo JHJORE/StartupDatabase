@@ -1,12 +1,13 @@
-import tkinter as tk
+from tkinter import *
 import customtkinter
 from sql_app import models, main
-import sqlite3
 from sql_app.database import SessionLocal
+from Pages.Notes import Notes
 
-class EditCompany(tk.Frame):
-    def __init__(self, parent, bottom_frame, tree):
-        tk.Frame.__init__(self, parent)
+class EditCompany(Frame):
+    
+    def __init__(self, parent, bottom_frame, values):
+        Frame.__init__(self, parent)
 
         self.db = SessionLocal()
 
@@ -37,13 +38,13 @@ class EditCompany(tk.Frame):
                                     corner_radius=5)
         org_entry.grid(row=0, column=1, padx=10, pady=10)
 
-        name_entry = customtkinter.CTkEntry(bottom_frame,
+        employees_entry = customtkinter.CTkEntry(bottom_frame,
                                         placeholder_text="Employees",
                                     width=180,
                                     height=25,
                                     border_width=2,
                                     corner_radius=5)
-        name_entry.grid(row=1, column=1, padx=10, pady=10)
+        employees_entry.grid(row=1, column=1, padx=10, pady=10)
 
         muncipality_entry = customtkinter.CTkEntry(bottom_frame,
                                         placeholder_text="Municipality",
@@ -56,7 +57,7 @@ class EditCompany(tk.Frame):
         update_btn = customtkinter.CTkButton(bottom_frame, text = 'Save Changes', command=self.update_company)
         update_btn.grid(row=3, column=0, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
-        notes_btn = customtkinter.CTkButton(bottom_frame, text="Notes")#, command= self.notes)
+        notes_btn = customtkinter.CTkButton(bottom_frame, text="Notes")
         notes_btn.grid(row=3, column=1, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
         news_btn = customtkinter.CTkButton(bottom_frame, text="News Articles")#, command= self.news)
@@ -64,6 +65,14 @@ class EditCompany(tk.Frame):
 
         delete_btn = customtkinter.CTkButton(bottom_frame, text="Delete Company", command= self.remove_company)
         delete_btn.grid(row=3, column=3, columnspan=1, pady=10, padx=10, ipadx= 30 )
+        # adding vlaues
+        print(values)
+
+        name_entry.insert(0,values[0])
+        email_entry.insert(0, values[2])
+        muncipality_entry.insert(0, values[-1])
+        org_entry.insert(0,values[1])
+        employees_entry.insert(0, values[5])
 
 
     def update_company(self):
@@ -89,14 +98,7 @@ class EditCompany(tk.Frame):
 
         
 
-    def selected(self, values):
-        self.email_entry.delete(0,tk.END) 
-        self.sector_edit.delete(0,tk.END)
-        self.name_entry.delete(0,tk.END)
 
-        self.name_entry.insert(0,values[0])
-        self.email_entry.insert(0, values[2])
-        self.sector_edit.insert(0, values[-1])
 
     def create_company(self):
         select = self.tree.focus()

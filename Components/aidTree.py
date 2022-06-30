@@ -6,8 +6,9 @@ from numpy import pad
 from sql_app import models, main
 import sqlite3
 
-class aidTree(Frame):
-    def __init__(self, parent, left_frame):
+
+class AidTree(Frame):
+    def __init__(self, parent, left_frame, values):
         Frame.__init__(self, parent)
         conn = sqlite3.connect('sql_app.db')
         cursor = conn.cursor()
@@ -47,7 +48,7 @@ class aidTree(Frame):
         tree.heading("Country", text= "Country", anchor= CENTER)
         tree.heading("DateGiven", text= "DateGiven", anchor= CENTER)
 
-        cursor.execute("SELECT * FROM Aid")
+        cursor.execute("SELECT *, oid FROM Aid WHERE OrgNumber = ?", (values[1]))
         capitalRais = cursor.fetchall()
 
         tree.tag_configure('oddrow',background="white")
@@ -61,3 +62,5 @@ class aidTree(Frame):
                 tree.insert(parent='', index= 'end', iid=capital[0], text="", values=(capital[1],capital[3],capital[2]), tags=(''))
     
             count_color +=1
+        conn.commit()
+        conn.close()
