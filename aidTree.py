@@ -6,38 +6,48 @@ from numpy import pad
 from sql_app import models, main
 import sqlite3
 
-class capitalTree(Frame):
-    def __init__(self, parent, right_frame):
+class aidTree(Frame):
+    def __init__(self, parent, left_frame):
         Frame.__init__(self, parent)
         conn = sqlite3.connect('sql_app.db')
         cursor = conn.cursor()
 
 
-        vertical_scroll = Scrollbar(right_frame)
+        vertical_scroll = Scrollbar(left_frame)
         vertical_scroll.grid(row=0, column=1, sticky="ns",padx = 0, pady = 40 )
 
-        tree = Treeview(right_frame,height= 20 , yscrollcommand= vertical_scroll.set)
+        tree = Treeview(left_frame,height= 20 , yscrollcommand= vertical_scroll.set)
         tree.grid(row = 0, column = 0, sticky = "nswe",padx = 40, pady = 40, ipadx = 10)
 
         vertical_scroll.config(command = tree.yview)
         tree['column'] = (
         "Sum",
-        "Date",
-        "Link")
+        "GivenBy",
+        "Type",
+        "Reason",
+        "Country",
+        "DateGiven")
 
         #colums
         tree.column("#0", width=0, stretch=NO)
         tree.column("Sum", anchor=CENTER, width= 200, stretch= 20)
-        tree.column("Date", anchor=W, width= 200, stretch= 20)
-        tree.column("Link", anchor=W, width= 300, stretch= 20)
+        tree.column("GivenBy", anchor=W, width= 200, stretch= 20)
+        tree.column("Type", anchor=W, width= 300, stretch= 20)
+        tree.column("Reason", anchor=W, width= 300, stretch= 20)
+        tree.column("Country", anchor=W, width= 300, stretch= 20)
+        tree.column("DateGiven", anchor=W, width= 300, stretch= 20)
+        
 
         #Headings
         tree.heading("#0", text= "", anchor= W)
         tree.heading("Sum", text= "Sum", anchor= W)
-        tree.heading("Date", text= "Date", anchor= W)
-        tree.heading("Link", text= "Link", anchor= CENTER)
+        tree.heading("GivenBy", text= "Given By", anchor= W)
+        tree.heading("Type", text= "Type", anchor= CENTER)
+        tree.heading("Reason", text= "Reason", anchor= CENTER)
+        tree.heading("Country", text= "Country", anchor= CENTER)
+        tree.heading("DateGiven", text= "DateGiven", anchor= CENTER)
 
-        cursor.execute("SELECT * FROM CapitalRaise")
+        cursor.execute("SELECT * FROM Aid")
         capitalRais = cursor.fetchall()
 
         tree.tag_configure('oddrow',background="white")

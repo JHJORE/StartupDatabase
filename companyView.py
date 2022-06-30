@@ -6,6 +6,7 @@ from sqlalchemy import column, values
 import sqlite3
 from sql_app.database import SessionLocal
 import capitalTree
+import aidTree
 db = SessionLocal()
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
@@ -45,7 +46,7 @@ capitaltree = capitalTree.capitalTree(root, right_frame)
 
 
 #tree AID
-
+aid = aidTree.aidTree(root,left_frame)
 
 
 
