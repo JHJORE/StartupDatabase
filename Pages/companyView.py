@@ -6,9 +6,8 @@ from Components import AidTree, CapitalTree, EditCompany
 
 class CompanyView(Frame):
 
-    def __init__(self, parent, controller, values = None):
+    def __init__(self, parent, values):
         Frame.__init__(self, parent)
-        
         self.values = values
 
         # customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"

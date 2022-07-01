@@ -1,4 +1,5 @@
 from tkinter import *
+from typing import List
 import customtkinter
 from sql_app import models, main
 from sql_app.database import SessionLocal
@@ -65,14 +66,12 @@ class EditCompany(Frame):
 
         delete_btn = customtkinter.CTkButton(bottom_frame, text="Delete Company", command= self.remove_company)
         delete_btn.grid(row=3, column=3, columnspan=1, pady=10, padx=10, ipadx= 30 )
-        # adding vlaues
-        #print(values[0])
-
-        # name_entry.insert(0,values[0])
-        # email_entry.insert(0, values[2])
-        # muncipality_entry.insert(0, values[-1])
-        # org_entry.insert(0,values[1])
-        # employees_entry.insert(0, values[5])
+        # if (type(values) == list):
+        #     name_entry.insert(0,values[0])
+        #     email_entry.insert(0, values[2])
+        #     muncipality_entry.insert(0, values[-1])
+        #     org_entry.insert(0,values[1])
+        #     employees_entry.insert(0, values[5])
 
 
     def update_company(self):
