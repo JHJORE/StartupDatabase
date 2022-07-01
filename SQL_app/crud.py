@@ -8,10 +8,10 @@ def get_Company(db: Session, OrgNumber_id: int):
     return db.query(models.Company).filter(models.Company.OrgNumber == OrgNumber_id).first()
 
 def get_CompanyByName(db: Session, CompanyName: str):
-    return db.query(models.Company).filter(models.Company.CompanyName == CompanyName).first()
+    return db.query(models.Company).filter(models.Company.CompanyName.like(f"%Folkeinvest%")).first()
 
-def get_Companies(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Company).offset(skip).limit(limit).all()
+def get_Companies(db: Session, Municipality: str, Sector: int, EmployeesMin: int, EmployeesMax: int, skip: int = 0, limit: int = 100):
+    return db.query(models.Company).filter(models.Company.Sector.like(f"%{Sector}%"), models.Company.Employees >= EmployeesMin, models.Company.Employees <= EmployeesMax, models.Company.Municipality.like(f"%{Municipality}%")).offset(skip).limit(limit).all()
 
 def get_Note(db: Session, NoteId: int):
     return db.query(models.Note).filter(models.Note.NoteId == NoteId).first()

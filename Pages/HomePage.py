@@ -1,10 +1,10 @@
 from tkinter import*
 from tkinter import ttk
 import customtkinter
-from Components import NavBar, Filter, EditCompany, MainPageTable
+
+from Components import NavBar, Filter, EditCompany, MainPageTable, NewFilter
 import CompanyView
-#import Components.NavBar, Components.Filter, Components.EditCompany, Components.MainPageTable
-#import Components
+
 
 class HomePage(Frame):
 

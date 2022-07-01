@@ -1,12 +1,10 @@
 from tkinter import *
 from tkinter import ttk
-from sql_app import main
-from sql_app.database import SessionLocal
+import requests
 
 class MainPageTable(Frame):
     def __init__(self, parent, tree_frame, open_company):
         Frame.__init__(self, parent)
-        self.db = SessionLocal()
 
         vertical_scroll = Scrollbar(tree_frame)
         vertical_scroll.pack(side=RIGHT, fill = Y )
@@ -53,13 +51,18 @@ class MainPageTable(Frame):
         return self.tree
 
     def make_treeview(self):
-        companies = main.read_companies(db = self.db)
+        import requests
+        URL = "http://127.0.0.1:8000/Company/"
+        r = requests.get(url = URL)
+        
+        companies = r.json()
+
         count_color = 0
         for company in companies:
             if count_color %2 ==0:
-                self.tree.insert(parent='', index= 'end', iid=company.OrgNumber, text="", values=(company.CompanyName,company.OrgNumber,company.Email,company.Sector,company.Description,company.Employees,company.Municipality), tags=('evenrow'))
+                self.tree.insert(parent='', index= 'end', iid=company["OrgNumber"], text="", values=(company["CompanyName"],company["OrgNumber"],company["Email"],company["Sector"],company["Description"],company["Employees"],company["Municipality"]), tags=('evenrow'))
             else:
-                self.tree.insert(parent='', index= 'end', iid=company.OrgNumber, text="", values=(company.CompanyName,company.OrgNumber,company.Email,company.Sector,company.Description,company.Employees,company.Municipality), tags=(''))
+                self.tree.insert(parent='', index= 'end', iid=company["OrgNumber"], text="", values=(company["CompanyName"],company["OrgNumber"],company["Email"],company["Sector"],company["Description"],company["Employees"],company["Municipality"]), tags=(''))
         
             count_color +=1
 
