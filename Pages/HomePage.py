@@ -1,79 +1,62 @@
 from tkinter import*
 from tkinter import ttk
 import customtkinter
-
-# import os
-# import sys
-
-# script_dir = os.path.dirname( __file__ )
-# mymodule_dir = os.path.join( script_dir, '..', 'Components' )
-# sys.path.append( mymodule_dir )
-# import NavBar, MainPageTable, Filter, EditCompany
-
 from Components import NavBar, Filter, EditCompany, MainPageTable
-import Pages.CompanyView
+import CompanyView
 #import Components.NavBar, Components.Filter, Components.EditCompany, Components.MainPageTable
 #import Components
 
-customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
-customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
-WIDTH = 850
-HEIGHT = 500
+class HomePage(Frame):
+
+    def __init__(self, parent, controller):
+        Frame.__init__(self, parent)
+        
+        
 
 
-root = customtkinter.CTk()
-root.title('Startup Database')
-root.geometry(f"{WIDTH}x{HEIGHT}")
+        # #Style
+        # style = ttk.Style()
+        # style.theme_use("default")
+        # style.configure("Treeview",
+        # foreground ="black",
+        # rowheight = 23,
+        # )
 
-root.columnconfigure((0), weight=1)
-root.rowconfigure((1,2,3,4,5,6,7,8,9), weight=1)
+        # create frames
 
+        top_frame = customtkinter.CTkFrame(self,
+                                height= 60, 
+                                corner_radius=0,
+                            )
+        top_frame.grid(row = 0, column=0, sticky = "nswe")
 
-#Style
-style = ttk.Style()
-style.theme_use("default")
-style.configure("Treeview",
-foreground ="black",
-rowheight = 23,
-)
+        filter_frame = customtkinter.CTkFrame(self)
+        filter_frame.grid(row = 1, column = 0, sticky = "nswe",padx = 20, pady = 20)
 
-# create frames
+        search_frame = customtkinter.CTkFrame(filter_frame)
+        search_frame.grid(row = 0, column = 0, sticky = "nswe",padx = 20, pady = 20)
 
-top_frame = customtkinter.CTkFrame(root,
-                        height= 60, 
-                        corner_radius=0,
-                    )
-top_frame.grid(row = 0, column=0, sticky = "nswe")
+        tree_frame = customtkinter.CTkFrame(self)
+        tree_frame.grid(row = 2, column = 0, sticky = "nswe", padx = 20, pady = 10)
 
-filter_frame = customtkinter.CTkFrame(root)
-filter_frame.grid(row = 1, column = 0, sticky = "nswe",padx = 20, pady = 20)
-
-search_frame = customtkinter.CTkFrame(filter_frame)
-search_frame.grid(row = 0, column = 0, sticky = "nswe",padx = 20, pady = 20)
-
-tree_frame = customtkinter.CTkFrame(root)
-tree_frame.grid(row = 2, column = 0, sticky = "nswe", padx = 20, pady = 10)
-
-# bottom_frame = customtkinter.CTkFrame(root)
-# bottom_frame.grid(row = 3, column = 0, sticky = "nswe",padx = 20, pady = 20)
+        # bottom_frame = customtkinter.CTkFrame(self)
+        # bottom_frame.grid(row = 3, column = 0, sticky = "nswe",padx = 20, pady = 20)
 
 
-def open_company(event):
-    tree = maintable.get_tree()
-    select = tree.focus()
-    values = tree.item(select,'values')
-    Pages.CompanyView.CompanyView(values)
+        def open_company(event):
+            tree = maintable.get_tree()
+            select = tree.focus()
+            values = tree.item(select,'values')
+            new_frame = CompanyView.CompanyView(parent, values=values)
+            controller.add_frame(new_frame)
+            controller.show_frame(new_frame)    #command = lambda : 
 
-navbar = NavBar(root, top_frame)
+        navbar = NavBar(self, top_frame)
 
-maintable = MainPageTable(root, tree_frame, open_company)
+        maintable = MainPageTable(self, tree_frame, open_company)
 
-filter = Filter(root, search_frame, maintable.get_tree())
-
-# edit_company_section = EditCompany(root, bottom_frame, maintable.get_tree())
-
-
+        filter = Filter(self, search_frame, maintable.get_tree())
 
 
+        #edit_company_section = EditCompany(self, bottom_frame, maintable.get_tree())
 
-root.mainloop()
