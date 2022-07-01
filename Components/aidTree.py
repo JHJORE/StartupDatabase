@@ -15,10 +15,10 @@ class AidTree(Frame):
 
 
         vertical_scroll = Scrollbar(left_frame)
-        vertical_scroll.grid(row=0, column=1, sticky="ns",padx = 0, pady = 40 )
+        vertical_scroll.grid(row=0, column=1, sticky="ns",padx = 0, pady = 20 )
 
-        tree = Treeview(left_frame,height= 20 , yscrollcommand= vertical_scroll.set)
-        tree.grid(row = 0, column = 0, sticky = "nswe",padx = 40, pady = 40, ipadx = 10)
+        tree = Treeview(left_frame,height= 10 , yscrollcommand= vertical_scroll.set)
+        tree.grid(row = 0, column = 0, sticky = "nswe",padx = 20, pady = 20, ipadx = 20)
 
         vertical_scroll.config(command = tree.yview)
         tree['column'] = (
@@ -31,12 +31,12 @@ class AidTree(Frame):
 
         #colums
         tree.column("#0", width=0, stretch=NO)
-        tree.column("Sum", anchor=CENTER, width= 200, stretch= 20)
-        tree.column("GivenBy", anchor=W, width= 200, stretch= 20)
-        tree.column("Type", anchor=W, width= 300, stretch= 20)
-        tree.column("Reason", anchor=W, width= 300, stretch= 20)
-        tree.column("Country", anchor=W, width= 300, stretch= 20)
-        tree.column("DateGiven", anchor=W, width= 300, stretch= 20)
+        tree.column("Sum", anchor=CENTER, width= 50, )
+        tree.column("GivenBy", anchor=W, width= 80, )
+        tree.column("Type", anchor=W, width= 80, )
+        tree.column("Reason", anchor=W, width= 80, )
+        tree.column("Country", anchor=W, width= 80, )
+        tree.column("DateGiven", anchor=W, width= 80, )
         
 
         #Headings
@@ -48,7 +48,7 @@ class AidTree(Frame):
         tree.heading("Country", text= "Country", anchor= CENTER)
         tree.heading("DateGiven", text= "DateGiven", anchor= CENTER)
 
-        cursor.execute("SELECT *, oid FROM Aid WHERE OrgNumber = ?", (values[1]))
+        cursor.execute("SELECT *, oid FROM Aid WHERE OrgNumber = ?", (values[1],))
         capitalRais = cursor.fetchall()
 
         tree.tag_configure('oddrow',background="white")

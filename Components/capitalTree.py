@@ -7,13 +7,14 @@ class CapitalTree(Frame):
         Frame.__init__(self, parent)
         conn = sqlite3.connect('sql_app.db')
         cursor = conn.cursor()
+        self.values = values
 
 
         vertical_scroll = Scrollbar(right_frame)
-        vertical_scroll.grid(row=0, column=1, sticky="ns",padx = 0, pady = 40 )
+        vertical_scroll.grid(row=0, column=1, sticky="ns",padx = 0, pady = 20 )
 
-        tree = Treeview(right_frame,height= 20 , yscrollcommand= vertical_scroll.set)
-        tree.grid(row = 0, column = 0, sticky = "nswe",padx = 40, pady = 40, ipadx = 10)
+        tree = Treeview(right_frame,height= 10 , yscrollcommand= vertical_scroll.set)
+        tree.grid(row = 0, column = 0, sticky = "nswe",padx = 20, pady = 20, ipadx = 10)
 
         vertical_scroll.config(command = tree.yview)
         tree['column'] = (
@@ -23,9 +24,9 @@ class CapitalTree(Frame):
 
         #colums
         tree.column("#0", width=0, stretch=NO)
-        tree.column("Sum", anchor=CENTER, width= 200, stretch= 20)
-        tree.column("Date", anchor=W, width= 200, stretch= 20)
-        tree.column("Link", anchor=W, width= 300, stretch= 20)
+        tree.column("Sum", anchor=CENTER, width= 80, stretch= 20)
+        tree.column("Date", anchor=W, width= 80, stretch= 20)
+        tree.column("Link", anchor=W, width= 80, stretch= 20)
 
         #Headings
         tree.heading("#0", text= "", anchor= W)
@@ -35,7 +36,7 @@ class CapitalTree(Frame):
 
         print(values)
 
-        cursor.execute("SELECT * FROM CapitalRaise WHERE OrgNumber = ?", (int(values[1])))
+        cursor.execute("SELECT * FROM CapitalRaise WHERE OrgNumber = ?", (int(values[1]),))
         capitalRais = cursor.fetchall()
 
         tree.tag_configure('oddrow',background="white")
