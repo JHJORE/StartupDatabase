@@ -13,15 +13,6 @@ class HomePage(Frame):
         
         
 
-
-        # #Style
-        # style = ttk.Style()
-        # style.theme_use("default")
-        # style.configure("Treeview",
-        # foreground ="black",
-        # rowheight = 23,
-        # )
-
         # create frames
 
         top_frame = customtkinter.CTkFrame(self,
@@ -39,9 +30,6 @@ class HomePage(Frame):
         tree_frame = customtkinter.CTkFrame(self)
         tree_frame.grid(row = 2, column = 0, sticky = "nswe", padx = 20, pady = 10)
 
-        # bottom_frame = customtkinter.CTkFrame(self)
-        # bottom_frame.grid(row = 3, column = 0, sticky = "nswe",padx = 20, pady = 20)
-
 
         def open_company(event):
             tree = maintable.get_tree()
@@ -49,14 +37,11 @@ class HomePage(Frame):
             values = tree.item(select,'values')
             new_frame = CompanyView.CompanyView(parent, values=values)
             controller.add_frame(new_frame)
-            controller.show_frame(new_frame)    #command = lambda : 
+            controller.show_frame(new_frame) 
 
         navbar = NavBar(self, top_frame)
 
         maintable = MainPageTable(self, tree_frame, open_company)
 
         filter = Filter(self, search_frame, maintable.get_tree())
-
-
-        #edit_company_section = EditCompany(self, bottom_frame, maintable.get_tree())
 
