@@ -46,11 +46,11 @@ class CompanyView(Frame):
         #table
         editcompany = EditCompany(self, top_frame, self.values)
         #tree kapitalutvidelse
-        #capitaltree = CapitalTree.CapitalTree(self, right_frame, values)
+        capitaltree = CapitalTree.CapitalTree(self, right_frame, values)
 
 
         # #tree AID
-        #aid = AidTree.AidTree(self,left_frame, values)
+        aid = AidTree.AidTree(self,left_frame, values)
 
 
 
