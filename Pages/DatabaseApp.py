@@ -28,8 +28,10 @@ class DatabaseApp(tk.Tk):
         self.show_frame(frame)
 
     def show_frame(self, cont):
-        frame = self.frames[cont]
-        frame.tkraise()
+        #frame = self.frames[cont]
+        print(cont)
+        cont.grid(row = 0, column = 0, sticky = "nsew")
+        cont.tkraise()
 
     def add_frame(self, cont):
         self.frames[cont] = cont
