@@ -2,7 +2,7 @@ from tkinter import *
 import customtkinter
 from sql_app import models, main
 from sql_app.database import SessionLocal
-from Pages.Notes import Notes
+from Pages import Notes
 
 class EditCompany(Frame):
     
