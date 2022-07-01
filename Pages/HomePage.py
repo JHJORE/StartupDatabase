@@ -47,9 +47,9 @@ class HomePage(Frame):
             tree = maintable.get_tree()
             select = tree.focus()
             values = tree.item(select,'values')
-            print("heisann")
-            print(values)
-            controller.show_frame(CompanyView.CompanyView(top_frame, values=values))    #command = lambda : 
+            new_frame = CompanyView.CompanyView(parent, values=values)
+            controller.add_frame(new_frame)
+            controller.show_frame(new_frame)    #command = lambda : 
 
         navbar = NavBar(self, top_frame)
 
