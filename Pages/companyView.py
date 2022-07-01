@@ -8,60 +8,55 @@ from Components import AidTree, CapitalTree
 from sql_app.database import SessionLocal
 from Components import EditCompany
 
-class HomePage(Frame):
+class CompanyView(Frame):
 
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
         
-        db = SessionLocal()
 
-        customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
-        customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
-        WIDTH = 820
-        HEIGHT = 600
+        # customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
+        # customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
+        # WIDTH = 820
+        # HEIGHT = 600
 
 
-        root = customtkinter.CTk()
-        root.title('Startup Database')
-        root.geometry(f"{WIDTH}x{HEIGHT}")
-        conn = sqlite3.connect('sql_app.db')
-        cursor = conn.cursor()
+        # self = customtkinter.CTk()
+        # self.title('Startup Database')
+        # self.geometry(f"{WIDTH}x{HEIGHT}")
+        # conn = sqlite3.connect('sql_app.db')
+        # cursor = conn.cursor()
 
-        root.columnconfigure((0,1), weight=1)
-        root.rowconfigure((1,1), weight=1)
-        #Style
-        style = ttk.Style()
-        style.theme_use("default")
-        style.configure("Treeview",
-        foreground ="black",
-        rowheight = 23,
-        )
+        # self.columnconfigure((0,1), weight=1)
+        # self.rowconfigure((1,1), weight=1)
+        # #Style
+        # style = ttk.Style()
+        # style.theme_use("default")
+        # style.configure("Treeview",
+        # foreground ="black",
+        # rowheight = 23,
+        # )
 
         #Frames
-        top_frame = customtkinter.CTkFrame(root)
+        top_frame = customtkinter.CTkFrame(self)
         top_frame.grid(row = 0, column = 0,  columnspan=2, sticky = "nswe", padx = 20, pady = 20)
 
-        left_frame = customtkinter.CTkFrame(root)
+        left_frame = customtkinter.CTkFrame(self)
         left_frame.grid(row = 1, column = 0, sticky = "nswe", padx = 20, pady = 10)
 
-        right_frame = customtkinter.CTkFrame(root)
+        right_frame = customtkinter.CTkFrame(self)
         right_frame.grid(row = 1, column = 1, sticky = "nswe", padx = 20, pady = 10)
 
         #table
-        #editcompany = EditCompany(root, top_frame, values)
+        #editcompany = EditCompany(self, top_frame, values)
         #tree kapitalutvidelse
-        # capitaltree = CapitalTree.CapitalTree(root, right_frame, values)
+        # capitaltree = CapitalTree.CapitalTree(self, right_frame, values)
 
 
         # #tree AID
-        # aid = AidTree.AidTree(root,left_frame, values)
+        # aid = AidTree.AidTree(self,left_frame, values)
 
 
 
 
 
         # tree.bind("<ButtonRelease-1>", clicked)
-
-
-
-    root.mainloop()
