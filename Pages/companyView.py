@@ -1,18 +1,15 @@
 from tkinter import*
 from tkinter import ttk
-from PIL import ImageTk, Image
 import customtkinter
-from sqlalchemy import column, values
 import sqlite3
-from Components import AidTree, CapitalTree
-from sql_app.database import SessionLocal
-from Components import EditCompany
+from Components import AidTree, CapitalTree, EditCompany
 
 class CompanyView(Frame):
 
-    def __init__(self, parent, controller):
+    def __init__(self, parent, controller, values = None):
         Frame.__init__(self, parent)
         
+        self.values = values
 
         # customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
         # customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -47,13 +44,13 @@ class CompanyView(Frame):
         right_frame.grid(row = 1, column = 1, sticky = "nswe", padx = 20, pady = 10)
 
         #table
-        #editcompany = EditCompany(self, top_frame, values)
+        editcompany = EditCompany(self, top_frame, self.values)
         #tree kapitalutvidelse
-        # capitaltree = CapitalTree.CapitalTree(self, right_frame, values)
+        #capitaltree = CapitalTree.CapitalTree(self, right_frame, values)
 
 
         # #tree AID
-        # aid = AidTree.AidTree(self,left_frame, values)
+        #aid = AidTree.AidTree(self,left_frame, values)
 
 
 

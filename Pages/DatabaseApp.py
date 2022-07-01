@@ -33,13 +33,18 @@ class DatabaseApp(tk.Tk):
   
 
         for F in (HomePage.HomePage, CompanyView.CompanyView):
-  
             frame = F(container, self)
-  
-
             self.frames[F] = frame
-  
             frame.grid(row = 0, column = 0, sticky ="nsew")
+
+        
+        # homeframe = HomePage.HomePage(container, self)
+        # self.frames[homeframe] = homeframe
+        # homeframe.grid(row = 0, column = 0, sticky= "nsew")
+
+        # homeframe = HomePage.HomePage(container, self, values)
+        # self.frames[homeframe] = homeframe
+        # homeframe.grid(row = 0, column = 0, sticky= "nsew")
   
         self.show_frame(HomePage.HomePage)
   

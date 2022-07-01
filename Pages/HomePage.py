@@ -47,11 +47,11 @@ class HomePage(Frame):
             tree = maintable.get_tree()
             select = tree.focus()
             values = tree.item(select,'values')
-            command = lambda : controller.show_frame(CompanyView)
+            controller.show_frame(CompanyView.CompanyView(self, top_frame, values=values))    #command = lambda : 
 
         navbar = NavBar(self, top_frame)
 
-        maintable = MainPageTable(self, tree_frame, open_company())
+        maintable = MainPageTable(self, tree_frame, open_company)
 
         filter = Filter(self, search_frame, maintable.get_tree())
 
