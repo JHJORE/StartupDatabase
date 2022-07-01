@@ -35,7 +35,7 @@ class HomePage(Frame):
             tree = maintable.get_tree()
             select = tree.focus()
             values = tree.item(select,'values')
-            new_frame = CompanyView.CompanyView(parent, values=values)
+            new_frame = CompanyView.CompanyView(parent, controller, values=values)
             controller.add_frame(new_frame)
             controller.show_frame(new_frame) 
 

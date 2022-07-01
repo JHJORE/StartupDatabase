@@ -2,11 +2,11 @@ from tkinter import*
 from tkinter import ttk
 import customtkinter
 import sqlite3
-from Components import AidTree, CapitalTree, EditCompany
+from Components import AidTree, CapitalTree, EditCompany, GoHome
 
 class CompanyView(Frame):
 
-    def __init__(self, parent, values):
+    def __init__(self, parent, controller, values):
         Frame.__init__(self, parent)
         self.values = values
 
@@ -21,6 +21,7 @@ class CompanyView(Frame):
         right_frame.grid(row = 1, column = 1, sticky = "nswe", padx = 20, pady = 10)
 
         #Components
+        gohome = GoHome.GoHome(parent, controller, top_frame)
         editcompany = EditCompany(self, top_frame, self.values)
         capitaltree = CapitalTree.CapitalTree(self, right_frame, values)
         aid = AidTree.AidTree(self,left_frame, values)

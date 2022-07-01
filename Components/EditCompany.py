@@ -66,8 +66,7 @@ class EditCompany(Frame):
 
         delete_btn = customtkinter.CTkButton(bottom_frame, text="Delete Company", command= self.remove_company)
         delete_btn.grid(row=3, column=3, columnspan=1, pady=10, padx=10, ipadx= 30 )
-        print(values)
-        
+
         name_entry.insert(0,values[0])
         email_entry.insert(0, values[2])
         muncipality_entry.insert(0, values[-1])
@@ -95,9 +94,6 @@ class EditCompany(Frame):
         
         company = self.tree.focus()
         self.tree.delete(company)
-
-        
-
 
 
     def create_company(self):
