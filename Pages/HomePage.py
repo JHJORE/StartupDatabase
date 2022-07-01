@@ -2,18 +2,9 @@ from tkinter import*
 from tkinter import ttk
 import customtkinter
 
-# import os
-# import sys
-
-# script_dir = os.path.dirname( __file__ )
-# mymodule_dir = os.path.join( script_dir, '..', 'Components' )
-# sys.path.append( mymodule_dir )
-# import NavBar, MainPageTable, Filter, EditCompany
-
-from Components import NavBar, Filter, EditCompany, MainPageTable
+from Components import NavBar, Filter, EditCompany, MainPageTable, NewFilter
 import Pages.CompanyView
-#import Components.NavBar, Components.Filter, Components.EditCompany, Components.MainPageTable
-#import Components
+
 
 customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("green")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -68,7 +59,7 @@ navbar = NavBar(root, top_frame)
 
 maintable = MainPageTable(root, tree_frame, open_company)
 
-filter = Filter(root, search_frame, maintable.get_tree())
+filter = NewFilter(root, search_frame, maintable.get_tree())
 
 # edit_company_section = EditCompany(root, bottom_frame, maintable.get_tree())
 
