@@ -7,9 +7,11 @@ from Pages import Notes
 
 class EditCompany(Frame):
     
-    def __init__(self, parent, bottom_frame, values):
+    def __init__(self, parent, bottom_frame, values, controller):
         Frame.__init__(self, parent)
 
+        self.controller = controller
+        self.parent = parent
         self.db = SessionLocal()
 
         email_entry = customtkinter.CTkEntry(bottom_frame,
@@ -58,7 +60,7 @@ class EditCompany(Frame):
         update_btn = customtkinter.CTkButton(bottom_frame, text = 'Save Changes', command=self.update_company)
         update_btn.grid(row=3, column=0, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
-        notes_btn = customtkinter.CTkButton(bottom_frame, text="Notes")
+        notes_btn = customtkinter.CTkButton(bottom_frame, text="Notes", command= self.openNote )
         notes_btn.grid(row=3, column=1, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
         news_btn = customtkinter.CTkButton(bottom_frame, text="News Articles")#, command= self.news)
@@ -111,3 +113,5 @@ class EditCompany(Frame):
             Municipality = self.sector_edit.get(),
             #HomePage = values[x],
         )
+    def openNote(self):
+        self.controller.show_frame(Notes.Notes(self.parent, self.controller))
