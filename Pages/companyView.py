@@ -9,6 +9,7 @@ class CompanyView(Frame):
     def __init__(self, parent, controller, values):
         Frame.__init__(self, parent)
         self.values = values
+        self.parent = parent
 
         #Frames
         top_frame = customtkinter.CTkFrame(self)
