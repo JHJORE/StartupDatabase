@@ -3,7 +3,7 @@ import customtkinter
 from tkinter import ttk
 from sqlalchemy import column, values
 from sql_app.database import SessionLocal
-import HomePage, CompanyView, Notes
+import HomePage
 
 
 class DatabaseApp(tk.Tk):

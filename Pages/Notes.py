@@ -30,7 +30,7 @@ class Notes(Frame):
 
         vscroll.config(command=textbox.yview)
 
-        #menu
+        # menu
 
         # filesview = FilesView(self, self, textbox)
 

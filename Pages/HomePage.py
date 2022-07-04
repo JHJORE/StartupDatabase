@@ -2,7 +2,7 @@ from tkinter import*
 from tkinter import ttk
 import customtkinter
 
-from Components import NavBar, Filter, EditCompany, MainPageTable, NewFilter
+from Components import NavBar, EditCompany, MainPageTable, NewFilter
 from Pages import CompanyView
 
 
