@@ -22,20 +22,15 @@ class DatabaseApp(tk.Tk):
         self.frames = {} 
   
         frame = HomePage.HomePage(container, self)
-        self.frames[frame] = frame
+        self.frames[frame] = frame 
+
         frame.grid(row = 0, column = 0, sticky ="nsew")
   
         self.show_frame(frame)
 
     def show_frame(self, cont):
-        #frame = self.frames[cont]
-        print(cont)
         cont.grid(row = 0, column = 0, sticky = "nsew")
         cont.tkraise()
-
-    def add_frame(self, cont):
-        self.frames[cont] = cont
-        cont.grid(row = 0, column = 0, sticky = "nsew")
 
 
 app = DatabaseApp()
