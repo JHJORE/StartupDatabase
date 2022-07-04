@@ -10,6 +10,7 @@ class EditCompany(Frame):
     def __init__(self, parent, bottom_frame, values, controller):
         Frame.__init__(self, parent)
 
+        self.values = values
         self.controller = controller
         self.parent = parent
         self.db = SessionLocal()
@@ -88,14 +89,11 @@ class EditCompany(Frame):
 
         
     def remove_company(self):
-        select = self.tree.focus()
-        row = self.tree.item(select)
-        values = row.get('values')
-        orgnumber = values[1]
+        orgnumber = self.values[1]
         main.delete_Company(db = self.db, OrgNumber=orgnumber)
         
-        company = self.tree.focus()
-        self.tree.delete(company)
+        # company = self.tree.focus()
+        # self.tree.delete(company)
 
 
     def create_company(self):
