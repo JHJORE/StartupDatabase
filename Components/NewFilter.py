@@ -103,5 +103,5 @@ class NewFilter(Frame):
         values = row.get('values')
 
         if(values != ""):
-            DeleteBox.DeleteBox(self.parent,self.tree)
+            DeleteBox.DeleteBox(self.parent,values,self.tree)
     

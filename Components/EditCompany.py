@@ -3,6 +3,7 @@ from typing import List
 import customtkinter
 from sql_app import models, main
 from sql_app.database import SessionLocal
+from Components import DeleteBox
 from Pages import Notes
 
 class EditCompany(Frame):
@@ -67,7 +68,7 @@ class EditCompany(Frame):
         news_btn = customtkinter.CTkButton(bottom_frame, text="News Articles")#, command= self.news)
         news_btn.grid(row=3, column=2, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
-        delete_btn = customtkinter.CTkButton(bottom_frame, text="Delete Company", command= self.remove_company)
+        delete_btn = customtkinter.CTkButton(bottom_frame, text="Delete Company", command= self.openDelteBox)
         delete_btn.grid(row=3, column=3, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
         self.name_entry.insert(0,values[0])
@@ -94,9 +95,7 @@ class EditCompany(Frame):
 
 
         
-    def remove_company(self):
-        orgnumber = self.values[1]
-        main.delete_Company(db = self.db, OrgNumber=orgnumber)
+  
 
 
     def create_company(self):
@@ -115,3 +114,9 @@ class EditCompany(Frame):
     def openNote(self):
         note_frame = Notes.Notes(self.parent.parent, self.controller)
         self.controller.show_frame(note_frame)
+
+    def openDelteBox(self):
+        if(self.values != ""):
+            DeleteBox.DeleteBox(self.parent,self.values)
+        
+    

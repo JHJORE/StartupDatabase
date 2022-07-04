@@ -7,8 +7,9 @@ from sql_app.crud import delete_Company
 
 class DeleteBox(Frame):
 
-    def __init__(self, parent, tree):
+    def __init__(self, parent, values, tree = None):
         Frame.__init__(self, parent)
+        self.values = values
         self.tree = tree
 
         customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
@@ -42,17 +43,21 @@ class DeleteBox(Frame):
         no_btn = customtkinter.CTkButton(main_frame, text="No", command= self.root.destroy)
         no_btn.grid(row = 1, column= 1, padx = 10, pady= 10 )
 
-    def remove_company(self):
-        company = self.tree.focus()
-        row = self.tree.item(company)
-        values = row.get('values')
-        orgnumber = values[1]
-        self.tree.delete(company)
 
+    def remove_company(self):
+
+        orgnumber = self.values[1]
+        if self.tree != None:
+            company = self.tree.focus()
+            self.tree.delete(company)
         URL = "http://127.0.0.1:8000/Company/" + str(orgnumber) + "/delete"
         PARAMS = {"OrgNumber": orgnumber}
         requests.delete(url = URL, params = PARAMS)
+    
+
+
         self.root.destroy()
+
 
 
       

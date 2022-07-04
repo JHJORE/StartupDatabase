@@ -25,7 +25,7 @@ class Notes(Frame):
         vscroll = Scrollbar(bottom_frame)
         vscroll.pack(side=RIGHT, fill= Y)
 
-        textbox = Text(bottom_frame,width=200, height=200)
+        textbox = Text(bottom_frame,width=45, height=10)
         textbox.pack()
 
         vscroll.config(command=textbox.yview)
