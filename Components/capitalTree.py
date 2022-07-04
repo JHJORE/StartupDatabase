@@ -34,8 +34,6 @@ class CapitalTree(Frame):
         tree.heading("Date", text= "Date", anchor= W)
         tree.heading("Link", text= "Link", anchor= CENTER)
 
-        print(values)
-
         cursor.execute("SELECT * FROM CapitalRaise WHERE OrgNumber = ?", (int(values[1]),))
         capitalRais = cursor.fetchall()
 

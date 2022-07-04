@@ -3,7 +3,7 @@ from tkinter import ttk
 import customtkinter
 
 from Components import NavBar, Filter, EditCompany, MainPageTable, NewFilter
-import CompanyView
+from Pages import CompanyView
 
 
 class HomePage(Frame):
@@ -35,13 +35,12 @@ class HomePage(Frame):
             tree = maintable.get_tree()
             select = tree.focus()
             values = tree.item(select,'values')
-            new_frame = CompanyView.CompanyView(parent, values=values)
-            controller.add_frame(new_frame)
+            new_frame = CompanyView.CompanyView(parent, controller, values)
             controller.show_frame(new_frame) 
 
-        navbar = NavBar(self, top_frame)
+        navbar = NavBar.NavBar(self, controller, top_frame)
 
         maintable = MainPageTable(self, tree_frame, open_company)
 
-        filter = Filter(self, search_frame, maintable.get_tree())
+        filter = NewFilter(self, search_frame, maintable.get_tree())
 
