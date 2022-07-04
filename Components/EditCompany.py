@@ -42,6 +42,7 @@ class EditCompany(Frame):
                                     border_width=2,
                                     corner_radius=5)
         self.org_entry.grid(row=0, column=1, padx=10, pady=10)
+        
 
         self.employees_entry = customtkinter.CTkEntry(bottom_frame,
                                         placeholder_text="Employees",
@@ -76,6 +77,7 @@ class EditCompany(Frame):
         self.muncipality_entry.insert(0, values[-1])
         self.org_entry.insert(0,values[1])
         self.employees_entry.insert(0, values[5])
+        self.org_entry.config(state= "disabled")
 
 
     def update_company(self):
@@ -92,6 +94,7 @@ class EditCompany(Frame):
         self.org_entry.insert(0,company.OrgNumber)
         self.employees_entry.insert(0, company.Employees)
         main.update_Company(db=self.db, OrgNumber = OrgNumber, Company = company)
+       
 
 
         

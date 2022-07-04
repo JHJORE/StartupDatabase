@@ -1,6 +1,7 @@
 from tkinter import*
 import customtkinter
-from Components.FilesView import FilesView
+
+from Components import TrashMenuBar
 
 class Notes(Frame):
 
@@ -10,36 +11,40 @@ class Notes(Frame):
 
 
         # Frames
-        top_frame = customtkinter.CTkFrame(self,
-                                height= 10, 
-                                corner_radius=0,
-                            )
-        top_frame.grid(row = 0, column = 0, sticky = "nswe")
+        # top_frame = customtkinter.CTkFrame(self,
+        #                         height= 20, 
+        #                         corner_radius=0,
+        #                     )
+        # top_frame.grid(row = 0, column = 0, sticky = "nswe")
+        top_frame = customtkinter.CTkFrame(self)
+        top_frame.grid(row = 1, column = 0, sticky = "nswe", padx = 10, pady = 10)
 
-        title_frame = customtkinter.CTkFrame(self)
-        title_frame.grid(row = 1, column = 0, sticky = "nswe", padx = 20, pady = 10)
 
         bottom_frame = customtkinter.CTkFrame(self)
-        bottom_frame.grid(row = 2, column = 0, sticky = "nswe", padx = 20, pady = 10)
+        bottom_frame.grid(row = 2, column = 0, sticky = "nswe", padx = 10, pady = 10)
 
         vscroll = Scrollbar(bottom_frame)
         vscroll.pack(side=RIGHT, fill= Y)
 
-        textbox = Text(bottom_frame,width=45, height=10)
+        textbox = Text(bottom_frame,width=110, height=20)
         textbox.pack()
 
         vscroll.config(command=textbox.yview)
 
+      
+
         # menu
+        trash = TrashMenuBar.TrashMenuBar(parent,top_frame)
 
-        # filesview = FilesView(self, self, textbox)
+        # menubar = MenuBar(self)
+        
 
-        title = customtkinter.CTkLabel(master=top_frame,
-                                    width=120,
-                                    text="Company Name",
-                                    height=45,
-                                    corner_radius=8)
-        title.grid(row =0, column= 0)
+        # title = customtkinter.CTkLabel(master=top_frame,
+        #                             width=12,
+        #                             text="Company Name",
+        #                             height=45,
+        #                             corner_radius=8)
+        # title.grid(row =0, column= 0)
 
 
 
