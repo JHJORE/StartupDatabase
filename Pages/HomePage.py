@@ -42,5 +42,5 @@ class HomePage(Frame):
 
         maintable = MainPageTable(self, tree_frame, open_company)
 
-        filter = NewFilter(self, search_frame, maintable.get_tree())
+        filter = NewFilter(self, search_frame, maintable.get_tree(), controller)
 

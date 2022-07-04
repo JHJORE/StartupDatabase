@@ -2,12 +2,15 @@ from tkinter import *
 import customtkinter
 from PIL import ImageTk, Image
 import requests
+from Components import DeleteBox
 
 from sql_app.models import Company
 
 class NewFilter(Frame):
-    def __init__(self, parent, search_frame, tree):
+    def __init__(self, parent, search_frame, tree, controller):
         Frame.__init__(self, parent)
+        self.controller = controller
+        self.parent = parent
 
         search_frame.rowconfigure((10), weight=1)
 
@@ -62,7 +65,7 @@ class NewFilter(Frame):
                                 corner_radius=5)
         self.employee_entry2.grid(row=1, column=1, padx=10, pady=10)
 
-        delete_btn = customtkinter.CTkButton(search_frame, text="Delete Company", command= self.remove_company)
+        delete_btn = customtkinter.CTkButton(search_frame, text="Delete Company", command= self.openDelteBox)
         delete_btn.grid(row=1, column=2, columnspan=1, pady=10, padx=10, ipadx= 30, sticky="ne")
 
         self.tree = tree
@@ -93,14 +96,12 @@ class NewFilter(Frame):
             else:
                 self.tree.insert(parent='', index= 'end', iid=company["OrgNumber"], text="", values=(company["CompanyName"],company["OrgNumber"],company["Email"],company["Sector"],company["Description"],company["Employees"],company["Municipality"]), tags=(''))
             count_color +=1
-    
-    def remove_company(self):
+
+    def openDelteBox(self):
         company = self.tree.focus()
         row = self.tree.item(company)
         values = row.get('values')
-        orgnumber = values[1]
-        self.tree.delete(company)
 
-        URL = "http://127.0.0.1:8000/Company/" + str(orgnumber) + "/delete"
-        PARAMS = {"OrgNumber": orgnumber}
-        requests.delete(url = URL, params = PARAMS)
+        if(values != ""):
+            DeleteBox.DeleteBox(self.parent,self.tree)
+    
