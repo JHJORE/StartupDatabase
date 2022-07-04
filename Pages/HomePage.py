@@ -3,7 +3,7 @@ from tkinter import ttk
 import customtkinter
 
 from Components import NavBar, Filter, EditCompany, MainPageTable, NewFilter
-import CompanyView
+from Pages import CompanyView
 
 
 class HomePage(Frame):

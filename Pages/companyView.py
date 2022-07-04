@@ -2,7 +2,7 @@ from tkinter import*
 from tkinter import ttk
 import customtkinter
 import sqlite3
-from Components import AidTree, CapitalTree, EditCompany, GoHome, NavBar
+from Components import AidTree, CapitalTree, EditCompany, NavBar
 
 class CompanyView(Frame):
 
