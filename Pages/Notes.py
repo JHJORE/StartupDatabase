@@ -1,7 +1,7 @@
 from tkinter import*
 import customtkinter
 
-from Components import TrashMenuBar
+from Components import TrashMenuBar, NavBar
 
 class Notes(Frame):
 
@@ -11,13 +11,15 @@ class Notes(Frame):
 
 
         # Frames
-        # top_frame = customtkinter.CTkFrame(self,
-        #                         height= 20, 
-        #                         corner_radius=0,
-        #                     )
-        # top_frame.grid(row = 0, column = 0, sticky = "nswe")
-        top_frame = customtkinter.CTkFrame(self)
-        top_frame.grid(row = 1, column = 0, sticky = "nswe", padx = 10, pady = 10)
+        top_frame = customtkinter.CTkFrame(self,
+                                height= 230, 
+                                corner_radius=0,
+                            )
+        top_frame.grid(row = 0, column = 0, sticky = "nswe")
+
+        mid_frame = customtkinter.CTkFrame(self)
+        mid_frame.grid(row = 1, column = 0, sticky = "nswe", padx = 10, pady = 10)
+        
 
 
         bottom_frame = customtkinter.CTkFrame(self)
@@ -34,7 +36,9 @@ class Notes(Frame):
       
 
         # menu
-        trash = TrashMenuBar.TrashMenuBar(parent,top_frame)
+        
+        navbar = NavBar.NavBar(parent, controller, top_frame)
+        trash = TrashMenuBar.TrashMenuBar(parent,mid_frame)
 
         # menubar = MenuBar(self)
         
