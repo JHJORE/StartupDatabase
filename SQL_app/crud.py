@@ -10,8 +10,8 @@ def get_Company(db: Session, OrgNumber_id: int):
 def get_CompanyByName(db: Session, CompanyName: str):
     return db.query(models.Company).filter(models.Company.CompanyName.like(f"%Folkeinvest%")).first()
 
-def get_Companies(db: Session, Municipality: str, Sector: int, EmployeesMin: int, EmployeesMax: int, skip: int = 0, limit: int = 100):
-    return db.query(models.Company).filter(models.Company.Sector.like(f"%{Sector}%"), models.Company.Employees >= EmployeesMin, models.Company.Employees <= EmployeesMax, models.Company.Municipality.like(f"%{Municipality}%")).offset(skip).limit(limit).all()
+def get_Companies(db: Session, CompanyName: str, Municipality: str, Sector: int, EmployeesMin: int, EmployeesMax: int, skip: int = 0, limit: int = 100):
+    return db.query(models.Company).filter(models.Company.Sector.like(f"%{Sector}%"), models.Company.Employees >= EmployeesMin, models.Company.Employees <= EmployeesMax, models.Company.Municipality.like(f"%{Municipality}%"), models.Company.CompanyName.like(f"%{CompanyName}%")).offset(skip).limit(limit).all()
 
 def get_Note(db: Session, NoteId: int):
     return db.query(models.Note).filter(models.Note.NoteId == NoteId).first()
@@ -31,6 +31,10 @@ def get_Aid(db: Session, AidId: str):
 
 def get_CapitalRaise(db: Session, RaiseId: int):
     return db.query(models.CapitalRaise).filter(models.CapitalRaise.RaiseId == RaiseId).first()
+
+
+def get_NewsArticleByOrgNumber(db: Session, OrgNumber: int, skip: int = 0, limit: int = 100):
+    return db.query(models.NewsArticle).filter(models.NewsArticle.OrgNumber == OrgNumber).offset(skip).limit(limit).all()
 
 
 
@@ -86,7 +90,7 @@ def create_Note(db: Session, Note: schemas.NoteCreate, OrgNumber: int):
 
 
 def create_NewsArticle(db: Session, NewsArticle: schemas.NewsArticleCreate, OrgNumber: int):
-    db_NewsArticle = models.NewsArticle (ArticleId = NewsArticle.ArticlId, URL = NewsArticle.URL, Title = NewsArticle.Title, OrgNumber = OrgNumber)
+    db_NewsArticle = models.NewsArticle (URL = NewsArticle.URL, Title = NewsArticle.Title, OrgNumber = OrgNumber)
     db.add(db_NewsArticle)
     db.commit()
     db.refresh(db_NewsArticle)

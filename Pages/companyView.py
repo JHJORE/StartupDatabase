@@ -26,6 +26,6 @@ class CompanyView(Frame):
 
         #Components
         navbar = NavBar.NavBar(parent, controller, top_frame)
-        editcompany = EditCompany(self, middle_frame, self.values, controller)
+        editcompany = EditCompany.EditCompany(self, middle_frame, self.values, controller)
         capitaltree = CapitalTree.CapitalTree(self, right_frame, values)
         aid = AidTree.AidTree(self,left_frame, values)
