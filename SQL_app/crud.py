@@ -39,7 +39,8 @@ def get_NoteByOrgNumber(db: Session, OrgNumber: int, skip: int = 0, limit: int =
 def get_NewsArticleByOrgNumber(db: Session, OrgNumber: int, skip: int = 0, limit: int = 100):
     return db.query(models.NewsArticle).filter(models.NewsArticle.OrgNumber == OrgNumber).offset(skip).limit(limit).all()
 
-
+def get_AidByOrgNumber(db: Session, OrgNumber: int, skip: int = 0, limit: int = 100):
+    return db.query(models.Aid).filter(models.Aid.OrgNumber == OrgNumber).offset(skip).limit(limit).all()
 
 
 

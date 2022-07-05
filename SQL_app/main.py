@@ -133,6 +133,11 @@ def read_Aids(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     Aid = crud.get_Aids(db=db, skip=skip, limit=limit)
     return Aid
 
+@app.get("/Aid/Org/{OrgNumber}", response_model=List[schemas.Aid])
+def read_Aids(OrgNumber: int, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    Aids = crud.get_AidByOrgNumber(db=db, OrgNumber = OrgNumber, skip=skip, limit=limit)
+    return Aids
+
 @app.get("/Aid/{AidId}", response_model=schemas.Aid)
 def read_Aid(AidId: str, db: Session = Depends(get_db)):
     Aid = crud.get_Aid(db=db, AidId = AidId)
