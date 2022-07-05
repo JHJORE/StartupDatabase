@@ -75,6 +75,11 @@ def read_Note(NoteId: int, db: Session = Depends(get_db)):
     note = crud.get_Note(db=db, NoteId=NoteId)
     return note
 
+@app.get("/Note/Org/{OrgNumber}", response_model=List[schemas.Note])
+def read_NoteFromOrgNuber(OrgNumber: int, db: Session = Depends(get_db)):
+    Note = crud.get_NoteByOrgNumber(db, OrgNumber=OrgNumber)
+    return Note
+
 @app.delete("/Note/{NoteId}/delete", response_model=schemas.Note)
 def delete_Note(NoteId:int, db: Session = Depends(get_db)):
     db_Note = crud.delete_Note(db=db, NoteId=NoteId)

@@ -32,6 +32,9 @@ def get_Aid(db: Session, AidId: str):
 def get_CapitalRaise(db: Session, RaiseId: int):
     return db.query(models.CapitalRaise).filter(models.CapitalRaise.RaiseId == RaiseId).first()
 
+def get_NoteByOrgNumber(db: Session, OrgNumber: int, skip: int = 0, limit: int = 100):
+    return db.query(models.Note).filter(models.Note.OrgNumber == OrgNumber).offset(skip).limit(limit).all()
+
 
 
 
@@ -78,7 +81,7 @@ def create_Company(db: Session, Company: schemas.CompanyCreate):
     return db_Company
 
 def create_Note(db: Session, Note: schemas.NoteCreate, OrgNumber: int):
-    db_Note = models.Note(NoteId = Note.NoteId, Note = Note.Note, OrgNumber = OrgNumber)
+    db_Note = models.Note(NoteId = Note.NoteId, Name = Note.Name, Note = Note.Note, OrgNumber = OrgNumber)
     db.add(db_Note)
     db.commit()
     db.refresh(db_Note)
@@ -145,6 +148,7 @@ def update_NewsArticle(db: Session, NewsArticle: schemas.NewsArticle, ArticleId:
 def update_Note(db: Session, Note: schemas.Note, NoteId: int):
     db_Note = db.query(models.Note).filter(models.Note.NoteId == NoteId).first()
     db_Note.NoteId = Note.NoteId
+    db_Note.Name = Note.Name
     db_Note.Note = Note.Note
     db_Note.OrgNumber = Note.OrgNumber
     db.commit()

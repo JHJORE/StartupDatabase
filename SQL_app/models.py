@@ -27,6 +27,7 @@ class Note(Base):
     __tablename__ = "Note"
 
     NoteId = Column(Integer, primary_key = True, index=True)
+    Name = Column(String)
     Note = Column(String)
     OrgNumber = Column(Integer, ForeignKey(Company.OrgNumber))
 

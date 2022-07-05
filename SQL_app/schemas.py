@@ -9,6 +9,7 @@ from sql_app.database import Base
 
 class NoteBase(BaseModel):
     NoteId: int
+    Name:str
     Note: str
     OrgNumber: int
 
