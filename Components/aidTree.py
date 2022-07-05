@@ -27,9 +27,9 @@ class AidTree(Frame):
         tree.column("#0", width=0, stretch=NO)
         tree.column("Sum", anchor=CENTER, width= 50, )
         tree.column("GivenBy", anchor=W, width= 80, )
-        tree.column("Type", anchor=W, width= 300, )
-        tree.column("Reason", anchor=W, width= 220, )
-        tree.column("Country", anchor=W, width= 80, )
+        tree.column("Type", anchor=W, width= 220, )
+        tree.column("Reason", anchor=W, width= 300, )
+        tree.column("County", anchor=W, width= 80, )
         tree.column("DateGiven", anchor=W, width= 80, )
         
 
