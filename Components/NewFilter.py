@@ -80,7 +80,7 @@ class NewFilter(Frame):
 
         URL = "http://127.0.0.1:8000/Company/"
         # sett inn i PARAMS når det går: "CompanyName": CompanyName,
-        PARAMS = {"Sector": Sector, "EmployeesMin": EmployeesMin, "EmployeesMax": EmployeesMax, "Municipality": Municipality}
+        PARAMS = {"CompanyName": CompanyName, "Sector": Sector, "EmployeesMin": EmployeesMin, "EmployeesMax": EmployeesMax, "Municipality": Municipality}
 
         r = requests.get(url = URL, params = PARAMS)
         companies = r.json()

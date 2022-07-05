@@ -24,10 +24,10 @@ class Note(NoteBase):
 
 
 class NewsArticleBase(BaseModel):
-    ArticlId: int
     URL: str
     Title: str
     OrgNumber: int
+
 
 
 class NewsArticleCreate(NewsArticleBase):
@@ -35,6 +35,7 @@ class NewsArticleCreate(NewsArticleBase):
 
 
 class NewsArticle(NewsArticleBase):
+    ArticleId: int
     class Config:
         orm_mode = True
 

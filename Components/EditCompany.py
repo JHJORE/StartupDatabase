@@ -4,7 +4,7 @@ import customtkinter
 from sql_app import models, main
 from sql_app.database import SessionLocal
 from Components import DeleteBox
-from Pages import Notes
+from Pages import Notes, NewsArticles
 
 class EditCompany(Frame):
     
@@ -66,7 +66,7 @@ class EditCompany(Frame):
         notes_btn = customtkinter.CTkButton(bottom_frame, text="Notes", command= self.openNote)
         notes_btn.grid(row=3, column=1, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
-        news_btn = customtkinter.CTkButton(bottom_frame, text="News Articles")#, command= self.news)
+        news_btn = customtkinter.CTkButton(bottom_frame, text="News Articles", command= self.openNews)
         news_btn.grid(row=3, column=2, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
         delete_btn = customtkinter.CTkButton(bottom_frame, text="Delete Company", command= self.openDelteBox)
@@ -117,6 +117,10 @@ class EditCompany(Frame):
     def openNote(self):
         note_frame = Notes.Notes(self.parent.parent, self.controller)
         self.controller.show_frame(note_frame)
+
+    def openNews(self):
+        news_frame = NewsArticles.NewsArticles(self.parent.parent, self.controller, self.values[1])
+        self.controller.show_frame(news_frame)
 
     def openDelteBox(self):
         if(self.values != ""):

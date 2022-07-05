@@ -29,8 +29,8 @@ def create_Company(Company: schemas.CompanyCreate, db: Session = Depends(get_db)
 
 
 @app.get("/Company/", response_model=List[schemas.Company])
-def read_companies(skip: int = 0, limit: int = 100, Sector: str = "", EmployeesMin: int = 0, EmployeesMax: int = 1000000, Municipality: str = "", db: Session = Depends(get_db)):
-    companies = crud.get_Companies(db, skip=skip, limit=limit, Sector = Sector, EmployeesMin = EmployeesMin, EmployeesMax = EmployeesMax, Municipality = Municipality)
+def read_companies(skip: int = 0, limit: int = 100, CompanyName: str = "", Sector: str = "", EmployeesMin: int = 0, EmployeesMax: int = 1000000, Municipality: str = "", db: Session = Depends(get_db)):
+    companies = crud.get_Companies(db, skip=skip, limit=limit, Sector = Sector, EmployeesMin = EmployeesMin, EmployeesMax = EmployeesMax, Municipality = Municipality, CompanyName=CompanyName)
     return companies
 
 
@@ -89,9 +89,9 @@ def update_Note(NoteId:int, Note: schemas.Note, db: Session = Depends(get_db)):
 
 
 
-@app.post("/Company/{OrgNumber}/NewsArticle", response_model=schemas.NewsArticle)
+@app.post("/Company/{OrgNumber}/NewsArticle/", response_model=schemas.NewsArticle)
 def create_NewsArticle(
-     OrgNumber: int, NewsArticle: schemas.NewsArticle, db: Session = Depends(get_db)
+     OrgNumber: int, NewsArticle: schemas.NewsArticleCreate, db: Session = Depends(get_db)
 ):
     return crud.create_NewsArticle(db=db, NewsArticle=NewsArticle, OrgNumber=OrgNumber)
 
@@ -99,6 +99,11 @@ def create_NewsArticle(
 def read_NewsArticle(NewsArticleId: int, db: Session = Depends(get_db)):
     newsArticle = crud.get_NewsArticle(db, NewsArticleId=NewsArticleId)
     return newsArticle
+
+@app.get("/NewsArticle/Org/{OrgNumber}", response_model=List[schemas.NewsArticle])
+def read_NewsArticlesFromOrgNuber(OrgNumber: int, db: Session = Depends(get_db)):
+    newsArticles = crud.get_NewsArticleByOrgNumber(db, OrgNumber=OrgNumber)
+    return newsArticles
 
 @app.delete("/NewsArticle/{ArticleId}/delete", response_model=schemas.NewsArticle)
 def delete_NewsArticle(ArticleId:int, db: Session = Depends(get_db)):
