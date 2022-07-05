@@ -36,7 +36,7 @@ class Notes(Frame):
                                 corner_radius=5)
         self.title_entry.grid(row = 0, column = 0, padx = 10, pady= 10, sticky = "w")
 
-        self.textbox = Text(bottom_frame,width=120, height=10)
+        self.textbox = Text(bottom_frame,width=112, height=10)
         self.textbox.grid(row = 1, column = 0, columnspan = 2)
 
         save_btn = customtkinter.CTkButton(bottom_frame, text="Save", command= self.add_note)

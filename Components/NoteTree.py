@@ -26,7 +26,7 @@ class NoteTree(Frame):
         #colums
         self.tree.column("#0", width=0, stretch=NO)
         self.tree.column("Name", anchor="w", width= 140, stretch= 20)
-        self.tree.column("Description", anchor="w", width= 700, stretch= 20)
+        self.tree.column("Description", anchor="w", width= 600, stretch= 20)
 
 
         #Headings
