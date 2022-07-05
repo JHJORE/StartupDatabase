@@ -159,6 +159,11 @@ def read_CapitalRaise(RaiseId: int, db: Session = Depends(get_db)):
     CapitalRaise = crud.get_CapitalRaise(db = db, RaiseId= RaiseId)
     return CapitalRaise
 
+@app.get("/CapitalRaise/Org/{OrgNum}", response_model=List[schemas.CapitalRaise])
+def read_CapitalRaiseByOrgNum(OrgNumber: int, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    CapitalRaises = crud.get_CapitalRaiseByOrgNum(db = db, OrgNumber= OrgNumber, skip = skip, limit = limit)
+    return CapitalRaises
+
 @app.delete("/CapitalRaise/{RaiseId}/delete", response_model=schemas.CapitalRaise)
 def delete_CapitalRaise(RaiseId: int, db: Session = Depends(get_db)):
     CapitalRaise = crud.delete_CapitalRaise(db=db, RaiseId=RaiseId)
