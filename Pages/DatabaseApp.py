@@ -19,18 +19,25 @@ class DatabaseApp(tk.Tk):
         container.grid_rowconfigure(0, weight = 1)
         container.grid_columnconfigure(0, weight = 1)
 
-        self.frames = {} 
+        self.frames = ["start"]
   
         frame = HomePage.HomePage(container, self)
-        self.frames[frame] = frame 
+        self.frames.append(frame) 
 
         frame.grid(row = 0, column = 0, sticky ="nsew")
   
         self.show_frame(frame)
 
     def show_frame(self, cont):
-        cont.grid(row = 0, column = 0, sticky = "nsew")
-        cont.tkraise()
+        lastframe = str(self.frames[-1])[12:17]
+        currentframe = str(cont)[12:17]
+        if(lastframe != currentframe):
+            self.frames.append(cont)
+            cont.grid(row = 0, column = 0, sticky = "nsew")
+            cont.tkraise()
+
+
+ 
 
 
 app = DatabaseApp()

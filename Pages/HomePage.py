@@ -2,7 +2,7 @@ from tkinter import*
 from tkinter import ttk
 import customtkinter
 
-from Components import NavBar, EditCompany, MainPageTable, NewFilter
+from Components import NavBar, MainPageTable, NewFilter
 from Pages import CompanyView
 
 
@@ -10,10 +10,6 @@ class HomePage(Frame):
 
     def __init__(self, parent, controller):
         Frame.__init__(self, parent)
-        
-        
-
-        # create frames
 
         top_frame = customtkinter.CTkFrame(self,
                                 height= 60, 

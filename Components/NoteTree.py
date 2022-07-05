@@ -1,4 +1,3 @@
-from re import L
 from tkinter import *
 from tkinter.ttk import Treeview
 import requests
@@ -14,7 +13,7 @@ class NoteTree(Frame):
         vertical_scroll = Scrollbar(tree_frame)
         vertical_scroll.grid(row=0, column=1, sticky="ns",padx = 0, pady = 10 )
 
-        self.tree = Treeview(tree_frame,height= 5 , yscrollcommand= vertical_scroll.set)
+        self.tree = Treeview(tree_frame,height= 3 , yscrollcommand= vertical_scroll.set)
         self.tree.grid(row = 0, column = 0, sticky = "nswe",padx = 10, pady = 10, ipadx = 10)
 
         vertical_scroll.config(command = self.tree.yview)
@@ -25,8 +24,8 @@ class NoteTree(Frame):
 
         #colums
         self.tree.column("#0", width=0, stretch=NO)
-        self.tree.column("Name", anchor="w", width= 100, stretch= 20)
-        self.tree.column("Description", anchor="w", width= 900, stretch= 20)
+        self.tree.column("Name", anchor="w", width= 140, stretch= 20)
+        self.tree.column("Description", anchor="w", width= 700, stretch= 20)
 
 
         #Headings

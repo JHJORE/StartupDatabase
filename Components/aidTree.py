@@ -1,9 +1,5 @@
 from tkinter import *
 from tkinter.ttk import Treeview
-from turtle import right
-import customtkinter
-from numpy import pad
-from sql_app import models, main
 import sqlite3
 
 
@@ -18,7 +14,7 @@ class AidTree(Frame):
         vertical_scroll.grid(row=0, column=1, sticky="ns",padx = 0, pady = 20 )
 
         tree = Treeview(left_frame,height= 10 , yscrollcommand= vertical_scroll.set)
-        tree.grid(row = 0, column = 0, sticky = "nswe",padx = 20, pady = 20, ipadx = 20)
+        tree.grid(row = 0, column = 0, sticky = "nswe",padx = 12, pady = 12, ipadx = 12)
 
         vertical_scroll.config(command = tree.yview)
         tree['column'] = (
