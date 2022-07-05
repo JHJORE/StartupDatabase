@@ -54,9 +54,8 @@ class NoteTree(Frame):
 
 
     def make_tree(self):
-        if len(self.tree.get_children()):
-            for note in self.tree.get_children():
-                self.tree.delete(note)
+        for note in self.tree.get_children():
+            self.tree.delete(note)
 
         URL = "http://127.0.0.1:8000/Note/Org/" + self.OrgNumber
         PARAMS = {"OrgNumber": self.OrgNumber}

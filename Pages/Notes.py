@@ -56,12 +56,18 @@ class Notes(Frame):
 
 
     def add_note(self):
-        note = self.create_note()
+        noteId = self.tree.get_noteId()
 
-        URL = "http://127.0.0.1:8000/Company/" + str(self.values[1]) + "/Note/"
-        data = {"Name": note.Name, "Note": note.Note, "OrgNumber": note.OrgNumber}
-        requests.post(url=URL, json=data)
-
+        if noteId == "":
+            note = self.create_note()
+            URL = "http://127.0.0.1:8000/Company/" + str(self.values[1]) + "/Note/"
+            data = {"Name": note.Name, "Note": note.Note, "OrgNumber": note.OrgNumber}
+            requests.post(url=URL, json=data)
+        else:
+            URL = "http://127.0.0.1:8000/Note/" + str(noteId) + "/update" 
+            DATA = {"NoteId": int(noteId), "Name": self.title_entry.get(), "Note": self.textbox.get("1.0",'end-1c'), "OrgNumber": self.OrgNumber}
+            requests.put(url=URL, json = DATA)
+        
         self.tree.make_tree()
 
 
