@@ -4,7 +4,6 @@ from PIL import ImageTk, Image
 import requests
 from Components import DeleteBox
 
-from sql_app.models import Company
 
 class NewFilter(Frame):
     def __init__(self, parent, search_frame, tree, controller):

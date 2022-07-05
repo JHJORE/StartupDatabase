@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 import re
-
 from sql_app.models import CapitalRaise
 from sql_app import main
 from sql_app.database import SessionLocal

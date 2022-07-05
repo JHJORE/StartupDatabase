@@ -10,11 +10,14 @@ class CompanyView(Frame):
         self.parent = parent
 
         #Frames
-        top_frame = customtkinter.CTkFrame(self)
-        top_frame.grid(row = 0, column = 0,  columnspan=2, sticky = "nswe", padx = 20, pady = 20)
+        top_frame = customtkinter.CTkFrame(self,
+                                height= 200, 
+                                corner_radius=0,
+                            )
+        top_frame.grid(row = 0, column = 0, sticky = "nswe")
         
         middle_frame = customtkinter.CTkFrame(self)
-        middle_frame.grid(row = 1, column = 0,  columnspan=2, sticky = "nswe", padx = 20, pady = 20)
+        middle_frame.grid(row = 1, column = 0,  columnspan=2, sticky = "nswe", padx = 10, pady = 10)
 
         left_frame = customtkinter.CTkFrame(self)
         left_frame.grid(row = 2, column = 0, sticky = "nswe", padx = 20, pady = 10)

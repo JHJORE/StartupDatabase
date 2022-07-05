@@ -1,8 +1,5 @@
-from ast import Raise
 from sqlalchemy.orm import Session
-
 from . import models, schemas
-
 
 def get_Company(db: Session, OrgNumber_id: int):
     return db.query(models.Company).filter(models.Company.OrgNumber == OrgNumber_id).first()
@@ -18,10 +15,6 @@ def get_Note(db: Session, NoteId: int):
 
 def get_NewsArticle(db: Session, NewsArticleId: int):
     return db.query(models.NewsArticle).filter(models.NewsArticle.ArticleId == NewsArticleId).first()
-
-
-# def get_StockHolder(db: Session, skip: int = 0):
-#     return db.query(models.StockHolder).offset(skip).all()
 
 def get_Aids(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Aid).offset(skip).limit(limit).all()
