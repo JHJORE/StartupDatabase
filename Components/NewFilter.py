@@ -45,8 +45,8 @@ class NewFilter(Frame):
 
         self.folder_img = ImageTk.PhotoImage(Image.open("./Constants/searchicon.png").resize((20,20),  Image.LANCZOS))
         
-        self.search_button = customtkinter.CTkButton(search_frame, image = self.folder_img,text="", width=20, height= 20, compound= "left", command=self.search_database)
-        self.search_button.grid(row=0, column=5, padx=10, pady=10)
+        self.search_btn = customtkinter.CTkButton(search_frame, image = self.folder_img,text="", width=20, height= 20, compound= "left", command=self.search_database)
+        self.search_btn.grid(row=0, column=3, padx=10, pady=10)
 
         self.employee_entry1 = customtkinter.CTkEntry(search_frame,
                                     placeholder_text="MinEmployees",
@@ -67,6 +67,9 @@ class NewFilter(Frame):
         delete_btn = customtkinter.CTkButton(search_frame, text="Delete Company", command= self.openDelteBox)
         delete_btn.grid(row=1, column=2, columnspan=1, pady=10, padx=10, ipadx= 30, sticky="ne")
 
+        clearn_btn = customtkinter.CTkButton(search_frame, text="clear",width=20, command= self.clear)
+        clearn_btn.grid(row=1, column=3, pady=10, padx=10, sticky="ne")
+
         self.tree = tree
 
     def search_database(self):
@@ -84,6 +87,14 @@ class NewFilter(Frame):
         r = requests.get(url = URL, params = PARAMS)
         companies = r.json()
         self.make_treeview(companies)
+
+    def clear(self):
+        self.employee_entry1.delete(0, END)
+        self.employee_entry2.delete(0, END)
+        self.municipality_entry.delete(0, END)
+        self.sector_entry.delete(0, END)
+        self.companyname_entry.delete(0, END)
+
 
     def make_treeview(self, companies):
         for company in self.tree.get_children():
