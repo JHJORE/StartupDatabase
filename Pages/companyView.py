@@ -1,6 +1,5 @@
 from tkinter import*
 import customtkinter
-
 from Components import AidTree, CapitalTree, EditCompany, NavBar
 
 class CompanyView(Frame):
@@ -20,14 +19,14 @@ class CompanyView(Frame):
         middle_frame = customtkinter.CTkFrame(self)
         middle_frame.grid(row = 1, column = 0,  columnspan=2, sticky = "nswe", padx = 10, pady = 10)
 
-        left_frame = customtkinter.CTkFrame(self)
-        left_frame.grid(row = 2, column = 0, sticky = "nswe", padx = 20, pady = 10)
+        lowerMidle_frame = customtkinter.CTkFrame(self)
+        lowerMidle_frame.grid(row = 2, column = 0, sticky = "nswe", padx = 20, pady = 10)
 
-        right_frame = customtkinter.CTkFrame(self)
-        right_frame.grid(row = 2, column = 1, sticky = "nswe", padx = 20, pady = 10)
+        bottom_frame = customtkinter.CTkFrame(self)
+        bottom_frame.grid(row = 3, column = 0, sticky = "nswe", padx = 20, pady = 10)
 
         #Components
         navbar = NavBar.NavBar(parent, controller, top_frame)
         editcompany = EditCompany.EditCompany(self, middle_frame, self.values, controller)
-        capitaltree = CapitalTree.CapitalTree(self, right_frame, values)
-        aid = AidTree.AidTree(self,left_frame, values)
+        capitaltree = CapitalTree.CapitalTree(self, bottom_frame, values)
+        aid = AidTree.AidTree(self,lowerMidle_frame, values)

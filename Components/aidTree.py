@@ -13,7 +13,7 @@ class AidTree(Frame):
         vertical_scroll = Scrollbar(left_frame)
         vertical_scroll.grid(row=0, column=1, sticky="ns",padx = 0, pady = 20 )
 
-        tree = Treeview(left_frame,height= 10 , yscrollcommand= vertical_scroll.set)
+        tree = Treeview(left_frame,height= 4 , yscrollcommand= vertical_scroll.set)
         tree.grid(row = 0, column = 0, sticky = "nswe",padx = 12, pady = 12, ipadx = 12)
 
         vertical_scroll.config(command = tree.yview)
@@ -29,8 +29,8 @@ class AidTree(Frame):
         tree.column("#0", width=0, stretch=NO)
         tree.column("Sum", anchor=CENTER, width= 50, )
         tree.column("GivenBy", anchor=W, width= 80, )
-        tree.column("Type", anchor=W, width= 80, )
-        tree.column("Reason", anchor=W, width= 80, )
+        tree.column("Type", anchor=W, width= 300, )
+        tree.column("Reason", anchor=W, width= 220, )
         tree.column("Country", anchor=W, width= 80, )
         tree.column("DateGiven", anchor=W, width= 80, )
         
