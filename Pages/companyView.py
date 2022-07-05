@@ -1,6 +1,5 @@
 from tkinter import*
 import customtkinter
-
 from Components import AidTree, CapitalTree, EditCompany, NavBar
 
 class CompanyView(Frame):

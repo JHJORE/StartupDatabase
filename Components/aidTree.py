@@ -1,13 +1,11 @@
 from tkinter import *
 from tkinter.ttk import Treeview
-import sqlite3
+import requests
 
 
 class AidTree(Frame):
     def __init__(self, parent, left_frame, values):
         Frame.__init__(self, parent)
-        conn = sqlite3.connect('sql_app.db')
-        cursor = conn.cursor()
 
 
         vertical_scroll = Scrollbar(left_frame)
@@ -22,7 +20,7 @@ class AidTree(Frame):
         "GivenBy",
         "Type",
         "Reason",
-        "Country",
+        "County",
         "DateGiven")
 
         #colums
@@ -31,7 +29,7 @@ class AidTree(Frame):
         tree.column("GivenBy", anchor=W, width= 80, )
         tree.column("Type", anchor=W, width= 80, )
         tree.column("Reason", anchor=W, width= 80, )
-        tree.column("Country", anchor=W, width= 80, )
+        tree.column("County", anchor=W, width= 80, )
         tree.column("DateGiven", anchor=W, width= 80, )
         
 
@@ -41,22 +39,25 @@ class AidTree(Frame):
         tree.heading("GivenBy", text= "Given By", anchor= W)
         tree.heading("Type", text= "Type", anchor= CENTER)
         tree.heading("Reason", text= "Reason", anchor= CENTER)
-        tree.heading("Country", text= "Country", anchor= CENTER)
+        tree.heading("County", text= "County", anchor= CENTER)
         tree.heading("DateGiven", text= "DateGiven", anchor= CENTER)
 
-        cursor.execute("SELECT *, oid FROM Aid WHERE OrgNumber = ?", (values[1],))
-        capitalRais = cursor.fetchall()
+        URL = "http://127.0.0.1:8000/Aid/Org/" + str(values[1])
+        PARAMS = {"OrgNumber": values[1]}
+
+        response = requests.get(url = URL, params = PARAMS)
+        aids = response.json()
+
+
 
         tree.tag_configure('oddrow',background="white")
         tree.tag_configure('evenrow',background="#51B087")
 
         count_color = 0
-        for capital in capitalRais:
+        for aid in aids:
             if count_color %2 ==0:
-                tree.insert(parent='', index= 'end', iid=capital[0], text="", values=(capital[1],capital[3],capital[2]), tags=('evenrow'))
+                tree.insert(parent='', index= 'end', iid=aid["AidId"], text="", values=(aid["Sum"],aid["GivenBy"],aid["Type"], aid["Reason"], aid["County"], aid["DateGiven"]), tags=('evenrow'))
             else:
-                tree.insert(parent='', index= 'end', iid=capital[0], text="", values=(capital[1],capital[3],capital[2]), tags=(''))
+                tree.insert(parent='', index= 'end', iid=aid["AidId"], text="", values=(aid["Sum"],aid["GivenBy"],aid["Type"], aid["Reason"], aid["County"], aid["DateGiven"]), tags=(''))
     
             count_color +=1
-        conn.commit()
-        conn.close()

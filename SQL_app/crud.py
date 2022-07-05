@@ -32,7 +32,11 @@ def get_NoteByOrgNumber(db: Session, OrgNumber: int, skip: int = 0, limit: int =
 def get_NewsArticleByOrgNumber(db: Session, OrgNumber: int, skip: int = 0, limit: int = 100):
     return db.query(models.NewsArticle).filter(models.NewsArticle.OrgNumber == OrgNumber).offset(skip).limit(limit).all()
 
+def get_AidByOrgNumber(db: Session, OrgNumber: int, skip: int = 0, limit: int = 100):
+    return db.query(models.Aid).filter(models.Aid.OrgNumber == OrgNumber).offset(skip).limit(limit).all()
 
+def get_CapitalRaiseByOrgNum(db: Session, OrgNumber: int, skip: int = 0, limit: int = 100):
+    return db.query(models.CapitalRaise).filter(models.CapitalRaise.OrgNumber == OrgNumber).offset(skip).limit(limit).all()
 
 
 
@@ -78,7 +82,7 @@ def create_Company(db: Session, Company: schemas.CompanyCreate):
     return db_Company
 
 def create_Note(db: Session, Note: schemas.NoteCreate, OrgNumber: int):
-    db_Note = models.Note(NoteId = Note.NoteId, Name = Note.Name, Note = Note.Note, OrgNumber = OrgNumber)
+    db_Note = models.Note(Name = Note.Name, Note = Note.Note, OrgNumber = OrgNumber)
     db.add(db_Note)
     db.commit()
     db.refresh(db_Note)

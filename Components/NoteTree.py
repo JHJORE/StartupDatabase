@@ -3,11 +3,12 @@ from tkinter.ttk import Treeview
 import requests
 
 class NoteTree(Frame):
-    def __init__(self, parent, tree_frame, OrgNumber, textbox):
+    def __init__(self, parent, tree_frame, OrgNumber, textbox, title_entry):
         Frame.__init__(self, parent)
 
         self.OrgNumber = str(OrgNumber)
         self.textbox = textbox
+        self.title_entry = title_entry
        
 
         vertical_scroll = Scrollbar(tree_frame)
@@ -43,22 +44,25 @@ class NoteTree(Frame):
         self.tree.bind("<Double-1>", self.open_note)
 
     def open_note(self, e):
-        
         select = self.tree.focus()
-        print(select)
         values = self.tree.item(select, "values")
         self.textbox.delete(1.0, END)
         self.textbox.insert(END, values[1])
+        self.title_entry.delete(0, END)
+        self.title_entry.insert(0, values[0])
         
 
 
     def make_tree(self):
+        if len(self.tree.get_children()):
+            for note in self.tree.get_children():
+                self.tree.delete(note)
+
         URL = "http://127.0.0.1:8000/Note/Org/" + self.OrgNumber
         PARAMS = {"OrgNumber": self.OrgNumber}
         r = requests.get(url=URL, params=PARAMS)
         
         notes = r.json()
-        
         
         count_color = 0
         for note in notes:
@@ -68,3 +72,9 @@ class NoteTree(Frame):
                 self.tree.insert(parent='', index= 'end', iid=note["NoteId"], text="", values=(note["Name"], note["Note"]), tags=(''))
     
             count_color +=1
+
+    def get_noteId(self):
+        return self.tree.focus()
+
+    def delete_row(self, noteId):
+        self.tree.delete(noteId)

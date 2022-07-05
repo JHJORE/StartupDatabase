@@ -5,7 +5,6 @@ from typing import List, Optional
 from pydantic import BaseModel
 
 class NoteBase(BaseModel):
-    NoteId: int
     Name:str
     Note: str
     OrgNumber: int
@@ -15,6 +14,7 @@ class NoteCreate(NoteBase):
 
 
 class Note(NoteBase):
+    NoteId: int
     class Config:
         orm_mode = True
 

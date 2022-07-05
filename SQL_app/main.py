@@ -66,7 +66,7 @@ def update_Company(OrgNumber: int, Company: schemas.Company, db: Session = Depen
 
 @app.post("/Company/{OrgNumber}/Note/", response_model=schemas.Note)
 def create_Note(
-    OrgNumber: int, Note: schemas.Note, db: Session = Depends(get_db)
+    OrgNumber: int, Note: schemas.NoteCreate, db: Session = Depends(get_db)
 ):
     return crud.create_Note(db=db, Note=Note, OrgNumber=OrgNumber)
 
@@ -142,6 +142,10 @@ def read_Aids(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     Aid = crud.get_Aids(db=db, skip=skip, limit=limit)
     return Aid
 
+@app.get("/Aid/Org/{OrgNumber}", response_model=List[schemas.Aid])
+def read_Aids(OrgNumber: int, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    Aids = crud.get_AidByOrgNumber(db=db, OrgNumber = OrgNumber, skip=skip, limit=limit)
+    return Aids
 
 @app.get("/Aid/{AidId}", response_model=schemas.Aid)
 def read_Aid(AidId: str, db: Session = Depends(get_db)):
@@ -172,6 +176,10 @@ def read_CapitalRaise(RaiseId: int, db: Session = Depends(get_db)):
     CapitalRaise = crud.get_CapitalRaise(db = db, RaiseId= RaiseId)
     return CapitalRaise
 
+@app.get("/CapitalRaise/Org/{OrgNum}", response_model=List[schemas.CapitalRaise])
+def read_CapitalRaiseByOrgNum(OrgNumber: int, skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    CapitalRaises = crud.get_CapitalRaiseByOrgNum(db = db, OrgNumber= OrgNumber, skip = skip, limit = limit)
+    return CapitalRaises
 
 @app.delete("/CapitalRaise/{RaiseId}/delete", response_model=schemas.CapitalRaise)
 def delete_CapitalRaise(RaiseId: int, db: Session = Depends(get_db)):
