@@ -115,7 +115,7 @@ class EditCompany(Frame):
             #HomePage = values[x],
         )
     def openNote(self):
-        note_frame = Notes.Notes(self.parent.parent, self.controller)
+        note_frame = Notes.Notes(self.parent.parent, self.controller,self.values)
         self.controller.show_frame(note_frame)
 
     def openNews(self):
