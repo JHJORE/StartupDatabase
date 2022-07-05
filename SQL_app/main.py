@@ -89,9 +89,9 @@ def update_Note(NoteId:int, Note: schemas.Note, db: Session = Depends(get_db)):
 
 
 
-@app.post("/Company/{OrgNumber}/NewsArticle/", response_model=schemas.NewsArticleCreate)
+@app.post("/Company/{OrgNumber}/NewsArticle/", response_model=schemas.NewsArticle)
 def create_NewsArticle(
-     OrgNumber: int, NewsArticle: schemas.NewsArticle, db: Session = Depends(get_db)
+     OrgNumber: int, NewsArticle: schemas.NewsArticleCreate, db: Session = Depends(get_db)
 ):
     return crud.create_NewsArticle(db=db, NewsArticle=NewsArticle, OrgNumber=OrgNumber)
 

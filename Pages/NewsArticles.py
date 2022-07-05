@@ -87,22 +87,27 @@ class NewsArticles(Frame):
 
 
     def create_newsarticle(self):
-        newsarticle = NewsArticle(
+        news_article = NewsArticle(
             Title = self.title_entry.get(),
             URL = self.url_entry.get(),
             OrgNumber = self.orgnumber
         )
-        return newsarticle
+        return news_article
 
     def saveArticle(self):
-        newsArticle = self.create_newsarticle()
+        news_article = self.create_newsarticle()
+        if len(self.tree.get_children()) % 2 == 0:
+            self.tree.insert(parent='', index= 'end', iid=news_article.ArticleId, text="", values=(news_article.Title, news_article.URL), tags=('evenrow'))
+        else:
+            self.tree.insert(parent='', index= 'end', iid=news_article.ArticleId, text="", values=(news_article.Title, news_article.URL), tags=('')) 
+
         URL = "http://127.0.0.1:8000/Company/" + str(self.orgnumber) + "/NewsArticle"
-        PARAMS = {"OrgNumber": self.orgnumber, "NewsArticle": newsArticle}
-        requests.post(url = URL, params = PARAMS)
+        DATA = {"URL": news_article.URL, "Title": news_article.Title, "OrgNumber": news_article.OrgNumber}
+        requests.post(url = URL, json = DATA)
 
     def make_treeview(self):
-        URL = "http://127.0.0.1:8000/NewsArticle/Org/" + str(2)
-        PARAMS = {"OrgNumber": 2}
+        URL = "http://127.0.0.1:8000/NewsArticle/Org/" + str(self.orgnumber)
+        PARAMS = {"OrgNumber": self.orgnumber}
         r = requests.get(url=URL, params=PARAMS)
         
         news_articles = r.json()

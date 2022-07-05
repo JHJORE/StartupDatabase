@@ -29,6 +29,7 @@ class NewsArticleBase(BaseModel):
     OrgNumber: int
 
 
+
 class NewsArticleCreate(NewsArticleBase):
     pass
 

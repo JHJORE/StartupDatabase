@@ -90,7 +90,7 @@ def create_Note(db: Session, Note: schemas.NoteCreate, OrgNumber: int):
 
 
 def create_NewsArticle(db: Session, NewsArticle: schemas.NewsArticleCreate, OrgNumber: int):
-    db_NewsArticle = models.NewsArticle (URL = NewsArticle.URL, Title = NewsArticle.Title, OrgNumber = OrgNumber)
+    db_NewsArticle = models.NewsArticle(URL = NewsArticle.URL, Title = NewsArticle.Title, OrgNumber = OrgNumber)
     db.add(db_NewsArticle)
     db.commit()
     db.refresh(db_NewsArticle)
