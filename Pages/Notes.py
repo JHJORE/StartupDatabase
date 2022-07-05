@@ -1,7 +1,7 @@
 from tkinter import*
 import customtkinter
 
-from Components import TrashMenuBar, NavBar, NoteTree
+from Components import NoteMenuBar, NavBar, NoteTree
 from sql_app.models import Note
 import requests
 
@@ -51,7 +51,7 @@ class Notes(Frame):
         # menu
         
         self.navbar = NavBar.NavBar(parent, controller, top_frame)
-        self.trash = TrashMenuBar.TrashMenuBar(parent,mid_frame, self.textbox, values)
+        self.trash = NoteMenuBar.NoteMenuBar(parent,mid_frame, self.textbox, values)
         self.tree= NoteTree.NoteTree(self, tree_frame, self.OrgNumber, self.textbox, self.title_entry)
 
 
