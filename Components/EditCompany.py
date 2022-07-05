@@ -1,5 +1,4 @@
 from tkinter import *
-from typing import List
 import customtkinter
 from sql_app import models, main
 from sql_app.database import SessionLocal
@@ -23,9 +22,6 @@ class EditCompany(Frame):
                                border_width=2,
                                corner_radius=5)
         self.email_entry.grid(row=1, column=0,padx=10, pady=10)
-
-        # company_name = customtkinter.CTkLabel(bottom_frame, text="Name", width=180,height=25, corner_radius=8)
-        # company_name.grid(row=0, column= 0,  padx=10, pady=10)
 
         self.name_entry = customtkinter.CTkEntry(bottom_frame,
                                         placeholder_text="Company Name",

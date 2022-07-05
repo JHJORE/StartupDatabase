@@ -2,9 +2,6 @@ from tkinter import*
 import customtkinter
 import requests
 
-
-from sql_app.crud import delete_Company
-
 class DeleteBox(Frame):
 
     def __init__(self, parent, values, tree = None):

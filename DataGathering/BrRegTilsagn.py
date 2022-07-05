@@ -1,5 +1,4 @@
 import json
-import pandas
 import requests
 from sql_app import models, main
 from sql_app.database import SessionLocal
@@ -21,10 +20,6 @@ def brreg_tilsagn_to_db():
         amountGiven = package.get("tildeltBelop")
         dateGiven = pd.to_datetime(package.get("tildelingsdato"), format= "%d.%m.%Y")
         aidId = package.get("stottemottakerOrganisasjonsnummer") + package.get("tildelingsdato")
-
-        # dateinfo = package.get("tildelingsdato").split(".")
-        # year, month, day = int("20" + dateinfo[0]), int(dateinfo[1]), int(dateinfo[2])
-        # dateGiven = date(year, month, day)
 
         aid = models.Aid(
             AidId = aidId,

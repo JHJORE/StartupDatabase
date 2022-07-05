@@ -1,9 +1,9 @@
 from tkinter import*
 import customtkinter
-from sqlalchemy import column
 from sql_app import models, main
 from sql_app.database import SessionLocal
-class TrashMenuBar(Frame):
+
+class NoteMenuBar(Frame):
     def __init__(self, parent, top_frame, textbox, values ):
         Frame.__init__(self, parent)
         self.top_frame = top_frame

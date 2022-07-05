@@ -1,18 +1,14 @@
 from datetime import date
-from optparse import Option
+
 from typing import List, Optional
 
 from pydantic import BaseModel
-
-from sql_app.database import Base
-
 
 class NoteBase(BaseModel):
     NoteId: int
     Name:str
     Note: str
     OrgNumber: int
-
 
 class NoteCreate(NoteBase):
     pass
@@ -22,18 +18,13 @@ class Note(NoteBase):
     class Config:
         orm_mode = True
 
-
-
 class NewsArticleBase(BaseModel):
     URL: str
     Title: str
     OrgNumber: int
 
-
-
 class NewsArticleCreate(NewsArticleBase):
     pass
-
 
 class NewsArticle(NewsArticleBase):
     ArticleId: int
@@ -71,17 +62,13 @@ class CapitalRaise(CapitalRaiseBase):
     class Config:
         orm_mode = True
 
-
-
 class StockHolderBase(BaseModel):
     StockHolderId: int
     Name: str
     OrgNumber: int
 
-
 class StockHolderCreate(StockHolderBase):
     pass
-
 
 class StockHolder(StockHolderBase):
     class Config:
@@ -97,11 +84,8 @@ class CompanyBase(BaseModel):
     Municipality: Optional[str]
     HomePage: Optional[str]
     
-
-
 class CompanyCreate(CompanyBase):
     pass
-
 
 class Company(CompanyBase):
     Notes: Optional[List[Note]]
