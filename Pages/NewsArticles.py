@@ -14,14 +14,17 @@ class NewsArticles(Frame):
 
 
         # Frames
-        top_frame = customtkinter.CTkFrame(self)
-        top_frame.grid(row = 0, column = 0, sticky = "nswe", padx = 20, pady = 10)
+        top_frame = customtkinter.CTkFrame(self,
+                                height= 200, 
+                                corner_radius=0,
+                            )
+        top_frame.grid(row = 0, column = 0, sticky = "nswe")
         
         middle_frame = customtkinter.CTkFrame(self,
                                 height= 10, 
-                                corner_radius=0,
+                               
                             )
-        middle_frame.grid(row = 2, column = 0, sticky = "nswe")
+        middle_frame.grid(row = 2, column = 0, sticky = "nswe", padx = 10, pady = 20)
 
         # title_frame = customtkinter.CTkFrame(self)
         # title_frame.grid(row = 1, column = 0, sticky = "nswe", padx = 20, pady = 10)
@@ -64,8 +67,8 @@ class NewsArticles(Frame):
         "Url")
         #colums
         self.tree.column("#0", width=0, stretch=NO)
-        self.tree.column("Title", anchor=W, width= 400)
-        self.tree.column("Url", anchor=W, width= 700)
+        self.tree.column("Title", anchor=W, width= 260)
+        self.tree.column("Url", anchor=W, width= 600)
        
 
         #Headings

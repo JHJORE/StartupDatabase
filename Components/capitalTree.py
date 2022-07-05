@@ -11,7 +11,7 @@ class CapitalTree(Frame):
         vertical_scroll = Scrollbar(right_frame)
         vertical_scroll.grid(row=0, column=1, sticky="ns",padx = 0, pady = 20 )
 
-        tree = Treeview(right_frame,height= 10 , yscrollcommand= vertical_scroll.set)
+        tree = Treeview(right_frame,height= 4 , yscrollcommand= vertical_scroll.set)
         tree.grid(row = 0, column = 0, sticky = "nswe",padx = 20, pady = 20, ipadx = 10)
 
         vertical_scroll.config(command = tree.yview)
@@ -24,7 +24,7 @@ class CapitalTree(Frame):
         tree.column("#0", width=0, stretch=NO)
         tree.column("Sum", anchor=CENTER, width= 80, stretch= 20)
         tree.column("Date", anchor=W, width= 80, stretch= 20)
-        tree.column("Link", anchor=W, width= 80, stretch= 20)
+        tree.column("Link", anchor=W, width= 500, stretch= 20)
 
         #Headings
         tree.heading("#0", text= "", anchor= W)
