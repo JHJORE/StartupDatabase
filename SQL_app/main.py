@@ -66,7 +66,7 @@ def update_Company(OrgNumber: int, Company: schemas.Company, db: Session = Depen
 
 @app.post("/Company/{OrgNumber}/Note/", response_model=schemas.Note)
 def create_Note(
-    OrgNumber: int, Note: schemas.Note, db: Session = Depends(get_db)
+    OrgNumber: int, Note: schemas.NoteCreate, db: Session = Depends(get_db)
 ):
     return crud.create_Note(db=db, Note=Note, OrgNumber=OrgNumber)
 

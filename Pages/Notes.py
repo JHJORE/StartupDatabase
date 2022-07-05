@@ -2,6 +2,8 @@ from tkinter import*
 import customtkinter
 
 from Components import TrashMenuBar, NavBar, NoteTree
+from sql_app.models import Note
+import requests
 
 class Notes(Frame):
 
@@ -9,7 +11,7 @@ class Notes(Frame):
         Frame.__init__(self, parent)
         self.OrgNumber = values[1]
 
-
+        self.values = values
         # Frames
         top_frame = customtkinter.CTkFrame(self,
                                 height= 200, 
@@ -23,38 +25,68 @@ class Notes(Frame):
         tree_frame = customtkinter.CTkFrame(self)
         tree_frame.grid(row = 2, column = 0, sticky = "nswe", padx = 10, pady = 10)
 
-        
-        
-
-
         bottom_frame = customtkinter.CTkFrame(self)
         bottom_frame.grid(row = 3, column = 0, sticky = "nswe", padx = 10, pady = 10)
 
-        vscroll = Scrollbar(bottom_frame)
-        vscroll.pack(side=RIGHT, fill= Y)
+        self.title_entry = customtkinter.CTkEntry(bottom_frame,
+                                 placeholder_text="Enter title",
+                                width=150,
+                                height=25,
+                                border_width=2,
+                                corner_radius=5)
+        self.title_entry.grid(row = 0, column = 0, padx = 10, pady= 10, sticky = "w")
 
-        textbox = Text(bottom_frame,width=120, height=20)
-        textbox.pack()
+        self.textbox = Text(bottom_frame,width=120, height=10)
+        self.textbox.grid(row = 1, column = 0, columnspan = 2)
 
-        vscroll.config(command=textbox.yview)
+        save_btn = customtkinter.CTkButton(bottom_frame, text="Save", command= self.add_note)
+        save_btn.grid(row = 2, column=0, padx = 10, pady= 10)
+
+        delete_btn = customtkinter.CTkButton(bottom_frame, text="Delete", command = self.delete_note)
+        delete_btn.grid(row = 2, column=1, padx = 10, pady= 10)
+
 
       
 
         # menu
         
-        navbar = NavBar.NavBar(parent, controller, top_frame)
-        trash = TrashMenuBar.TrashMenuBar(parent,mid_frame, textbox, values)
-        tree= NoteTree.NoteTree(self, tree_frame, self.OrgNumber, textbox)
+        self.navbar = NavBar.NavBar(parent, controller, top_frame)
+        self.trash = TrashMenuBar.TrashMenuBar(parent,mid_frame, self.textbox, values)
+        self.tree= NoteTree.NoteTree(self, tree_frame, self.OrgNumber, self.textbox, self.title_entry)
 
-        # menubar = MenuBar(self)
+
+    def add_note(self):
+        note = self.create_note()
+
+        URL = "http://127.0.0.1:8000/Company/" + str(self.values[1]) + "/Note/"
+        data = {"Name": note.Name, "Note": note.Note, "OrgNumber": note.OrgNumber}
+        requests.post(url=URL, json=data)
+
+        self.tree.make_tree()
+
+
+    def create_note(self):
+        return Note(
+            Name= self.title_entry.get(),
+            Note = self.textbox.get("1.0",'end-1c'),
+            OrgNumber = self.OrgNumber
         
+        )
 
-        # title = customtkinter.CTkLabel(master=top_frame,
-        #                             width=12,
-        #                             text="Company Name",
-        #                             height=45,
-        #                             corner_radius=8)
-        # title.grid(row =0, column= 0)
+    def delete_note(self):
+        noteId = self.tree.get_noteId()
+
+        URL = "http://127.0.0.1:8000/Note/" + str(noteId) + "/delete"
+        PARAMS = {"NoteId": noteId}
+        requests.delete(url=URL, params=PARAMS)
+
+        self.tree.delete_row(noteId)
+
+
+
+
+
+
 
 
 

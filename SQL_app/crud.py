@@ -89,7 +89,7 @@ def create_Company(db: Session, Company: schemas.CompanyCreate):
     return db_Company
 
 def create_Note(db: Session, Note: schemas.NoteCreate, OrgNumber: int):
-    db_Note = models.Note(NoteId = Note.NoteId, Name = Note.Name, Note = Note.Note, OrgNumber = OrgNumber)
+    db_Note = models.Note(Name = Note.Name, Note = Note.Note, OrgNumber = OrgNumber)
     db.add(db_Note)
     db.commit()
     db.refresh(db_Note)
