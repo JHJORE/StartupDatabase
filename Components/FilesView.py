@@ -1,12 +1,4 @@
 from tkinter import *
-from tkinter import filedialog
-from tkinter.ttk import Treeview
-from turtle import right
-import customtkinter
-from matplotlib.pyplot import text
-from numpy import pad
-from sql_app import models, main
-import sqlite3
 
 from sql_app.crud import create_Note
 

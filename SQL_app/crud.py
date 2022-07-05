@@ -42,6 +42,9 @@ def get_NewsArticleByOrgNumber(db: Session, OrgNumber: int, skip: int = 0, limit
 def get_AidByOrgNumber(db: Session, OrgNumber: int, skip: int = 0, limit: int = 100):
     return db.query(models.Aid).filter(models.Aid.OrgNumber == OrgNumber).offset(skip).limit(limit).all()
 
+def get_CapitalRaiseByOrgNum(db: Session, OrgNumber: int, skip: int = 0, limit: int = 100):
+    return db.query(models.CapitalRaise).filter(models.CapitalRaise.OrgNumber == OrgNumber).offset(skip).limit(limit).all()
+
 
 
 def delete_Company(db: Session, OrgNumber: int):

@@ -1,12 +1,10 @@
 from tkinter import *
 from tkinter.ttk import Treeview
-import sqlite3
+import requests
 
 class CapitalTree(Frame):
     def __init__(self, parent, right_frame, values):
         Frame.__init__(self, parent)
-        conn = sqlite3.connect('sql_app.db')
-        cursor = conn.cursor()
         self.values = values
 
 
@@ -34,19 +32,19 @@ class CapitalTree(Frame):
         tree.heading("Date", text= "Date", anchor= W)
         tree.heading("Link", text= "Link", anchor= CENTER)
 
-        cursor.execute("SELECT * FROM CapitalRaise WHERE OrgNumber = ?", (int(values[1]),))
-        capitalRais = cursor.fetchall()
-
         tree.tag_configure('oddrow',background="white")
         tree.tag_configure('evenrow',background="#51B087")
 
+        URL = "http://127.0.0.1:8000/CapitalRaise/Org/" + str(values[1])
+        PARAMS = {"OrgNumber": values[1]}
+        response = requests.get(url = URL, params = PARAMS)
+        capitalraises = response.json()
+
         count_color = 0
-        for capital in capitalRais:
+        for capitalraise in capitalraises:
             if count_color %2 ==0:
-                tree.insert(parent='', index= 'end', iid=capital[0], text="", values=(capital[1],capital[3],capital[2]), tags=('evenrow'))
+                tree.insert(parent='', index= 'end', iid=capitalraise["RaiseId"], text="", values=(capitalraise["Sum"],capitalraise["Date"],capitalraise["Link"]), tags=('evenrow'))
             else:
-                tree.insert(parent='', index= 'end', iid=capital[0], text="", values=(capital[1],capital[3],capital[2]), tags=(''))
+                tree.insert(parent='', index= 'end', iid=capitalraise["RaiseId"], text="", values=(capitalraise["Sum"],capitalraise["Date"],capitalraise["Link"]), tags=(''))
     
             count_color +=1
-        conn.commit()
-        conn.close()
