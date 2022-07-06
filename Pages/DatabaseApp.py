@@ -36,16 +36,9 @@ class DatabaseApp(tk.Tk):
             self.raiseframe(cont)
 
 
-    def dark_mode(self):
+    def dark_mode(self, color):
         thisFrame = self.frames[-1]
-        print(thisFrame)
-        thisFrame["bg"] = "black"
-        self.raiseframe(thisFrame)
-    
-    def normal_mode(self):
-        thisFrame = self.frames[-1]
-        print(thisFrame)
-        thisFrame["bg"] = "white"
+        thisFrame["bg"] = color
         self.raiseframe(thisFrame)
         
     def raiseframe(self,cont):
