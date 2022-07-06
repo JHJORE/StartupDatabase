@@ -48,7 +48,6 @@ def fetch_capital_raises_by_org_num(orgnum):
 
 def capital_raises_to_db(orgnum):
     df = fetch_capital_raises_by_org_num(orgnum=orgnum)
-    print(df)
     if (type(df) != type(None)):
         if (not df.empty):
             db = SessionLocal()
