@@ -1,4 +1,5 @@
 import tkinter as tk
+from turtle import bgcolor
 import customtkinter
 from tkinter import ttk
 from sqlalchemy import column, values
@@ -32,12 +33,26 @@ class DatabaseApp(tk.Tk):
         lastframe = str(self.frames[-1])[12:17]
         currentframe = str(cont)[12:17]
         if(lastframe != currentframe):
-            self.frames.append(cont)
-            cont.grid(row = 0, column = 0, sticky = "nsew")
-            cont.tkraise()
+            self.raiseframe(cont)
 
 
- 
+    def dark_mode(self):
+        thisFrame = self.frames[-1]
+        print(thisFrame)
+        thisFrame["bg"] = "black"
+        self.raiseframe(thisFrame)
+    
+    def normal_mode(self):
+        thisFrame = self.frames[-1]
+        print(thisFrame)
+        thisFrame["bg"] = "white"
+        self.raiseframe(thisFrame)
+        
+    def raiseframe(self,cont):
+        self.frames.append(cont)
+        cont.grid(row = 0, column = 0, sticky = "nsew")
+        cont.tkraise()
+
 
 
 app = DatabaseApp()

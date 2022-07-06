@@ -29,12 +29,16 @@ class NavBar(tk.Frame):
         self.mode_switch = customtkinter.CTkSwitch(top_frame, text = "Dark Mode", command= self.switchmode, onvalue= "on", offvalue= "off")
         self.mode_switch.grid(row=0, column=9, padx=10, pady=10)
 
+        self.switchmode
+
     def switchmode(self):
         state = self.mode_switch.get()
         if(state == "on"):
             customtkinter.set_appearance_mode("Dark")
+            self.controller.dark_mode()
         else:
             customtkinter.set_appearance_mode("System")
+            self.controller.normal_mode()
 
     def openHome(self):
         self.controller.show_frame(HomePage.HomePage(self.parent, self.controller))
