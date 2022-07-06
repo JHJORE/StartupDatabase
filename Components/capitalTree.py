@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter.ttk import Treeview
 import requests
+from DataGathering import CapitalRaises
 
 class CapitalTree(Frame):
     def __init__(self, parent, right_frame, values):
@@ -39,6 +40,12 @@ class CapitalTree(Frame):
         PARAMS = {"OrgNumber": values[1]}
         response = requests.get(url = URL, params = PARAMS)
         capitalraises = response.json()
+
+        if len(capitalraises) == 0:
+            CapitalRaises.capital_raises_to_db(values[1])
+            response = requests.get(url = URL, params = PARAMS)
+            capitalraises = response.json()
+             
 
         count_color = 0
         for capitalraise in capitalraises:

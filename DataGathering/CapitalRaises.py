@@ -1,3 +1,4 @@
+
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
@@ -48,16 +49,18 @@ def fetch_capital_raises_by_org_num(orgnum):
 def capital_raises_to_db(orgnum):
     df = fetch_capital_raises_by_org_num(orgnum=orgnum)
     print(df)
-    if (not df.empty):
-        db = SessionLocal()
-        for row in df.iterrows():
-            capitalraise = CapitalRaise (
-                Sum = row[1].loc["amount"],
-                Link = row[1].loc["link"],
-                Date = row[1].loc["date"],
-                OrgNumber = orgnum
-            )
-            main.create_CapitalRaise(OrgNumber=orgnum, CapitalRaise=capitalraise, db=db)
+    if (type(df) != type(None)):
+        if (not df.empty):
+            db = SessionLocal()
+            for row in df.iterrows():
+                capitalraise = CapitalRaise (
+                    Sum = row[1].loc["amount"],
+                    Link = row[1].loc["link"],
+                    Date = row[1].loc["date"],
+                    OrgNumber = orgnum
+                )
+                main.create_CapitalRaise(OrgNumber=orgnum, CapitalRaise=capitalraise, db=db)
+            print("Capitalraises fetched and stored in database")
+    else: 
+        print("No capitalraises found")
     
-orgnum = 916545061
-capital_raises_to_db(orgnum)
