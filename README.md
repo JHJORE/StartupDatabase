@@ -42,6 +42,7 @@ Videre utvikling:
  - Samle inn data fra andre steder, eksempelvis StartupMatcher og Proff.no
  - Gjøre grafiske grensesnittet penere og mer brukervennlig
  - Legge til flere attributter en kan filtrere på
- - Dark Mode
+ - lage en enklerer sammenheng mellom news articles og notes med resten av sidene
+ - Fikse bugs, eks darkmode
 
 
