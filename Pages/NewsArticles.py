@@ -4,6 +4,7 @@ import customtkinter
 import requests
 from sql_app.models import NewsArticle
 from Components import NavBar
+import pyperclip
 
 
 class NewsArticles(Frame):
@@ -87,6 +88,22 @@ class NewsArticles(Frame):
                                     height=45,
                                     corner_radius=8)
         title.grid(row =0, column= 0)
+
+        
+
+        self.tree.bind("<Control-Key-c>", self.copy_from_treeview)
+
+    def copy_from_treeview(self, _):
+        selections = self.tree.selection()  # get hold of selected rows
+
+        copied_string = ""
+        for row in selections:
+            values = self.tree.item(row, 'values')  # get values for each selected row
+
+            for item in values:
+                copied_string += f"{item}  "
+
+        pyperclip.copy(copied_string)
 
 
     def create_newsarticle(self):
