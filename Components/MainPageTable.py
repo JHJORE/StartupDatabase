@@ -3,7 +3,7 @@ from tkinter import ttk
 import requests
 import customtkinter
 from Components import ExcelPopUp
-from ExportData import ExportExcel
+from ExportData import ExportCompaniesExcel
 
 class MainPageTable(Frame):
     def __init__(self, parent, tree_frame, open_company):
@@ -75,7 +75,7 @@ class MainPageTable(Frame):
             count_color +=1
 
     def save_as_excel(self):
-        ExportExcel.save_as_excel(self.tree)
+        ExportCompaniesExcel.save_as_excel(self.tree)
         ExcelPopUp.ExcelPopUp(self.parent)
 
     
