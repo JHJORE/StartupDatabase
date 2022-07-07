@@ -6,7 +6,7 @@ from sql_app.database import SessionLocal
 db = SessionLocal()
 
 def innovation_norway_help():
-    df = pd.read_csv("Tildelinger.csv", encoding="ISO-8859-1", sep=";")
+    df = pd.read_csv("DataGathering/Tildelinger.csv", encoding="ISO-8859-1", sep=";")
     df.dropna(inplace=True)
     df.reset_index(inplace=True)
     i = 0

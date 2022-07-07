@@ -55,6 +55,9 @@ class NewsArticles(Frame):
         add_news_button = customtkinter.CTkButton(middle_frame, text="Save Newsarticle", command= self.saveArticle)
         add_news_button.grid(row=1, column=2, columnspan=1, pady=10, padx=10, ipadx= 30 )
 
+        delete_new = customtkinter.CTkButton(middle_frame, text="Delete article", command= self.delete_news)
+        delete_new.grid(row=1, column=3, columnspan=1, pady=10, padx=10, ipadx= 30 )
+
 
         vertical_scroll = Scrollbar(bottom_frame)
         vertical_scroll.pack(side=RIGHT, fill = Y )
@@ -142,4 +145,9 @@ class NewsArticles(Frame):
             count_color +=1
 
 
-
+    def delete_news(self):
+        articleId = self.tree.focus()
+        self.tree.delete(articleId)
+        URL = "http://127.0.0.1:8000/NewsArticle/" + str(articleId) + "/delete"
+        PARAMS = {"ArticleId": articleId}
+        requests.delete(url = URL, params = PARAMS)
