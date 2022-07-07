@@ -21,7 +21,7 @@ class EditCompany(Frame):
         
 
         self.email_entry = customtkinter.CTkEntry(bottom_frame,
-                                placeholder_text="Comany Email",
+                                placeholder_text="Company Email",
                                width=180,
                                height=25,
                                corner_radius=5)
