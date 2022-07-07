@@ -32,7 +32,7 @@ def save_as_excel(tree):
             "Municipality": MunicipalityList
         }
     )
-    #print(df)
+
     if os.name == "nt":
         DOWNLOAD_FOLDER = f"{os.getenv('USERPROFILE')}\\Downloads\\"
     else:  # PORT: For *Nix systems

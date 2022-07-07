@@ -1,6 +1,7 @@
 from tkinter import*
 import customtkinter
-from Components import AidTree, CapitalTree, EditCompany, NavBar
+from Components import AidTree, CapitalTree, EditCompany, NavBar, ExcelPopUp
+from ExportData import ExportCompanyExcel
 
 class CompanyView(Frame):
 
@@ -28,5 +29,13 @@ class CompanyView(Frame):
         #Components
         navbar = NavBar.NavBar(parent, controller, top_frame)
         editcompany = EditCompany.EditCompany(self, middle_frame, self.values, controller)
-        capitaltree = CapitalTree.CapitalTree(self, bottom_frame, values)
-        aid = AidTree.AidTree(self,lowerMidle_frame, values)
+        self.capitaltree = CapitalTree.CapitalTree(self, bottom_frame, values)
+        self.aidtree = AidTree.AidTree(self,lowerMidle_frame, values)
+
+        self.save_to_excel_btn = customtkinter.CTkButton(middle_frame, text = 'Export company to excel', command=self.save_as_excel)
+        self.save_to_excel_btn.grid(row = 0, column = 2, sticky = "nse", pady=10, padx=10, ipadx= 30)
+
+
+    def save_as_excel(self):
+        ExportCompanyExcel.save_as_excel(self.values, self.aidtree.get_tree(), self.capitaltree.get_tree())
+        ExcelPopUp.ExcelPopUp(self.parent)
