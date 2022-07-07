@@ -1,9 +1,7 @@
 import tkinter as tk
-from turtle import bgcolor
+
 import customtkinter
-from tkinter import ttk
-from sqlalchemy import column, values
-from sql_app.database import SessionLocal
+
 import HomePage
 
 
