@@ -2,11 +2,14 @@ from tkinter import *
 from tkinter import ttk
 import requests
 import customtkinter
+from Components import ExcelPopUp
 from ExportData import ExportExcel
 
 class MainPageTable(Frame):
     def __init__(self, parent, tree_frame, open_company):
         Frame.__init__(self, parent)
+
+        self.parent = parent
 
         vertical_scroll = Scrollbar(tree_frame)
         vertical_scroll.pack(side=RIGHT, fill = Y )
@@ -73,4 +76,7 @@ class MainPageTable(Frame):
 
     def save_as_excel(self):
         ExportExcel.save_as_excel(self.tree)
+        ExcelPopUp.ExcelPopUp(self.parent)
+
+    
 

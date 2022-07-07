@@ -23,9 +23,10 @@ vil blir forklart senere
 
 Det grafiske grensesnittet består av flere sider. Det første som møter brukeren er en hjemmeside der alle selskapene som ligger i databasen 
 fremstilles i en tabell med utvalgt informasjon om selskapet. På denne siden er det mulig å filtrer hvilke selskaper som vises basert på følgende:
-selskapsnavn, sektor, kommune, minimum og maksimum antall ansatte. Herfra kan du også manuelt slette selskaper som ikke er relevante fra databasen.
-I tabellen kan en bruker dobbelklikke på et selskap for å bli tatt videre til en side med mer informasjon om nevnt selskap. Her kan du manuelt
-slette og endre informasjonen om bedriften. Du kan ikke endre organisasjonsnummer. Brukeren kan legge til og endre notater om bedriften. Brukeren
+selskapsnavn, sektor, kommune, minimum og maksimum antall ansatte. Herfra kan du også manuelt slette selskaper som ikke er relevante fra databasen. 
+I tillegg er det mulig å eksportere ut den filtrerte tabell til en excel fil. Hvor den blir lastet ned i downloads mappen på pcen.I tabellen kan en 
+bruker dobbelklikke på et selskap for å bli tatt videre til en side med mer informasjon om nevnt selskap. Her kan du manueltslette og endre
+ informasjonen om bedriften. Du kan ikke endre organisasjonsnummer. Brukeren kan legge til og endre notater om bedriften. Brukeren
 kan også legge til nyhetsartikler om bedriften. Første tabell fra toppen inneholder alle støtteordninger og tilsagn bedriften har fått. Etter
 vår erfaring med å skumme gjennom dataen er det ikke stort overlapp mellom selskaper som har mottat tilsagn og selskaper som har mottat støtte
 fra innovasjon Norge. Dette er ikke definitivt. Andre tabell fra toppen inneholder kapitalutvidelser. Kapitalutvidelsene blir hentet når en bruker
@@ -42,6 +43,6 @@ Videre utvikling:
  - Samle inn data fra andre steder, eksempelvis StartupMatcher og Proff.no
  - Gjøre grafiske grensesnittet penere og mer brukervennlig
  - Legge til flere attributter en kan filtrere på
- - Dark Mode
+ - Dark mode
 
 
