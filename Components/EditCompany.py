@@ -16,7 +16,7 @@ class EditCompany(Frame):
         self.db = SessionLocal()
 
         self.email_entry = customtkinter.CTkEntry(bottom_frame,
-                                placeholder_text="Comany Email",
+                                placeholder_text="Company Email",
                                width=180,
                                height=25,
                                border_width=2,
