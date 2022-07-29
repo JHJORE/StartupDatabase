@@ -5,7 +5,8 @@ from . import models, schemas
 
 
 def get_Company(db: Session, OrgNumber_id: int):
-    return db.query(models.Company).filter(models.Company.OrgNumber == OrgNumber_id).first()
+    query = db.query(models.Company).filter(models.Company.OrgNumber == OrgNumber_id).first()
+    return query
 
 def get_CompanyByName(db: Session, CompanyName: str):
     return db.query(models.Company).filter(models.Company.CompanyName == CompanyName).first()
@@ -31,9 +32,6 @@ def get_Aid(db: Session, AidId: str):
 
 def get_CapitalRaise(db: Session, RaiseId: int):
     return db.query(models.CapitalRaise).filter(models.CapitalRaise.RaiseId == RaiseId).first()
-
-
-
 
 
 def delete_Company(db: Session, OrgNumber: int):
