@@ -1,3 +1,4 @@
+from cgitb import reset
 from tkinter import *
 import customtkinter
 from PIL import ImageTk, Image
@@ -40,13 +41,15 @@ class NewFilter(Frame):
 
         self.municipality_entry.grid(row=0, column=2, padx=10, pady=10)  
 
+        optionmenu_var = customtkinter.StringVar(value="") 
 
-
+        self.dropdown_btn = customtkinter.CTkOptionMenu(search_frame, values=["Oppstartstilskudd", "Støtteordning"],width=20,corner_radius =8, variable=optionmenu_var)
+        self.dropdown_btn.grid(row=0, column=3, pady=10, padx=10, sticky="ne")
 
         self.folder_img = ImageTk.PhotoImage(Image.open("./Constants/searchicon.png").resize((20,20),  Image.LANCZOS))
         
         self.search_btn = customtkinter.CTkButton(search_frame, image = self.folder_img,text="", width=20, height= 20, compound= "left", command=self.search_database)
-        self.search_btn.grid(row=0, column=3, padx=10, pady=10)
+        self.search_btn.grid(row=0, column=4, padx=10, pady=10)
 
         self.employee_entry1 = customtkinter.CTkEntry(search_frame,
                                     placeholder_text="MinEmployees",
@@ -78,15 +81,18 @@ class NewFilter(Frame):
         EmployeesMin = 0 if self.employee_entry1.get() == "" else self.employee_entry1.get()
         EmployeesMax = 1000000 if self.employee_entry2.get() == "" else self.employee_entry2.get()
         Municipality = self.municipality_entry.get()
+        Aidtype = self.dropdown_btn.get()
 
 
         URL = "http://127.0.0.1:8000/Company/"
         # sett inn i PARAMS når det går: "CompanyName": CompanyName,
-        PARAMS = {"CompanyName": CompanyName, "Sector": Sector, "EmployeesMin": EmployeesMin, "EmployeesMax": EmployeesMax, "Municipality": Municipality}
+        PARAMS = {"CompanyName": CompanyName, "Sector": Sector, "EmployeesMin": EmployeesMin, "EmployeesMax": EmployeesMax, "Municipality": Municipality, "Type": Aidtype}
 
         r = requests.get(url = URL, params = PARAMS)
         companies = r.json()
         self.make_treeview(companies)
+
+        
 
     def clear(self):
         self.employee_entry1.delete(0, END)
@@ -94,6 +100,8 @@ class NewFilter(Frame):
         self.municipality_entry.delete(0, END)
         self.sector_entry.delete(0, END)
         self.companyname_entry.delete(0, END)
+        self.dropdown_btn.set("")
+   
 
 
     def make_treeview(self, companies):

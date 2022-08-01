@@ -16,6 +16,7 @@ class Company(Base):
     Employees = Column(Integer)
     Municipality = Column(String)
     HomePage = Column(String)
+    
 
     Notes = relationship("Note", back_populates="NoteAbout", cascade="all, delete-orphan")
     NewsArticles = relationship("NewsArticle", back_populates="ArticleAbout", cascade="all, delete-orphan")

@@ -27,8 +27,8 @@ def create_Company(Company: schemas.CompanyCreate, db: Session = Depends(get_db)
 
 
 @app.get("/Company/", response_model=List[schemas.Company])
-def read_companies(skip: int = 0, limit: int = 100, CompanyName: str = "", Sector: str = "", EmployeesMin: int = 0, EmployeesMax: int = 1000000, Municipality: str = "", db: Session = Depends(get_db)):
-    companies = crud.get_Companies(db, skip=skip, limit=limit, Sector = Sector, EmployeesMin = EmployeesMin, EmployeesMax = EmployeesMax, Municipality = Municipality, CompanyName=CompanyName)
+def read_companies(skip: int = 0, limit: int = 100, CompanyName: str = "", Sector: str = "", EmployeesMin: int = 0, EmployeesMax: int = 1000000, Municipality: str = "",Type: str = "", db: Session = Depends(get_db)):
+    companies = crud.get_Companies(db, skip=skip, limit=limit, Sector = Sector, EmployeesMin = EmployeesMin, EmployeesMax = EmployeesMax, Municipality = Municipality, CompanyName=CompanyName, Type = Type)
     return companies
 
 

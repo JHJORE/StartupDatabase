@@ -8,7 +8,7 @@ class FilesView(Frame):
         notes_menu = Menu(top_frame)
         top_frame.config(menu= notes_menu)
 
-        file_menu = Menu(notes_menu, tearoff=False)
+        file_menu = Menu(notes_menu, tearoff=False) 
         notes_menu.add_cascade(label="Files", menu= file_menu)
         file_menu.add_command(label="New", command= self.new_note())
         file_menu.add_command(label="Open", command= self.open_note())
