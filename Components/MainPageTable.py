@@ -60,7 +60,7 @@ class MainPageTable(Frame):
 
     def make_treeview(self):
         URL = "http://127.0.0.1:8000/Company/"
-        PARAMS = {"limit": 500}
+        PARAMS = {"limit": 300}
         r = requests.get(url = URL, params=PARAMS)
         
         companies = r.json()

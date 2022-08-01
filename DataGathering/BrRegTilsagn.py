@@ -59,5 +59,3 @@ def brreg_tilsagn_to_db():
 
         
         
-brreg_tilsagn_to_db()
-        

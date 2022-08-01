@@ -75,7 +75,7 @@ def save_as_excel(values, aidtree, capitaltree):
         DOWNLOAD_FOLDER = f"{os.getenv('HOME')}/Downloads/"
 
 
-    writer = pd.ExcelWriter(DOWNLOAD_FOLDER + "companies.xlsx")
+    writer = pd.ExcelWriter(DOWNLOAD_FOLDER + "company.xlsx")
     company_df.to_excel(writer, sheet_name="CompanyInfo")
     aid_df.to_excel(writer, sheet_name="Aid")
     capital_df.to_excel(writer, sheet_name="CapitalRaises")

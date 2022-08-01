@@ -25,10 +25,19 @@ def create_Company(Company: schemas.CompanyCreate, db: Session = Depends(get_db)
     #    raise HTTPException(status_code=400, detail="Email already registered")
     return crud.create_Company(db=db, Company=Company)
 
-
 @app.get("/Company/", response_model=List[schemas.Company])
-def read_companies(skip: int = 0, limit: int = 100, CompanyName: str = "", Sector: str = "", EmployeesMin: int = 0, EmployeesMax: int = 1000000, Municipality: str = "", db: Session = Depends(get_db)):
-    companies = crud.get_Companies(db, skip=skip, limit=limit, Sector = Sector, EmployeesMin = EmployeesMin, EmployeesMax = EmployeesMax, Municipality = Municipality, CompanyName=CompanyName)
+def read_companies(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    companies = crud.get_Companies(db, skip=skip, limit=limit)
+    return companies
+
+@app.get("/Company/count")
+def get_company_count(db: Session = Depends(get_db)):
+    company_count = crud.get_company_count(db)
+    return company_count    
+
+@app.get("/Company/search", response_model=List[schemas.Company])
+def search_companies(skip: int = 0, limit: int = 100, CompanyName: str = "", Sector: str = "", EmployeesMin: int = 0, EmployeesMax: int = 1000000, Municipality: str = "", db: Session = Depends(get_db)):
+    companies = crud.search_Companies(db, skip=skip, limit=limit, Sector = Sector, EmployeesMin = EmployeesMin, EmployeesMax = EmployeesMax, Municipality = Municipality, CompanyName=CompanyName)
     return companies
 
 

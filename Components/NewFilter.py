@@ -80,9 +80,9 @@ class NewFilter(Frame):
         Municipality = self.municipality_entry.get()
 
 
-        URL = "http://127.0.0.1:8000/Company/"
+        URL = "http://127.0.0.1:8000/Company/search"
         # sett inn i PARAMS når det går: "CompanyName": CompanyName,
-        PARAMS = {"CompanyName": CompanyName, "Sector": Sector, "EmployeesMin": EmployeesMin, "EmployeesMax": EmployeesMax, "Municipality": Municipality}
+        PARAMS = {"limit": 10000, "CompanyName": CompanyName, "Sector": Sector, "EmployeesMin": EmployeesMin, "EmployeesMax": EmployeesMax, "Municipality": Municipality}
 
         r = requests.get(url = URL, params = PARAMS)
         companies = r.json()

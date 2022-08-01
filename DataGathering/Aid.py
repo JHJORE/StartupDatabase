@@ -13,7 +13,7 @@ def innovation_norway_help():
     for row in df.iterrows():
         i += 1
         if (i % 1000 == 0):
-            print(i)
+            print(str(i) + " av ~37 000")
         if len(str(int((row[1].loc["Org-nr"])))) != 9 or row[1].loc["Næringshovedområde"].lower() == "uspesifisert":
             continue
 
@@ -55,11 +55,5 @@ def innovation_norway_help():
             try:
                 main.read_Aid(AidId = aidId, db=db)
                 main.update_Aid(AidId = aidId, Aid=aid, db=db)
-                
             except:
                 main.create_Aid(OrgNumber=OrgNumber, Aid=aid, db=db)
-
-
-
-
-innovation_norway_help()

@@ -1,55 +1,67 @@
 import json
-from sql_app.models import Company
+from this import d
 from sql_app import main
-from sql_app import models
 from sql_app.database import SessionLocal
 import requests
-import math
 
 db = SessionLocal()
 
 def create_list_orgnum():
-    list_of_orgnum = ""
-    companies = main.read_companies(db=db, limit=10000) #dette setter em limit på 10 000 selskaper vi får enhetsinformasjon fra
-    for company in companies:
-        list_of_orgnum += str(company.OrgNumber) + ","
-    return list_of_orgnum[:-1]
+    list_of_orgnum_strings = []
+    company_count = main.get_company_count(db = db)
+    companies = main.read_companies(db=db, limit=company_count, skip=0)
+    list_of_orgnum_string = ""
+    for i in range(company_count):
+        if i % 880 == 0 and i != 0:
+            list_of_orgnum_strings.append(list_of_orgnum_string[:-1])
+            list_of_orgnum_string = ""
+        list_of_orgnum_string += str(companies[i].OrgNumber) + ","
+    return list_of_orgnum_strings
 
 def get_total_pages(list_of_orgnum): 
     request_url = "https://data.brreg.no/enhetsregisteret/api/enheter?organisasjonsnummer="
     request_url += list_of_orgnum
-    len_list_of_orgnum = len(list_of_orgnum.split(","))
     response_API = requests.get(request_url)
     package_info = json.loads(response_API.text).get("page")
     total_pages = package_info.get("totalPages")
-    total_elements = package_info.get("totalElements")
-    print("Det er " + str(len_list_of_orgnum) + " selskaper i databasen, og brreg gir svar på " + str(total_elements))
-    print("Det betyr at det er " + str(len_list_of_orgnum - total_elements) + " selskaper som ikke eksisterer lenger.")
     return total_pages
 
 
 def company_info_brreg():
-    list_of_orgnum = create_list_orgnum()
-    total_pages = get_total_pages(list_of_orgnum=list_of_orgnum)
-    for i in range(total_pages):
-        request_url = "https://data.brreg.no/enhetsregisteret/api/enheter?organisasjonsnummer="
-        request_url += list_of_orgnum
-        request_url += "&page=" + str(i)
-        response_API = requests.get(request_url)
-        package_response = json.loads(response_API.text).get("_embedded").get("enheter")
+    list_of_orgnum_strings = create_list_orgnum()
+    for list_of_orgnum in list_of_orgnum_strings:
+        total_pages = get_total_pages(list_of_orgnum=list_of_orgnum)
+        for i in range(total_pages):
+            request_url = "https://data.brreg.no/enhetsregisteret/api/enheter?organisasjonsnummer="
+            request_url += list_of_orgnum
+            request_url += "&page=" + str(i)
+            response_API = requests.get(request_url)
+            package_response = json.loads(response_API.text).get("_embedded").get("enheter")
 
-        for package in package_response:
-            company = main.read_Company(OrgNumber = package.get("organisasjonsnummer"), db=db)
-            try:
-                company.Description = package.get("naeringskode1").get("beskrivelse")
-            except:
-                pass
-            company.Employees = package.get("antallAnsatte")
-            company.Municipality = package.get("forretningsadresse").get("kommune")
-            try:
-                company.HomePage = package.get("hjemmeside")
-            except:
-                pass
-            main.update_Company(OrgNumber=company.OrgNumber, Company=company, db=db)
-
-company_info_brreg()
+            for package in package_response:
+                try:
+                    company = main.read_Company(OrgNumber = package.get("organisasjonsnummer"), db=db)
+                    if(package.get('organisasjonsform').get('kode') == 'AS'):
+                        try:
+                            company.Employees = package.get("antallAnsatte")
+                        except:
+                            pass
+                        try:
+                            company.Municipality = package.get("forretningsadresse").get("kommune")
+                        except:
+                            pass
+                        try:
+                            company.HomePage = package.get("hjemmeside")
+                        except:
+                            pass
+                        try:
+                            company.Description = package.get("naeringskode1").get("beskrivelse")
+                        except:
+                            pass
+                        
+                        main.update_Company(OrgNumber=company.OrgNumber, Company=company, db=db)
+                    else: 
+                        main.delete_Company(OrgNumber=company.OrgNumber, db = db)
+                except:
+                    print('Fant ikke organisasjonsnummer: ' + package.get('organisasjonsnummer'))
+                
