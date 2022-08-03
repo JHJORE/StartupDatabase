@@ -41,7 +41,7 @@ def company_info_brreg():
             for package in package_response:
                 try:
                     company = main.read_Company(OrgNumber = package.get("organisasjonsnummer"), db=db)
-                    if(package.get('organisasjonsform').get('kode') == 'AS'):
+                    if(company.CompanyName[-2:] == 'AS'):
                         try:
                             company.Employees = package.get("antallAnsatte")
                         except:
@@ -60,8 +60,10 @@ def company_info_brreg():
                             pass
                         
                         main.update_Company(OrgNumber=company.OrgNumber, Company=company, db=db)
-                    else: 
+                    else:
                         main.delete_Company(OrgNumber=company.OrgNumber, db = db)
                 except:
-                    print('Fant ikke organisasjonsnummer: ' + package.get('organisasjonsnummer'))
-                
+                    pass
+
+
+company_info_brreg()
