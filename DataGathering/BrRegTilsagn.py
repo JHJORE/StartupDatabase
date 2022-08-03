@@ -12,6 +12,8 @@ def brreg_tilsagn_to_db():
     for package in package_response:
         OrgNumber = package.get("stottemottakerOrganisasjonsnummer")
         CompanyName = package.get("stottemottakerNavn")
+        if (CompanyName[-2:] != 'AS'):
+            continue
         Sector = package.get("naeringBeskrivelse")
         givenBy = package.get("stottegiverNavn")
         typeOfAid = package.get("typeTiltak")
@@ -21,6 +23,8 @@ def brreg_tilsagn_to_db():
         dateGiven = pd.to_datetime(package.get("tildelingsdato"), format= "%d.%m.%Y")
         aidId = package.get("stottemottakerOrganisasjonsnummer") + package.get("tildelingsdato")
 
+
+        
         aid = models.Aid(
             AidId = aidId,
             Sum = amountGiven,

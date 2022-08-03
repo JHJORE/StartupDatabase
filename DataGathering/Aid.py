@@ -13,8 +13,8 @@ def innovation_norway_help():
     for row in df.iterrows():
         i += 1
         if (i % 1000 == 0):
-            print(str(i) + " av ~37 000")
-        if len(str(int((row[1].loc["Org-nr"])))) != 9 or row[1].loc["Næringshovedområde"].lower() == "uspesifisert":
+            print(str(i) + " av ~30 000")
+        if len(str(int((row[1].loc["Org-nr"])))) != 9 or row[1].loc["Næringshovedområde"].lower() == "uspesifisert" or row[1].loc['Bedriftsnavn'][-2:] != 'AS':
             continue
 
         OrgNumber = int(row[1].loc["Org-nr"])
