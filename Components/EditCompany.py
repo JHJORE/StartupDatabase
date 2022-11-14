@@ -1,7 +1,7 @@
 from tkinter import *
 import customtkinter
-from sql_app import models, main
-from sql_app.database import SessionLocal
+from SQL_app import models, main
+from SQL_app.database import SessionLocal
 from Components import DeleteBox
 from typing import Final
 from Pages import Notes, NewsArticles
