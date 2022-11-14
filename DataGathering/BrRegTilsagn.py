@@ -1,12 +1,13 @@
 import json
 import requests
-from sql_app import models, main
-from sql_app.database import SessionLocal
+from SQL_app import models, main
+from SQL_app.database import SessionLocal
 import pandas as pd
 
 db = SessionLocal()
 
 def brreg_tilsagn_to_db():  
+    
     response_API = requests.get('https://data.brreg.no/rofs/od/rofs/stottetildeling/search?language=nob&mottakerOrgnr=987&fraDato=2016-11-20')
     package_response = json.loads(response_API.text)
     for package in package_response:
